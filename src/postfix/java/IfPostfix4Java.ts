@@ -8,35 +8,27 @@ class IfPostfix4Java extends JavaPostfix {
     super("if", ".");
   }
 
-  provideCompletionItems(
-    document: vsc.TextDocument,
-    position: vsc.Position,
-    token: vsc.CancellationToken,
-    context: vsc.CompletionContext
-  ): vsc.ProviderResult<vsc.CompletionItem[] | vsc.CompletionList<vsc.CompletionItem>> {
-    // 获取行文本
-    const line: vsc.TextLine = document.lineAt(position);
-    let lineText: string = line.text.substring(0, position.character);
+  handleLineText(lineText: string): string | vsc.SnippetString {
     let startIndex = lineText.lastIndexOf(" ");
     let endIndex = lineText.lastIndexOf(".");
-    // 新增item
-    const items: [string] = [this._labelName];
-    // 返回item的映射
-    return items.map((dep) => {
-      let item = new vsc.CompletionItem(dep, vsc.CompletionItemKind.Snippet);
-      // 删除原来的文本
-      item.additionalTextEdits = [
-        vsc.TextEdit.delete(
-          new vsc.Range(new Position(line.lineNumber, startIndex), position)
-        ),
-      ];
-      // 插入的内容
-      item.insertText = ` if (${lineText.substring(
-        startIndex + 1,
-        endIndex
-      )}) {\n\n }`;
-      return item;
-    });
+    let snippet = new vsc.SnippetString(
+      ` if (${lineText.substring(startIndex + 1, endIndex)}) {\n\t$1\n }`
+    );
+    snippet.appendTabstop(1);
+    return snippet;
+  }
+
+  handleCompleteItem(item: vsc.CompletionItem) {
+    let position: vsc.Position = this.args.position;
+    // 删除原来的文本
+    item.additionalTextEdits = [
+      vsc.TextEdit.delete(
+        new vsc.Range(
+          new Position(position.line, this.args.startIndex),
+          position
+        )
+      ),
+    ];
   }
 }
 

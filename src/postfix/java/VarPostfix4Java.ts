@@ -1,26 +1,30 @@
 import * as vsc from "vscode";
 import { Position } from "vscode";
-import DocumentUtil from "../../util/DocumentUtil";
 import JavaPostfix from "./JavaPostfix";
 import Register from "../../util/Register";
 
-class NotPostfix4Java extends JavaPostfix {
+class VarPostfix4Java extends JavaPostfix {
   constructor() {
-    super("not", ".");
+    super("var", ".");
   }
 
   handleLineText(lineText: string): string | vsc.SnippetString | null {
-    // 截取
-    let startIndex = lineText.lastIndexOf(" ");
+    if (!lineText.match(/^(.*?)new (.+?)\(.*\).$/)) {
+      return null;
+    }
+    let startIndex = lineText.lastIndexOf("new");
     let endIndex = lineText.lastIndexOf(".");
     // 需要替换的文本
-    let replacement = lineText.substring(startIndex + 1, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex);
+    // 获取类名
+    let clazz = lineText.substring(startIndex + 4, lineText.lastIndexOf("("));
     this.args.startIndex = startIndex;
-    return `!${replacement}`;
+    return `${clazz} varName = ${replacement};`;
   }
 
   handleCompleteItem(item: vsc.CompletionItem) {
-    let position: Position = this.args.position;
+    let position: vsc.Position = this.args.position;
+    // 删除原来的文本
     item.additionalTextEdits = [
       vsc.TextEdit.delete(
         new vsc.Range(
@@ -32,4 +36,4 @@ class NotPostfix4Java extends JavaPostfix {
   }
 }
 
-Register.registerPostfix(new NotPostfix4Java());
+Register.registerPostfix(new VarPostfix4Java());

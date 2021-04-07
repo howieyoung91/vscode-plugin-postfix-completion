@@ -1,21 +1,12 @@
 import * as vsc from "vscode";
 import { Position } from "vscode";
-import JavaPostfix from "./JavaPostfix";
-import Register from "../../util/Register";
+import PostfixHandler from "../../abs/PostfixHandler";
 
-class SoutPostfix4Java extends JavaPostfix {
-  constructor() {
-    super("sout", ".");
-  }
-
+//! exists Bugs! Don't use this module!!!
+export default class SoutPostfixHandler4J extends PostfixHandler {
   handleLineText(lineText: string): string | vsc.SnippetString | null {
-    //   TODO 
-    /*
-       ① somthing.sout -> System.out.println(somthing);
-       ② new somthing.sout -> System.out.println(new somthing);
-       ③ (somthing).sout -> System.out.println(somthing);
-    */
     let startIndex = 0;
+    //  (somthing).sout -> System.out.println(somthing);
     startIndex = lineText.search(/[\s;\[\]\{\}]\(.*?\).[s]*[o]*[u]*[t]*$/);
     if (startIndex !== -1) {
       let replacement = lineText.substring(
@@ -27,8 +18,9 @@ class SoutPostfix4Java extends JavaPostfix {
       this.args.startIndex = startIndex + replacementStartIndex - 1;
       return `System.out.println(${replacement});`;
     }
+    // new somthing.sout -> System.out.println(new somthing);
     startIndex = lineText.search(
-      /[\s;\[\]\(\)\{\}]new\s+(.*?)\(.*?\).[s]*[o]*[u]*[t]*$/
+      /[\s;\[\](){\}]new\s+(.*?)\(.*?\).[s]*[o]*[u]*[t]*$/
     );
     if (startIndex !== -1) {
       let replacement = lineText.substring(
@@ -40,14 +32,17 @@ class SoutPostfix4Java extends JavaPostfix {
       this.args.startIndex = startIndex + replacementStartIndex;
       return `System.out.println(${replacement});`;
     }
+    // somthing.sout -> System.out.println(somthing);
     startIndex = lineText.search(/[\s;\[\]\(\)\{\}](.*?).[s]*[o]*[u]*[t]*$/);
     if (startIndex !== -1) {
       let replacement = lineText.substring(
         startIndex,
         lineText.lastIndexOf(".")
       );
-      replacement = replacement.substring(replacement.indexOf("new"));
-      this.args.startIndex = startIndex;
+      let replacementStartIndex = replacement.indexOf(" ");
+      replacement.trim();
+      replacement = replacement.substring(replacementStartIndex);
+      this.args.startIndex = startIndex + replacementStartIndex;
       return `System.out.println(${replacement});`;
     }
     return null;
@@ -66,5 +61,3 @@ class SoutPostfix4Java extends JavaPostfix {
     ];
   }
 }
-
-Register.registerPostfix(new SoutPostfix4Java());

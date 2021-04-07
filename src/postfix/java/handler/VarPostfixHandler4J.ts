@@ -1,15 +1,16 @@
 import * as vsc from "vscode";
-import { Position } from "vscode";
-import JavaPostfix from "./JavaPostfix";
-import Register from "../../util/Register";
+import {Position} from "vscode";
+import PostfixHandler from "../../abs/PostfixHandler";
 
-class VarPostfix4Java extends JavaPostfix {
-  constructor() {
-    super("var", ".");
-  }
-
-  handleLineText(lineText: string): string | vsc.SnippetString | null {
-    if (!lineText.match(/^(.*?)new (.+?)\(.*\).$/)) {
+export default class VarPostfixHandler4J extends PostfixHandler {
+  handleLineText(
+    lineText: string
+  ): null | {
+    text: string | vsc.SnippetString;
+    documentation: string;
+    detail: string;
+  } {
+    if (!lineText.match(/^(.*?)new (.+?)\(.*\).[v]*[a]*[r]*$/)) {
       return null;
     }
     let startIndex = lineText.lastIndexOf("new");
@@ -19,7 +20,13 @@ class VarPostfix4Java extends JavaPostfix {
     // 获取类名
     let clazz = lineText.substring(startIndex + 4, lineText.lastIndexOf("("));
     this.args.startIndex = startIndex;
-    return `${clazz} varName = ${replacement};`;
+    return {
+      text: new vsc.SnippetString(
+        `${clazz} ` + "$" + `{1:${clazz.toLowerCase()}} = ` + `${replacement};`
+      ).appendTabstop(0),
+      detail: `var postfix`,
+      documentation: `${clazz} varName = ${replacement}`,
+    };
   }
 
   handleCompleteItem(item: vsc.CompletionItem) {
@@ -35,5 +42,3 @@ class VarPostfix4Java extends JavaPostfix {
     ];
   }
 }
-
-Register.registerPostfix(new VarPostfix4Java());

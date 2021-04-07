@@ -1,4 +1,3 @@
-import { TextDecoder } from "node:util";
 import * as vsc from "vscode";
 import { Disposable } from "vscode";
 
@@ -17,5 +16,4 @@ export function activate(context: vsc.ExtensionContext) {
   context.subscriptions.push(...items);
 }
 
-export function deactivate() {
-}
+export function deactivate() {}

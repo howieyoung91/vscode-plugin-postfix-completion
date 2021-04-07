@@ -1,10 +1,12 @@
-import {Position, TextDocument, TextLine} from "vscode";
+import * as vsc from "vscode";
 
 export default class DocumentUtil {
-  private constructor() {
-  }
-
-  public static getLineFromDocumentAndPosition(document: TextDocument, position: Position): TextLine {
-    return document.lineAt(position);
-  }
+  private constructor() {}
+  public static getIndentCharacters = () => {
+    if (vsc.window.activeTextEditor?.options.insertSpaces) {
+      return " ".repeat(vsc.window.activeTextEditor.options.tabSize as number);
+    } else {
+      return "\t";
+    }
+  };
 }

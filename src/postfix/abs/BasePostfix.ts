@@ -22,7 +22,7 @@ export default class BasePostfix extends CompletionItem {
     this._datas = value;
   }
 
-  get data(): Store {
+  get datas(): Store {
     return this._datas;
   }
 

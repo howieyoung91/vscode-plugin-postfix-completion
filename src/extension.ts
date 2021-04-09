@@ -1,12 +1,14 @@
-import * as vsc from "vscode";
-import { Disposable } from "vscode";
+import { win32 } from "node:path";
+import { Disposable, ExtensionContext, window } from "vscode";
+import { iocContainer } from "./postfix/decorator/IocContainer";
 
 import("./ImportAll");
 
 let items: Disposable[] = [];
 export { items };
 
-export function activate(context: vsc.ExtensionContext) {
+export function activate(context: ExtensionContext) {
+  iocContainer.register();
   // vsc.commands.registerTextEditorCommand(
   //   'fastcomplete4j.testEditorCommand', (textEditor, edit) => {
   //     vsc.window.showInformationMessage("您正在执行编辑器命令！");

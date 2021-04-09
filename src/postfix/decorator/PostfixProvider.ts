@@ -1,9 +1,7 @@
 import { Constructor, iocContainer } from "./IocContainer";
 
-iocContainer.addComponent("postfixProviders", {});
-
-export function PostfixProvider(language: string) {
+export default function PostfixProvider(language: string) {
   return (ctor: Constructor) => {
-    iocContainer.getComponent("postfixProviders")[language] = ctor;
+    iocContainer.postfixProviderContainer()[language] = ctor;
   };
 }

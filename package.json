@@ -18,7 +18,8 @@
   ],
   "activationEvents": [
     "onCommand:fastcomplete4j.helloWorld",
-    "onLanguage:java"
+    "onLanguage:java",
+    "onLanguage:python"
   ],
   "main": "./out/extension.js",
   "contributes": {

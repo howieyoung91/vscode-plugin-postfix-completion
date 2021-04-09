@@ -1,4 +1,3 @@
-import { HexBase64Latin1Encoding } from "crypto";
 import {
   CancellationToken,
   CompletionContext,
@@ -25,7 +24,7 @@ export default abstract class BasePostfixProvider
 
   constructor(language: string, ...triggerCharacters: string[]) {
     this._language = language;
-    this._triggerCharacters = triggerCharacters;
+    this._triggerCharacters = [`.`];
   }
 
   public push(
@@ -44,6 +43,8 @@ export default abstract class BasePostfixProvider
    * 注册到vscode中
    */
   public register(): BasePostfixProvider {
+    console.log("register!");
+
     Register.registerPostfixDispatcher(this);
     return this;
   }
@@ -62,19 +63,19 @@ export default abstract class BasePostfixProvider
     for (const postfix of this._postfixs) {
       // 设置参数
       let postfixHandler = postfix.postfixHandler;
-      postfix.data.setData({
+      postfix.datas.setData({
         document,
         position,
         token,
         context,
       });
       // 初始化参数
-      postfixHandler.initArgs(postfix.data.store);
+      postfixHandler.initArgs(postfix.datas.store);
       // 获取行文本
       const line: TextLine = document.lineAt(position);
       let lineText: string = line.text.substring(0, position.character);
       // 处理行文本
-      let result = postfixHandler.handleLineText(lineText, postfix.data.store);
+      let result = postfixHandler.handleLineText(lineText, postfix.datas.store);
       // 如果返回null 则直接返回,不添加item
       if (result === null) {
         continue;
@@ -112,12 +113,12 @@ export default abstract class BasePostfixProvider
       }
       // 添加参数
       if (args) {
-        postfix.data.setData(args);
+        postfix.datas.setData(args);
       }
       // 处理补全项
-      postfixHandler.handleCompletionItem(postfix, postfix.data.store);
+      postfixHandler.handleCompletionItem(postfix, postfix.datas.store);
       // 重置参数
-      postfix.data.clearData();
+      postfix.datas.clearData();
       // 添加补全项
       completionItems.push(postfix);
     }

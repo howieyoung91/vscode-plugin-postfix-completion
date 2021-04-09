@@ -1,53 +1,97 @@
 type Constructor<T = any> = new (...args: any[]) => T;
 
 class IocContainer {
-  private readonly ctorContainer: any = {};
-  private readonly instanceContainer: any = {};
+  private readonly ctorContainer: any = {
+    postfixContainer: {},
+    postfixHandlerContainer: {},
+    postfixProviderContainer: {},
+  };
+  private readonly instanceContainer: any = {
+    postfixContainer: {},
+    postfixHandlerContainer: {},
+    postfixProviderContainer: {},
+  };
 
-  public addComponent(key: string, target: any) {
-    this.ctorContainer[key] = target;
+  public postfixContainerOf(language: string) {
+    if (!this.ctorContainer.postfixContainer[language]) {
+      this.ctorContainer.postfixContainer[language] = {};
+    }
+    return this.ctorContainer.postfixContainer[language];
   }
 
-  public getComponent(key: string) {
-    return this.ctorContainer[key];
+  public postfixHandlerContainerOf(language: string) {
+    if (!this.ctorContainer.postfixHandlerContainer[language]) {
+      this.ctorContainer.postfixHandlerContainer[language] = {};
+    }
+    return this.ctorContainer.postfixHandlerContainer[language];
+  }
+
+  public postfixProviderContainer() {
+    return this.ctorContainer.postfixProviderContainer;
   }
 
   public register() {
     // new PostfixHandler
-    let postfixHandlerCtors = this.ctorContainer.postfixHandlers;
-    for (const language in postfixHandlerCtors) {
-      let labelPostfixHanlderMap = postfixHandlerCtors[language];
+    let postfixHandlerCtorContainer = this.ctorContainer
+      .postfixHandlerContainer;
+    let postfixHandlerInsContainer = this.instanceContainer
+      .postfixHandlerContainer;
+    let postfixProviderCtorContainer = this.ctorContainer
+      .postfixProviderContainer;
+    let postfixProviderInsContainer = this.instanceContainer
+      .postfixProviderContainer;
+    let postfixCtorContainer = this.ctorContainer.postfixContainer;
+    let postfixInsContainer = this.instanceContainer.postfixContainer;
+    for (const language in postfixHandlerCtorContainer) {
+      let labelPostfixHanlderMap = postfixHandlerCtorContainer[language];
+      // 创建map
+      if (!postfixHandlerInsContainer[language]) {
+        postfixHandlerInsContainer[language] = {};
+      }
       for (const label in labelPostfixHanlderMap) {
         let postfixHandler = labelPostfixHanlderMap[label];
-        this.instanceContainer.postfixHandlers[language][
-          label
-        ] = new postfixHandler();
+        postfixHandlerInsContainer[language][label] = new postfixHandler();
       }
     }
     // new PostfixProvider
-    let postfixProviderCtors = this.ctorContainer.postfixProviders;
-    for (const language in postfixProviderCtors) {
-      let postfixProviders: Constructor[] = postfixProviderCtors[language];
-      for (const postfixProvider of postfixProviders) {
-        let providerInstance = new postfixProvider(language);
-        // 推入实例容器
-        this.instanceContainer.postfixProviders[language] = providerInstance;
-      }
+    for (const language in postfixProviderCtorContainer) {
+      let postfixProviderCtor: any = postfixProviderCtorContainer[language];
+      let providerInstance = new postfixProviderCtor(language);
+      // 推入实例容器
+      postfixProviderInsContainer[language] = providerInstance;
     }
+
     // new Postfix
-    let postfixCtors = this.ctorContainer.postfixs;
-    for (const language in postfixCtors) {
-      let labelPostfixMap = postfixCtors[language];
+
+    for (const language in postfixCtorContainer) {
+      // 创建map
+      if (!postfixInsContainer[language]) {
+        postfixInsContainer[language] = {};
+      }
+      let labelPostfixMap = postfixCtorContainer[language];
       for (const label in labelPostfixMap) {
-        let postfix = labelPostfixMap[label];
-        this.instanceContainer.postfixs[language][label] = new postfix(
-          this.instanceContainer.postfixHandlers[language][label],
+        if (
+          !postfixHandlerInsContainer[language][label] ||
+          !postfixProviderInsContainer[language]
+        ) {
+          // 如果需要注入的postfixHandler为undefined或者null || 对应语言的provider不存在则跳过
+          continue;
+        }
+        // 获取构造器
+        let postfixCtor = labelPostfixMap[label];
+        // 创建实例
+        let postfixInstance = new postfixCtor(
+          postfixHandlerInsContainer[language][label],
           label
         );
-        this.instanceContainer.postfixProviders[language]
-          .push(postfix)
-          .register();
+        postfixInsContainer[language][label] = postfixInstance;
+        postfixProviderInsContainer[language].push(postfixInstance);
       }
+    }
+    console.log(postfixInsContainer);
+    // 注册provider
+    for (const language in postfixProviderInsContainer) {
+      postfixProviderInsContainer[language].register();
     }
   }
 }

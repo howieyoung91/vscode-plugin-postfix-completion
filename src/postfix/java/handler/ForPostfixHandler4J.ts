@@ -1,4 +1,4 @@
-import PostfixHandler from "../../abs/PostfixHandler";
+import BasePostfixHandler from "../../abs/BasePostfixHandler";
 import {
   CompletionItem,
   Position,
@@ -7,15 +7,10 @@ import {
   TextEdit,
 } from "vscode";
 import DocumentUtil from "../../../util/DocumentUtil";
+import LineTextHandleResult from "../../abs/LinetextHandleResult";
 
-export default class ForPostfixHandler4J extends PostfixHandler {
-  handleLineText(
-    lineText: string
-  ): {
-    text: string | SnippetString;
-    detail: string;
-    documentation: string;
-  } | null {
+export default class ForPostfixHandler4J extends BasePostfixHandler {
+  handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
     // 获取数字
@@ -24,21 +19,27 @@ export default class ForPostfixHandler4J extends PostfixHandler {
     if (!numberString.match(/^[0-9]+.?[0-9]*$/)) {
       return null;
     }
-    this.args.startIndex = startIndex;
     return {
       text: new SnippetString(
         `for (int i = 0; i < ${numberString}; i++) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
       ).appendTabstop(0),
       detail: `for postfix`,
       documentation: `for (int i = 0; i < ${numberString}; i++) {\n\n}`,
+      datas: {
+        startIndex,
+        endIndex,
+      },
     };
   }
 
-  handleCompleteItem(item: CompletionItem) {
-    let position: Position = this.args.position;
+  handleCompletionItem(item: CompletionItem, datas: any) {
+    let position: Position = datas.position;
     item.additionalTextEdits = [
       TextEdit.delete(
-        new Range(new Position(position.line, this.args.startIndex), position)
+        new Range(
+          new Position(position.line, datas.startIndex),
+          new Position(position.line, datas.endIndex + 1)
+        )
       ),
     ];
   }

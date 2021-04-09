@@ -1,6 +1,6 @@
 import { items } from "../extension";
 import { CompletionItemProvider, languages } from "vscode";
-import PostfixDispatcher from "../postfix/abs/PostfixDispatcher";
+import BasePostfixProvider from "../postfix/abs/BasePostfixProvider";
 import { assert } from "node:console";
 
 /**
@@ -12,7 +12,7 @@ export default class Register {
    * 注册分发器
    */
   public static registerPostfixDispatcher(
-    postfixDispatcher: PostfixDispatcher
+    postfixDispatcher: BasePostfixProvider
   ) {
     if (postfixDispatcher.language === null) {
       throw Error(`register failed! reason: the language is null!`);

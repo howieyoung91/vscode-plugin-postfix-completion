@@ -1,4 +1,5 @@
-// postfix
+// command
 import("./command/HelloWorld");
-import("./postfix/java/JavaPostfixDispatcher");
+// postfix
+import("./postfix/java/JavaPostfixProvider");
 export {};

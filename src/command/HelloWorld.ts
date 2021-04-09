@@ -10,6 +10,4 @@ let disposable = vsc.commands.registerCommand(
   }
 );
 items.push(disposable);
-let _ = 123;
-export { _ };
-
+export {};

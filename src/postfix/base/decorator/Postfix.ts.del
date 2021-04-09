@@ -1,9 +1,0 @@
-import { Constructor, iocContainer } from "./IocContainer";
-import { PostfixId } from "./PostfixId";
-
-export default function Postfix({ language, label }: PostfixId) {
-  return (ctor: Constructor) => {
-    let postfixContainer = iocContainer.postfixContainerOf(language);
-    postfixContainer[label] = ctor;
-  };
-}

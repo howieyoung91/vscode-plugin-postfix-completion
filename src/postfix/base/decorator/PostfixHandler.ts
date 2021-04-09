@@ -1,19 +1,24 @@
 import BasePostfix from "../BasePostfix";
+import BasePostfixProvider from "../BasePostfixProvider";
 import { Constructor, iocContainer } from "./IocContainer";
-
-export function PostfixHandler({
-  language,
-  label,
-}: {
+export interface PostfixHandlerId {
   language: string;
   label: string;
-}) {
-  return (postfixHandlerctor: Constructor) => {
-    let postfixHandlerContainer = iocContainer.postfixHandlerContainerOf(
-      language
-    );
-    postfixHandlerContainer[label] = postfixHandlerctor;
-    // 自动注入postfix
-    iocContainer.postfixContainerOf(language)[label] = BasePostfix;
+}
+export function PostfixHandler({ language, label }: PostfixHandlerId) {
+  return (postfixHandlerCtor: Constructor) => {
+    // new postfixHandler
+    let postHandler = new postfixHandlerCtor();
+    iocContainer.postfixHandlerContainerOf(language)[label] = postHandler;
+    // postfix注入postfixHandler
+    let postfix = new BasePostfix(postHandler, label);
+    iocContainer.postfixContainerOf(language)[label] = postfix;
+    // postfixProvider注入postfix
+    if (!iocContainer.postfixProviderContainerOf(language)) {
+      iocContainer.postfixProviderContainer()[
+        language
+      ] = new BasePostfixProvider(language);
+    }
+    iocContainer.postfixProviderContainer()[language].push(postfix);
   };
 }

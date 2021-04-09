@@ -16,8 +16,7 @@ import BasePostfix from "./BasePostfix";
 /**
  * 后缀补全提供器
  */
-export default abstract class BasePostfixProvider
-  implements CompletionItemProvider {
+export default class BasePostfixProvider implements CompletionItemProvider {
   protected _postfixs: BasePostfix[] = [];
   protected _triggerCharacters: string[] = [`.`];
   protected _language: string | null = null;
@@ -44,7 +43,6 @@ export default abstract class BasePostfixProvider
    */
   public register(): BasePostfixProvider {
     console.log("register!");
-
     Register.registerPostfixDispatcher(this);
     return this;
   }

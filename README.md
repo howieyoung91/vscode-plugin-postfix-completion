@@ -1,4 +1,4 @@
-# fastcomplete4j README
+# FastComplete README
 
 ## Features
 

@@ -1,6 +1,6 @@
 import { items } from "../extension";
 import { CompletionItemProvider, languages } from "vscode";
-import BasePostfixProvider from "../postfix/abs/BasePostfixProvider";
+import BasePostfixProvider from "../postfix/base/BasePostfixProvider";
 import { assert } from "node:console";
 
 /**

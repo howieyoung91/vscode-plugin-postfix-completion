@@ -1,6 +1,5 @@
-import { win32 } from "node:path";
 import { Disposable, ExtensionContext, window } from "vscode";
-import { iocContainer } from "./postfix/decorator/IocContainer";
+import { iocContainer } from "./postfix/base/decorator/IocContainer";
 
 import("./ImportAll");
 
@@ -17,5 +16,9 @@ export function activate(context: ExtensionContext) {
   //   });
   context.subscriptions.push(...items);
 }
-
+/*
+ TODO
+ ① provider 全局数据传递
+ ② postfixHandler的复用
+*/
 export function deactivate() {}

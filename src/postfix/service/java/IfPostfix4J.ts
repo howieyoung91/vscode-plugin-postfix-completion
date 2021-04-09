@@ -5,15 +5,10 @@ import {
   TextEdit,
   Range,
 } from "vscode";
-import DocumentUtil from "../../util/DocumentUtil";
-import BasePostfix from "../abs/BasePostfix";
-import BasePostfixHandler from "../abs/BasePostfixHandler";
-import LineTextHandleResult from "../abs/LinetextHandleResult";
-import Postfix from "../decorator/Postfix";
-import { PostfixHandler } from "../decorator/PostfixHandler";
-
-@Postfix({ language: "java", label: "if" })
-export default class IfPostfix4J extends BasePostfix {}
+import DocumentUtil from "../../../util/DocumentUtil";
+import BasePostfixHandler from "../../base/BasePostfixHandler";
+import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler({ language: "java", label: "if" })
 class IfPostfixHandler4J extends BasePostfixHandler {

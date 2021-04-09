@@ -1,5 +1,3 @@
-import BasePostfix from "../abs/BasePostfix";
-import Postfix from "../decorator/Postfix";
 import {
   CompletionItem,
   Position,
@@ -7,11 +5,10 @@ import {
   SnippetString,
   TextEdit,
 } from "vscode";
-import BasePostfixHandler from "../abs/BasePostfixHandler";
-import LineTextHandleResult from "../abs/LinetextHandleResult";
-import { PostfixHandler } from "../decorator/PostfixHandler";
-@Postfix({ language: "java", label: "var" })
-export default class VarPostfix4J extends BasePostfix {}
+import BasePostfixHandler from "../../base/BasePostfixHandler";
+import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
   handleLineText(lineText: string): null | LineTextHandleResult {
@@ -26,7 +23,7 @@ class VarPostfixHandler4J extends BasePostfixHandler {
     let clazz = lineText.substring(startIndex + 4, lineText.lastIndexOf("("));
     return {
       text: new SnippetString(
-        `${clazz} ` + "$" + `{1:${clazz.toLowerCase()}} = ` + `${replacement};`
+        `${clazz} \${1:${clazz.toLowerCase()}} = ${replacement};`
       ).appendTabstop(0),
       detail: `var postfix`,
       documentation: `${clazz} varName = ${replacement}`,

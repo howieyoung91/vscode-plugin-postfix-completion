@@ -1,12 +1,9 @@
-import BasePostfix from "../abs/BasePostfix";
-import Postfix from "../decorator/Postfix";
 import { CompletionItem, Position, Range, TextEdit } from "vscode";
-import BasePostfixHandler from "../abs/BasePostfixHandler";
-import LineTextHandleResult from "../abs/LinetextHandleResult";
-import { PostfixHandler } from "../decorator/PostfixHandler";
+import BasePostfixHandler from "../../base/BasePostfixHandler";
+import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@Postfix({ language: "java", label: "not" })
-export default class NotPostfix4J extends BasePostfix {}
+
 @PostfixHandler({ language: "java", label: "not" })
 class NotPostfixHandler4J extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {

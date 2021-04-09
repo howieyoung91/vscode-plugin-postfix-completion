@@ -1,6 +1,4 @@
-import BasePostfix from "../abs/BasePostfix";
-import Postfix from "../decorator/Postfix";
-import { PostfixHandler } from "../decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import {
   SnippetString,
   CompletionItem,
@@ -8,12 +6,11 @@ import {
   TextEdit,
   Range,
 } from "vscode";
-import DocumentUtil from "../../util/DocumentUtil";
-import BasePostfixHandler from "../abs/BasePostfixHandler";
-import LineTextHandleResult from "../abs/LinetextHandleResult";
+import DocumentUtil from "../../../util/DocumentUtil";
+import BasePostfixHandler from "../../base/BasePostfixHandler";
+import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-@Postfix({ language: "java", label: "for" })
-export default class ForPostfix4J extends BasePostfix {}
+
 @PostfixHandler({ language: "java", label: "for" })
 class ForPostfixHandler4J extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult | null {
@@ -27,10 +24,10 @@ class ForPostfixHandler4J extends BasePostfixHandler {
     }
     return {
       text: new SnippetString(
-        `for (int i = 0; i < ${numberString}; i++) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
+        `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n${DocumentUtil.getIndentCharacters()}$2\n}`
       ).appendTabstop(0),
       detail: `for postfix`,
-      documentation: `for (int i = 0; i < ${numberString}; i++) {\n\n}`,
+      documentation: `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n\n}`,
       datas: {
         startIndex,
         endIndex,

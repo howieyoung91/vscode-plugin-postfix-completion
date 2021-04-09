@@ -1,12 +1,12 @@
 {
-  "name": "fastcomplete4j",
-  "displayName": "FastComplete4J",
-  "description": "Java Postfix",
+  "name": "fastcomplete",
+  "displayName": "FastComplete",
+  "description": "postfix completion",
   "publisher": "Howie Young",
+  "license": "MIT",
   "version": "0.0.1",
   "keywords": [
     "postfix",
-    "java",
     "complete"
   ],
   "engines": {
@@ -17,21 +17,22 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onCommand:fastcomplete4j.helloWorld",
+    "onCommand:fastcomplete.helloWorld",
     "onLanguage:java",
-    "onLanguage:python"
+    "onLanguage:python",
+    "onLanguage:cpp"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "fastcomplete4j.helloWorld",
+        "command": "fastcomplete.helloWorld",
         "title": "Hello World"
       }
     ],
     "keybindings": [
       {
-        "command": "fastcomplete4j.helloWorld",
+        "command": "fastcomplete.helloWorld",
         "key": "ctrl+f10",
         "mac": "cmd+f10",
         "when": "editorTextFocus"

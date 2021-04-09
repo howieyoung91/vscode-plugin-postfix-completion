@@ -1,5 +1,8 @@
 type Constructor<T = any> = new (...args: any[]) => T;
 
+/**
+ * ioc容器
+ */
 class IocContainer {
   private readonly ctorContainer: any = {
     postfixContainer: {},
@@ -97,4 +100,4 @@ class IocContainer {
 }
 
 const iocContainer = new IocContainer();
-export { iocContainer, Constructor };
+export {iocContainer, Constructor};

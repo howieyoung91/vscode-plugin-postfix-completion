@@ -1,4 +1,5 @@
 import { CompletionItem, SnippetString } from "vscode";
+import { Constructor, iocContainer } from "./decorator/IocContainer";
 import LineTextHandleResult from "./LinetextHandleResult";
 
 /**

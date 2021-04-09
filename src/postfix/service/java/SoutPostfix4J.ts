@@ -5,14 +5,10 @@ import {
   SnippetString,
   TextEdit,
 } from "vscode";
-import BasePostfix from "../abs/BasePostfix";
-import BasePostfixHandler from "../abs/BasePostfixHandler";
+import BasePostfixHandler from "../../base/BasePostfixHandler";
 
-export default class SoutPostfix4J extends BasePostfix {
-  constructor() {
-    super(new SoutPostfixHandler4J(), `sout`);
-  }
-}
+//! exists bugs! don't use this module!!!
+// @PostfixHandler({ language: "java", label: "sout" })
 class SoutPostfixHandler4J extends BasePostfixHandler {
   handleLineText(lineText: string, datas: any): string | SnippetString | null {
     let startIndex = 0;

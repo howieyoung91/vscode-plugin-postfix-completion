@@ -1,7 +1,6 @@
 import BasePostfixHandler from "./BasePostfixHandler";
 import { CompletionItem, CompletionItemKind } from "vscode";
 import Store from "./Store";
-
 /**
  * 后缀补全
  */

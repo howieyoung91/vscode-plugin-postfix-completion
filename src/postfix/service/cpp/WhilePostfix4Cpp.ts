@@ -5,17 +5,13 @@ import {
   TextEdit,
   Range,
 } from "vscode";
-import DocumentUtil from "../../util/DocumentUtil";
-import BasePostfix from "../abs/BasePostfix";
-import BasePostfixHandler from "../abs/BasePostfixHandler";
-import LineTextHandleResult from "../abs/LinetextHandleResult";
-import Postfix from "../decorator/Postfix";
-import { PostfixHandler } from "../decorator/PostfixHandler";
+import DocumentUtil from "../../../util/DocumentUtil";
+import BasePostfixHandler from "../../base/BasePostfixHandler";
+import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@Postfix({ language: "java", label: "while" })
-export default class WhilePostfix4J extends BasePostfix {}
-@PostfixHandler({ language: "java", label: "while" })
-class WhilePostfixHandler4J extends BasePostfixHandler {
+@PostfixHandler({ language: "cpp", label: "while" })
+class WhilePostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");

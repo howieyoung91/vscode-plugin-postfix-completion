@@ -1,37 +1,28 @@
-import {
-  SnippetString,
-  CompletionItem,
-  Position,
-  TextEdit,
-  Range,
-} from "vscode";
-import DocumentUtil from "../../../util/DocumentUtil";
+import { CompletionItem, Position, Range, TextEdit } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "java", label: "if" })
-class IfPostfixHandler4J extends BasePostfixHandler {
+@PostfixHandler(
+  { language: "java", label: "not" },
+  { language: "cpp", label: "not" },
+  { language: "javascript", label: "not" }
+)
+class MultiNotPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
+    // 截取
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
+    // 需要替换的文本
+    let replacement = lineText.substring(startIndex, endIndex);
     return {
-      text: new SnippetString(
-        `if (${lineText.substring(
-          startIndex,
-          endIndex
-        )}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
-      ).appendTabstop(0),
-      detail: "if postfix",
-      documentation: `if (${lineText.substring(startIndex, endIndex)}) {\n\n}`,
-      datas: {
-        startIndex,
-        endIndex,
-      },
+      text: `!${replacement}`,
+      detail: `postfix`,
+      documentation: `!${replacement}`,
+      datas: { startIndex, endIndex },
     };
   }
 
-  // 删除原来的文本
   handleCompletionItem(item: CompletionItem, datas: any) {
     let position: Position = datas.position;
     item.additionalTextEdits = [

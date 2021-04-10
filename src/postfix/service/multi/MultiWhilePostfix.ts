@@ -10,8 +10,12 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "cpp", label: "while" })
-class WhilePostfixHandler4Cpp extends BasePostfixHandler {
+@PostfixHandler(
+  { language: "java", label: "while" },
+  { language: "cpp", label: "while" },
+  { language: "javascript", label: "while" }
+)
+class MultiWhilePostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
@@ -21,7 +25,7 @@ class WhilePostfixHandler4Cpp extends BasePostfixHandler {
       text: new SnippetString(
         `while (${raw}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
       ).appendTabstop(0),
-      detail: `while postfix`,
+      detail: `postfix`,
       documentation: `while (${raw}) {\n\n}`,
       datas: {
         startIndex,

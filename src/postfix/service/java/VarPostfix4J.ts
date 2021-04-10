@@ -12,7 +12,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
   handleLineText(lineText: string): null | LineTextHandleResult {
-    if (!lineText.match(/^(.*?)new (.+?)\(.*\).[v]*[a]*[r]*$/)) {
+    if (!lineText.match(/^(.*?)new (.+?)\(.*\)[.var]{0,4}$/)) {
       return null;
     }
     let startIndex = lineText.lastIndexOf("new");
@@ -25,7 +25,7 @@ class VarPostfixHandler4J extends BasePostfixHandler {
       text: new SnippetString(
         `${clazz} \${1:${clazz.toLowerCase()}} = ${replacement};`
       ).appendTabstop(0),
-      detail: `var postfix`,
+      detail: `postfix`,
       documentation: `${clazz} varName = ${replacement}`,
       datas: {
         startIndex,

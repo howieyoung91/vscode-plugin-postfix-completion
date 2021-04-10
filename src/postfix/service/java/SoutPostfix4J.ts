@@ -6,9 +6,10 @@ import {
   TextEdit,
 } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 //! exists bugs! don't use this module!!!
-// @PostfixHandler({ language: "java", label: "sout" })
+@PostfixHandler({ language: "java", label: "sout" })
 class SoutPostfixHandler4J extends BasePostfixHandler {
   handleLineText(lineText: string, datas: any): string | SnippetString | null {
     let startIndex = 0;

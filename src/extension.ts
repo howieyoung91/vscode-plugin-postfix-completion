@@ -4,6 +4,9 @@ import { iocContainer } from "./postfix/base/decorator/IocContainer";
 import("./ImportAll");
 
 let items: Disposable[] = [];
+// let config = {
+//   extensionDisplayName: `FastComplete`,
+// };
 export { items };
 
 export function activate(context: ExtensionContext) {
@@ -16,9 +19,4 @@ export function activate(context: ExtensionContext) {
   //   });
   context.subscriptions.push(...items);
 }
-/*
- TODO
- ① provider 全局数据传递
- ② postfixHandler的复用
-*/
 export function deactivate() {}

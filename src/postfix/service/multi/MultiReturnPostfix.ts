@@ -5,24 +5,24 @@ import {
   TextEdit,
   Range,
 } from "vscode";
-import DocumentUtil from "../../../util/DocumentUtil";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "java", label: "while" })
-class WhilePostfixHandler4J extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
+@PostfixHandler(
+  { language: "java", label: "return" },
+  { language: "cpp", label: "return" },
+  { language: "javascript", label: "return" }
+)
+class MultiReturnPostfixHandler extends BasePostfixHandler {
+  handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    // 获取数字
     let raw = lineText.substring(startIndex, endIndex);
     return {
-      text: new SnippetString(
-        `while (${raw}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
-      ).appendTabstop(0),
-      detail: `while postfix`,
-      documentation: `while (${raw}) {\n\n}`,
+      text: new SnippetString(`return ${raw};`).appendTabstop(0),
+      detail: `postfix`,
+      documentation: `return ${raw};`,
       datas: {
         startIndex,
         endIndex,

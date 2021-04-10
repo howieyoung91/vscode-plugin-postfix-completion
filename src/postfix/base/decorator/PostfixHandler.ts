@@ -1,24 +1,27 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import BasePostfix from "../BasePostfix";
 import BasePostfixProvider from "../BasePostfixProvider";
 import { Constructor, iocContainer } from "./IocContainer";
-export interface PostfixHandlerId {
+/**
+ * @description PostfixHandlerPosition表示PostHandler作用的位置 ,{ language:java, label:if }表示在java文件下使用if触发补全
+ */
+interface PostfixHandlerPosition {
   language: string;
   label: string;
 }
-export function PostfixHandler({ language, label }: PostfixHandlerId) {
+export function PostfixHandler(...ids: PostfixHandlerPosition[]) {
   return (postfixHandlerCtor: Constructor) => {
-    // new postfixHandler
-    let postHandler = new postfixHandlerCtor();
-    iocContainer.postfixHandlerContainerOf(language)[label] = postHandler;
-    // postfix注入postfixHandler
-    let postfix = new BasePostfix(postHandler, label);
-    iocContainer.postfixContainerOf(language)[label] = postfix;
-    // postfixProvider注入postfix
-    if (!iocContainer.postfixProviderContainerOf(language)) {
-      iocContainer.postfixProviderContainer()[
-        language
-      ] = new BasePostfixProvider(language);
+    let postfixHandler = new postfixHandlerCtor();
+    // TODO 目前只实现了postHandler的复用,可以优化postfix的复用
+    for (const id of ids) {
+      if (!iocContainer.postfixProvidersOf(id.language)) {
+        iocContainer.postfixProviders()[id.language] = new BasePostfixProvider(
+          id.language
+        );
+      }
+      iocContainer
+        .postfixProviders()
+        [id.language].push(new BasePostfix(postfixHandler, id.label));
     }
-    iocContainer.postfixProviderContainer()[language].push(postfix);
   };
 }

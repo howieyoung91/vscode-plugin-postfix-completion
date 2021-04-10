@@ -10,11 +10,12 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-// @Postfix({ language: "cpp", label: "if" })
-// export default class IfPostfix4Cpp extends BasePostfix {}
-
-@PostfixHandler({ language: "cpp", label: "if" })
-class IfPostfixHandler4Cpp extends BasePostfixHandler {
+@PostfixHandler(
+  { language: "java", label: "if" },
+  { language: "cpp", label: "if" },
+  { language: "javascript", label: "if" }
+)
+class MultiIfPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
@@ -25,7 +26,7 @@ class IfPostfixHandler4Cpp extends BasePostfixHandler {
           endIndex
         )}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
       ).appendTabstop(0),
-      detail: "if postfix",
+      detail: "postfix",
       documentation: `if (${lineText.substring(startIndex, endIndex)}) {\n\n}`,
       datas: {
         startIndex,

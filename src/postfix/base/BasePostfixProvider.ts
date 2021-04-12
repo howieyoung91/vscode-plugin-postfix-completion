@@ -8,7 +8,6 @@ import {
   ProviderResult,
   SnippetString,
   TextDocument,
-  TextEditorLineNumbersStyle,
   TextLine,
 } from "vscode";
 import Register from "../../util/Registry";
@@ -44,7 +43,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
    * 注册到vscode中
    */
   public register(): BasePostfixProvider {
-    console.log("register!");
+    // console.log("register!");
     Register.registerPostfixDispatcher(this);
     return this;
   }

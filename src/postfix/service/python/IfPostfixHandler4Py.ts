@@ -14,7 +14,7 @@ class IfPostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     return {
       text: new SnippetString(
-        `if ${replacement}:\n${DocumentUtil.getIndentCharacters()}`
+        `if ${replacement}:\n${DocumentUtil.indentCharacters()}`
       ),
       detail: "postfix",
       documentation: `if ${replacement}:\n`,

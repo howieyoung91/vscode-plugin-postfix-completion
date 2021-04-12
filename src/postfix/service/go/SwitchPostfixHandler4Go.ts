@@ -12,7 +12,7 @@ class SwitchPostfixHandler4Go extends BasePostfixHandler {
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(firstNotWhileSpaceIndex, endIndex);
-    const newText = `switch ${replacement} {\n${DocumentUtil.getIndentCharacters()}case \${1:case1}:\n\n}`;
+    const newText = `switch ${replacement} {\n${DocumentUtil.indentCharacters()}case \${1:case1}:\n${DocumentUtil.indentCharacters()}${DocumentUtil.indentCharacters()}$2\n}`;
     return {
       text: new SnippetString(newText),
       deleteText: {

@@ -8,7 +8,8 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
   { language: "java", label: "fori" },
   { language: "c", label: "fori" },
   { language: "cpp", label: "fori" },
-  { language: "javascript", label: "fori" }
+  { language: "javascript", label: "fori" },
+  { language: "typescript", label: "fori" }
 )
 class ForiPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult | null {
@@ -22,7 +23,7 @@ class ForiPostfixHandler extends BasePostfixHandler {
     }
     return {
       text: new SnippetString(
-        `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n${DocumentUtil.getIndentCharacters()}$2\n}`
+        `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n${DocumentUtil.indentCharacters()}$2\n}`
       ),
       detail: `postfix`,
       documentation: `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n\n}`,

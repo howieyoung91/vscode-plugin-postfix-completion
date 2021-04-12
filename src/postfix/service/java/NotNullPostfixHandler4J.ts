@@ -4,22 +4,24 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import DocumentUtil from "../../../util/DocumentUtil";
 
-@PostfixHandler({ language: "c", label: "notnull" })
-class NotnullPostfixHandler4Cpp extends BasePostfixHandler {
+@PostfixHandler({ language: "java", label: "notnull" })
+class NotNullPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,
-    firstWhiteSpaceIndex: number
+    firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
-    let startIndex = firstWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
-    const newText = `if (${replacement} != NULL){\n${DocumentUtil.getIndentCharacters()}$1\n}`;
+    const replacement = lineText.substring(
+      firstNonWhitespaceCharacterIndex,
+      endIndex
+    );
+    const newText = `if (${replacement} != null) {\n${DocumentUtil.indentCharacters()}$1\n}`;
     return {
       text: new SnippetString(newText),
       detail: `postfix`,
       documentation: newText,
       deleteText: {
-        startIndex: startIndex,
+        startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,
       },
     };

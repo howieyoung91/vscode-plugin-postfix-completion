@@ -1,30 +1,29 @@
 import { SnippetString } from "vscode";
-import DocumentUtil from "../../../util/DocumentUtil";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler(
-  { language: "java", label: "if" },
-  { language: "c", label: "if" },
-  { language: "cpp", label: "if" },
-  { language: "javascript", label: "if" }
+  { language: "java", label: "return" },
+  { language: "c", label: "return" },
+  { language: "cpp", label: "return" },
+  { language: "javascript", label: "return" },
+  { language: "typescript", label: "return" }
 )
-class IfPostfixHandler extends BasePostfixHandler {
+class ReturnPostfixHandler extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
-  ): LineTextHandleResult {
+  ): LineTextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
+    let replacement = lineText.substring(
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `if (${replacement}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`;
     return {
-      text: new SnippetString(newText),
-      detail: "postfix",
-      documentation: newText,
+      text: new SnippetString(`return ${replacement};`),
+      detail: `postfix`,
+      documentation: `return ${replacement};`,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

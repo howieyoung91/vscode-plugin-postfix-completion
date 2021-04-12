@@ -44,7 +44,7 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
     // 生成矩阵的行和列
     let rowAndCol = ``;
     for (let row = 0; row < maxRow; row++) {
-      let temp = `${DocumentUtil.getIndentCharacters()}[`;
+      let temp = `${DocumentUtil.indentCharacters()}[`;
       for (let col = 0; col < maxCol; col++) {
         let index = row * maxCol + col;
         if (index >= realLength) {
@@ -57,7 +57,7 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
       // 补全方括号
       temp += `],\n`;
       rowAndCol += temp;
-      console.log(temp);
+      // console.log(temp);
     }
     const newText = `[\n${rowAndCol}]`;
     return {

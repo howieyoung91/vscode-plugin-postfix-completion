@@ -14,7 +14,7 @@ class NonePostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     return {
       text: new SnippetString(
-        `if ${replacement} is None:\n${DocumentUtil.getIndentCharacters()}`
+        `if ${replacement} is None:\n${DocumentUtil.indentCharacters()}`
       ),
       detail: "postfix",
       documentation: `if ${replacement} is None:\n`,

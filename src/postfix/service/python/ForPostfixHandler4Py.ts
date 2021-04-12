@@ -15,7 +15,7 @@ class ForPostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     let newText;
     let documentation;
-    let indentChars = DocumentUtil.getIndentCharacters();
+    let indentChars = DocumentUtil.indentCharacters();
     if (StringUtil.isInt(replacement)) {
       newText = `for \${1:i} in range(${replacement}):\n${indentChars}`;
       documentation = `for \${1:i} in range(${replacement}):\n${indentChars}`;

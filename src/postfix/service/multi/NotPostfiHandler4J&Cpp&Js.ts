@@ -6,7 +6,8 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
   { language: "java", label: "not" },
   { language: "c", label: "not" },
   { language: "cpp", label: "not" },
-  { language: "javascript", label: "not" }
+  { language: "javascript", label: "not" },
+  { language: "typescript", label: "not" }
 )
 class NotPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {

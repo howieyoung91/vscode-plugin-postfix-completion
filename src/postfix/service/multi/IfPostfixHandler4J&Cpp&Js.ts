@@ -5,28 +5,27 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler(
-  { language: "java", label: "while" },
-  { language: "c", label: "while" },
-  { language: "cpp", label: "while" },
-  { language: "javascript", label: "while" }
+  { language: "java", label: "if" },
+  { language: "c", label: "if" },
+  { language: "cpp", label: "if" },
+  { language: "javascript", label: "if" },
+  { language: "typescript", label: "if" }
 )
-class WhilePostfixHandler extends BasePostfixHandler {
+class IfPostfixHandler extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    // 获取数字
     const replacement = lineText.substring(
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
+    const newText = `if (${replacement}) {\n${DocumentUtil.indentCharacters()}$1\n}`;
     return {
-      text: new SnippetString(
-        `while (${replacement}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`
-      ),
-      detail: `postfix`,
-      documentation: `while (${replacement}) {\n\n}`,
+      text: new SnippetString(newText),
+      detail: "postfix",
+      documentation: newText,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

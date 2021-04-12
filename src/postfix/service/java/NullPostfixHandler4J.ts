@@ -15,7 +15,7 @@ class NullPostfixHandler4J extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `if (${replacement} == null) {\n${DocumentUtil.getIndentCharacters()}$1\n}`;
+    const newText = `if (${replacement} == null) {\n${DocumentUtil.indentCharacters()}$1\n}`;
     return {
       text: new SnippetString(newText),
       detail: `postfix`,

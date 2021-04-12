@@ -9,7 +9,8 @@ import StringUtil from "../../../util/StringUtil";
   { language: "java", label: "forr" },
   { language: "c", label: "forr" },
   { language: "cpp", label: "forr" },
-  { language: "javascript", label: "forr" }
+  { language: "javascript", label: "forr" },
+  { language: "typescript", label: "forr" }
 )
 class ForrPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult | null {
@@ -23,7 +24,7 @@ class ForrPostfixHandler extends BasePostfixHandler {
     }
     return {
       text: new SnippetString(
-        `for (int \${1:i} = ${numberString}; \${1:i} >= 0; \${1:i}--) {\n${DocumentUtil.getIndentCharacters()}$2\n}`
+        `for (int \${1:i} = ${numberString}; \${1:i} >= 0; \${1:i}--) {\n${DocumentUtil.indentCharacters()}$2\n}`
       ),
       detail: `postfix`,
       documentation: `for (int \${1:i} = ${numberString}; \${1:i} >= 0; \${1:i}--) {\n\n}`,

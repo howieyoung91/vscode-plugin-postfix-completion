@@ -4,16 +4,16 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import DocumentUtil from "../../../util/DocumentUtil";
 
-@PostfixHandler(
-  { language: "cpp", label: "struct" },
-  { language: "c", label: "struct" }
-)
-class StructptrPostfixHandler4Cpp extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
+@PostfixHandler({ language: "c", label: "notnull" })
+class NotnullPostfixHandler4C extends BasePostfixHandler {
+  handleLineText(
+    lineText: string,
+    firstWhiteSpaceIndex: number
+  ): LineTextHandleResult {
+    let startIndex = firstWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(startIndex, endIndex);
-    const newText = `struct ${replacement} {\n${DocumentUtil.getIndentCharacters()}$1\n}`;
+    const newText = `if (${replacement} != NULL){\n${DocumentUtil.indentCharacters()}$1\n}`;
     return {
       text: new SnippetString(newText),
       detail: `postfix`,

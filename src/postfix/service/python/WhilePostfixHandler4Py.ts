@@ -14,7 +14,7 @@ class WhilePostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     return {
       text: new SnippetString(
-        `while ${replacement}:\n${DocumentUtil.getIndentCharacters()}`
+        `while ${replacement}:\n${DocumentUtil.indentCharacters()}`
       ),
       detail: "postfix",
       documentation: `while ${replacement}:\n`,

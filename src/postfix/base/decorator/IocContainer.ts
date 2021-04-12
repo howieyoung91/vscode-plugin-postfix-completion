@@ -1,5 +1,6 @@
-type Constructor<T = any> = new (...args: any[]) => T;
+import BasePostfixProvider from "../BasePostfixProvider";
 
+type Constructor<T = any> = new (...args: any[]) => T;
 /**
  * ioc容器
  */
@@ -8,20 +9,39 @@ class IocContainer {
     postfixProviders: {},
   };
 
+  private IocContainer() {}
+
   public postfixProviders() {
     return this.instanceContainer.postfixProviders;
   }
 
   public postfixProvidersOf(language: string) {
+    // 判断是否存在language对应的PostfixProvider
+    if (!this.instanceContainer.postfixProviders[language]) {
+      this.instanceContainer.postfixProviders[
+        language
+      ] = new BasePostfixProvider(language);
+    }
     return this.instanceContainer.postfixProviders[language];
   }
-  public register() {
+
+  /**
+   * 注册后缀补全提供器
+   */
+  private registerPostfixProvider() {
     let postfixProviderInsContainer = this.instanceContainer.postfixProviders;
     console.log(postfixProviderInsContainer);
-    // 注册provider
     for (const language in postfixProviderInsContainer) {
       postfixProviderInsContainer[language].register();
     }
+  }
+
+  /**
+   * register
+   * @description 注册IOC容器中的所有组件到Vscode中
+   */
+  public register() {
+    this.registerPostfixProvider();
   }
 }
 

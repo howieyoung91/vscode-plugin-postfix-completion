@@ -1,39 +1,27 @@
-import { CompletionItem, Position, SnippetString } from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
-import TextEditUtil from "../../../util/TextEditUtil";
 import DocumentUtil from "../../../util/DocumentUtil";
 
 @PostfixHandler({ language: "python", label: "if" })
 class IfPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
-    lineText: string
+    lineText: string,
+    firstNonWhiteSpaceIndex: number
   ): string | SnippetString | LinetextHandleResult | null {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     return {
       text: new SnippetString(
         `if ${replacement}:\n${DocumentUtil.getIndentCharacters()}`
       ),
       detail: "postfix",
       documentation: `if ${replacement}:\n`,
-      datas: {
-        startIndex,
-        endIndex,
+      deleteText: {
+        startIndex: firstNonWhiteSpaceIndex,
+        endIndex: endIndex + 1,
       },
     };
-  }
-
-  handleCompletionItem(item: CompletionItem, datas: any) {
-    let position: Position = datas.position;
-    item.additionalTextEdits = [
-      TextEditUtil.ATextEditToDeleteBetween(
-        position.line,
-        datas.startIndex,
-        datas.endIndex + 1
-      ),
-    ];
   }
 }

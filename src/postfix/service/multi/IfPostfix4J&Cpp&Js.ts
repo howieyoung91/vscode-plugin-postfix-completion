@@ -1,10 +1,16 @@
 import { SnippetString } from "vscode";
+import DocumentUtil from "../../../util/DocumentUtil";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "java", label: "sout" })
-class SoutPostfixHandler4J extends BasePostfixHandler {
+@PostfixHandler(
+  { language: "java", label: "if" },
+  { language: "c", label: "if" },
+  { language: "cpp", label: "if" },
+  { language: "javascript", label: "if" }
+)
+class IfPostfixHandler extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
@@ -14,10 +20,10 @@ class SoutPostfixHandler4J extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `System.out.println(${replacement});`;
+    const newText = `if (${replacement}) {\n${DocumentUtil.getIndentCharacters()}$1\n}`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
+      detail: "postfix",
       documentation: newText,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,

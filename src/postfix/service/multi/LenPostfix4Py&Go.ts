@@ -3,8 +3,12 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "python", label: "not" })
-class NotPostfixHandler4Py extends BasePostfixHandler {
+@PostfixHandler(
+  { language: "python", label: "len" },
+  { language: "go", label: "len" }
+)
+// BUG
+class LenPostfixHandler extends BasePostfixHandler {
   handleLineText(
     lineText: string
   ): string | SnippetString | LinetextHandleResult | null {
@@ -12,9 +16,9 @@ class NotPostfixHandler4Py extends BasePostfixHandler {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(startIndex, endIndex);
     return {
-      text: new SnippetString(`not ${replacement}`),
+      text: new SnippetString(`len(${replacement})`),
       detail: "postfix",
-      documentation: `not ${replacement}`,
+      documentation: `len(${replacement})`,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

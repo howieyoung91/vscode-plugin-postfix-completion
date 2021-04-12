@@ -3,8 +3,8 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-@PostfixHandler({ language: "java", label: "sout" })
-class SoutPostfixHandler4J extends BasePostfixHandler {
+@PostfixHandler({ language: "java", label: "souf" })
+class SoufPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
@@ -14,7 +14,7 @@ class SoutPostfixHandler4J extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `System.out.println(${replacement});`;
+    const newText = `System.out.printf("$1",${replacement});`;
     return {
       text: new SnippetString(newText),
       detail: `postfix`,

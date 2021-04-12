@@ -2,7 +2,7 @@ import BasePostfixHandler from "./BasePostfixHandler";
 import { CompletionItem, CompletionItemKind } from "vscode";
 import Store from "./Store";
 /**
- * 后缀补全
+ * 后缀补全基类
  */
 export default class BasePostfix extends CompletionItem {
   protected _postfixHandler: BasePostfixHandler;

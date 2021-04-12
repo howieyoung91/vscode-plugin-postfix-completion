@@ -4,20 +4,20 @@ import LinetextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import DocumentUtil from "../../../util/DocumentUtil";
 
-@PostfixHandler({ language: "python", label: "while" })
-class WhilePostfixHandler4Py extends BasePostfixHandler {
+@PostfixHandler({ language: "python", label: "none" })
+class NonePostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhiteSpaceIndex: number
-  ): LinetextHandleResult {
+  ): string | SnippetString | LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     return {
       text: new SnippetString(
-        `while ${replacement}:\n${DocumentUtil.getIndentCharacters()}`
+        `if ${replacement} is None:\n${DocumentUtil.getIndentCharacters()}`
       ),
       detail: "postfix",
-      documentation: `while ${replacement}:\n`,
+      documentation: `if ${replacement} is None:\n`,
       deleteText: {
         startIndex: firstNonWhiteSpaceIndex,
         endIndex: endIndex + 1,

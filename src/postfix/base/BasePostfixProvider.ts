@@ -8,9 +8,11 @@ import {
   ProviderResult,
   SnippetString,
   TextDocument,
+  TextEditorLineNumbersStyle,
   TextLine,
 } from "vscode";
-import Register from "../../util/Register";
+import Register from "../../util/Registry";
+import TextEditUtil from "../../util/TextEditUtil";
 import BasePostfix from "./BasePostfix";
 
 /**
@@ -73,7 +75,11 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       const line: TextLine = document.lineAt(position);
       let lineText: string = line.text.substring(0, position.character);
       // 处理行文本
-      let result = postfixHandler.handleLineText(lineText, postfix.datas.store);
+      let result = postfixHandler.handleLineText(
+        lineText,
+        line.firstNonWhitespaceCharacterIndex,
+        postfix.datas.store
+      );
       // 如果返回null 则直接返回,不添加item
       if (result === null) {
         continue;
@@ -81,7 +87,8 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       let text: string | SnippetString | undefined = undefined;
       let documentation: string | undefined = undefined;
       let detail: string | undefined = undefined;
-      let args: object | undefined = undefined;
+      let datas: object | undefined = undefined;
+      let deleteText: { startIndex; endIndex } | undefined = undefined;
       switch (typeof result) {
         case "object":
           if (result instanceof SnippetString) {
@@ -90,7 +97,8 @@ export default class BasePostfixProvider implements CompletionItemProvider {
             text = result.text;
             documentation = result.documentation;
             detail = result.detail;
-            args = result.datas;
+            datas = result.datas;
+            deleteText = result.deleteText;
           }
           break;
         case "string":
@@ -110,8 +118,18 @@ export default class BasePostfixProvider implements CompletionItemProvider {
         postfix.documentation = documentation;
       }
       // 添加参数
-      if (args) {
-        postfix.datas.setData(args);
+      if (datas) {
+        postfix.datas.setData(datas);
+      }
+      // 是否删除原有文本
+      if (deleteText) {
+        postfix.additionalTextEdits = [
+          TextEditUtil.ATextEditToDeleteBetween(
+            position.line,
+            deleteText.startIndex,
+            deleteText.endIndex
+          ),
+        ];
       }
       // 处理补全项
       postfixHandler.handleCompletionItem(postfix, postfix.datas.store);

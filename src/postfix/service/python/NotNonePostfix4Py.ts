@@ -1,23 +1,22 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/decorator/PostfixHandler";
 import DocumentUtil from "../../../util/DocumentUtil";
 
-@PostfixHandler({ language: "python", label: "while" })
-class WhilePostfixHandler4Py extends BasePostfixHandler {
+@PostfixHandler({language: "python", label: "notnone"})
+class NotNonePostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhiteSpaceIndex: number
-  ): LinetextHandleResult {
+  ): string | SnippetString | LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
+    const newText = `if ${replacement} is not None:\n${DocumentUtil.getIndentCharacters()}`;
     return {
-      text: new SnippetString(
-        `while ${replacement}:\n${DocumentUtil.getIndentCharacters()}`
-      ),
+      text: new SnippetString(newText),
       detail: "postfix",
-      documentation: `while ${replacement}:\n`,
+      documentation: newText,
       deleteText: {
         startIndex: firstNonWhiteSpaceIndex,
         endIndex: endIndex + 1,

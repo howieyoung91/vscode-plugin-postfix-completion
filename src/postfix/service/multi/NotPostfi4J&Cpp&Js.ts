@@ -1,14 +1,14 @@
-import { CompletionItem, Position, Range, TextEdit } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler(
   { language: "java", label: "not" },
+  { language: "c", label: "not" },
   { language: "cpp", label: "not" },
   { language: "javascript", label: "not" }
 )
-class MultiNotPostfixHandler extends BasePostfixHandler {
+class NotPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     // 截取
     let startIndex = lineText.lastIndexOf(" ") + 1;
@@ -19,19 +19,10 @@ class MultiNotPostfixHandler extends BasePostfixHandler {
       text: `!${replacement}`,
       detail: `postfix`,
       documentation: `!${replacement}`,
-      datas: { startIndex, endIndex },
+      deleteText: {
+        startIndex,
+        endIndex: endIndex + 1,
+      },
     };
-  }
-
-  handleCompletionItem(item: CompletionItem, datas: any) {
-    let position: Position = datas.position;
-    item.additionalTextEdits = [
-      TextEdit.delete(
-        new Range(
-          new Position(position.line, datas.startIndex),
-          new Position(position.line, datas.endIndex + 1)
-        )
-      ),
-    ];
   }
 }

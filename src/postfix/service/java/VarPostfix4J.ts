@@ -1,10 +1,4 @@
-import {
-  CompletionItem,
-  Position,
-  Range,
-  SnippetString,
-  TextEdit,
-} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
@@ -24,26 +18,13 @@ class VarPostfixHandler4J extends BasePostfixHandler {
     return {
       text: new SnippetString(
         `${clazz} \${1:${clazz.toLowerCase()}} = ${replacement};`
-      ).appendTabstop(0),
+      ),
       detail: `postfix`,
       documentation: `${clazz} varName = ${replacement}`,
-      datas: {
+      deleteText: {
         startIndex,
-        endIndex,
+        endIndex: endIndex + 1,
       },
     };
-  }
-
-  handleCompletionItem(item: CompletionItem, datas: any) {
-    let position: Position = datas.position;
-    // 删除原来的文本
-    item.additionalTextEdits = [
-      TextEdit.delete(
-        new Range(
-          new Position(position.line, datas.startIndex),
-          new Position(position.line, datas.endIndex + 1)
-        )
-      ),
-    ];
   }
 }

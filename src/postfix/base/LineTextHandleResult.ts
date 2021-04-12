@@ -7,4 +7,8 @@ export default interface LineTextHandleResult {
   documentation?: string;
   detail?: string;
   datas?: {};
+  deleteText?: {
+    startIndex: number;
+    endIndex: number;
+  };
 }

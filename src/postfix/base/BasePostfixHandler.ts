@@ -21,6 +21,7 @@ export default abstract class BasePostfixHandler {
    */
   abstract handleLineText(
     lineText: string,
+    firstNotWhileSpaceIndex: number,
     datas: {}
   ): string | SnippetString | LineTextHandleResult | null;
 

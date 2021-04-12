@@ -1,20 +1,17 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-@PostfixHandler({ language: "java", label: "sout" })
-class SoutPostfixHandler4J extends BasePostfixHandler {
+@PostfixHandler({language: "java", label: "serr"})
+class SerrPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
-    const newText = `System.out.println(${replacement});`;
+    const replacement = lineText.substring(firstNonWhitespaceCharacterIndex, endIndex);
+    const newText = `System.err.println(${replacement});`;
     return {
       text: new SnippetString(newText),
       detail: `postfix`,

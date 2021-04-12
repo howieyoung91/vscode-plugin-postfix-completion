@@ -1,24 +1,28 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "java", label: "sout" })
-class SoutPostfixHandler4J extends BasePostfixHandler {
+@PostfixHandler(
+  { language: "java", label: "return" },
+  { language: "c", label: "return" },
+  { language: "cpp", label: "return" },
+  { language: "javascript", label: "return" }
+)
+class ReturnPostfixHandler extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
-  ): LineTextHandleResult {
+  ): LineTextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
+    let replacement = lineText.substring(
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `System.out.println(${replacement});`;
     return {
-      text: new SnippetString(newText),
+      text: new SnippetString(`return ${replacement};`),
       detail: `postfix`,
-      documentation: newText,
+      documentation: `return ${replacement};`,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

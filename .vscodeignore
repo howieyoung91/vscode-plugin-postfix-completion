@@ -1,0 +1,16 @@
+.vscode/**
+.idea/**
+.vscode-test/**
+out/test/**
+test/**
+src/**
+**/*.map
+.gitignore
+tsconfig.json
+vsc-extension-quickstart.md
+.eslint*
+*.vsix
+coverage/**
+tasks.js
+coverconfig.json
+.github/**

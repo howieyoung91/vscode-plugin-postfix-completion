@@ -2,15 +2,18 @@
   "name": "fastcomplete",
   "displayName": "FastComplete",
   "description": "postfix completion",
-  "publisher": "Howie Young",
-  "license": "MIT",
+  "publisher": "Howie",
   "version": "0.0.1",
   "keywords": [
     "postfix",
     "complete"
   ],
   "engines": {
-    "vscode": "^1.20.0"
+    "vscode": "^1.46.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ozral/vscode-plugin-fastcomplete"
   },
   "categories": [
     "Programming Languages",
@@ -21,22 +24,7 @@
     "*"
   ],
   "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "fastcomplete.helloWorld",
-        "title": "Hello World"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "fastcomplete.helloWorld",
-        "key": "ctrl+f10",
-        "mac": "cmd+f10",
-        "when": "editorTextFocus"
-      }
-    ]
-  },
+  "contributes": {},
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -44,6 +32,9 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
+  },
+  "dependencies": {
+    "glob": "^7.1.2"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
@@ -53,7 +44,6 @@
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.19.0",
-    "glob": "^7.1.6",
     "mocha": "^8.2.1",
     "ts-loader": "^8.1.0",
     "typescript": "^4.1.3",

@@ -2,10 +2,17 @@
   "name": "fastcomplete",
   "displayName": "FastComplete",
   "description": "postfix completion",
-  "publisher": "Howie",
+  "publisher": "HowieYoung",
   "version": "0.0.1",
   "keywords": [
     "postfix",
+    "language",
+    "java",
+    "cpp",
+    "c",
+    "go",
+    "js",
+    "ts",
     "complete"
   ],
   "engines": {

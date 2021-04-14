@@ -4,7 +4,6 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 import DocumentUtil from "../../util/DocumentUtil";
 
-
 @PostfixHandler({ language: "go", label: "for" })
 class ForPostfixHandler4Go extends BasePostfixHandler {
   handleLineText(
@@ -13,7 +12,7 @@ class ForPostfixHandler4Go extends BasePostfixHandler {
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(firstNotWhileSpaceIndex, endIndex);
-    const newText = `for index, elem := range ${replacement} {\n${DocumentUtil.indentCharacters()}\$1\n}`;
+    const newText = `for \${1:i}, \${2:elem} := range ${replacement} {\n${DocumentUtil.indentCharacters()}\$3\n}`;
     return {
       text: new SnippetString(newText),
       deleteText: {

@@ -3,7 +3,6 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
-
 @PostfixHandler({ language: "go", label: "printf" })
 class PrintfPostfixHandler4Go extends BasePostfixHandler {
   handleLineText(
@@ -12,7 +11,7 @@ class PrintfPostfixHandler4Go extends BasePostfixHandler {
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(firstNotWhileSpaceIndex, endIndex);
-    const newText = `fmt.Printf("%v\\n",${replacement})`;
+    const newText = `fmt.Printf("%+v\\n",${replacement})`;
     return {
       text: new SnippetString(newText),
       deleteText: {

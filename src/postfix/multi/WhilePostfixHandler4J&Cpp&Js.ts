@@ -4,7 +4,6 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import DocumentUtil from "../../util/DocumentUtil";
 
-
 @PostfixHandler(
   { language: "java", label: "while" },
   { language: "c", label: "while" },

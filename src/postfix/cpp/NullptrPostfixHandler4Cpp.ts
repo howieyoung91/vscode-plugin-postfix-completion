@@ -1,10 +1,10 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import DocumentUtil from "../../util/DocumentUtil";
 
-@PostfixHandler({ language: "cpp", label: "nullptr" })
+@PostfixHandler({language: "cpp", label: "nullptr"})
 class NullptrPostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(
     lineText: string,

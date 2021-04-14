@@ -3,16 +3,10 @@
   "displayName": "FastComplete",
   "description": "postfix completion",
   "publisher": "HowieYoung",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [
     "postfix",
     "language",
-    "java",
-    "cpp",
-    "c",
-    "go",
-    "js",
-    "ts",
     "complete"
   ],
   "engines": {

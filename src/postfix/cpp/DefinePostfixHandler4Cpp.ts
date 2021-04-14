@@ -2,15 +2,17 @@ import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import {PostfixHandler} from "../../base/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
 
-@PostfixHandler({language: "cpp", label: "class"})
-class ClassPostfixHandler4Cpp extends BasePostfixHandler {
+@PostfixHandler(
+  {language: "cpp", label: "define"},
+  {language: "c`", label: "define"}
+)
+class DefinePostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(startIndex, endIndex);
-    const newText = `class ${replacement} {\n${DocumentUtil.indentCharacters()}$1\n}`;
+    const newText = `#define ${replacement}`;
     return {
       text: new SnippetString(newText),
       detail: `postfix`,

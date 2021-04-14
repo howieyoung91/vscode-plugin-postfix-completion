@@ -6,7 +6,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
 
 - ### c/c++
 
-  |            后缀 | 补全结果                                |
+  |         postfix | outcome                                 |
   | --------------: | --------------------------------------- |
   |         **.if** | `if (${expr}) {}`                       |
   |        **.not** | `!{expr}`                               |
@@ -14,6 +14,9 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |       **.forr** | `for (int i = ${expr}; i >= 0; i--) {}` |
   |      **.while** | `while(${expr}) {}`                     |
   |     **.return** | `return {expr};`                        |
+  |    **.include** | `#include "${expr}"`                    |
+  |     **.define** | `#define ${expr}`                       |
+  |   **.template** | `template <${expr}>`                    |
   |      **.class** | `class ${expr} {}`                      |
   |     **.struct** | `struct ${expr} {}`                     |
   |        **.ptr** | `*${expr} `                             |
@@ -111,6 +114,9 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   |       **.forr** | `for (int i = ${expr}; i >= 0; i--) {}` |
   |      **.while** | `while(${expr}) {}`                     |
   |     **.return** | `return {expr};`                        |
+  |    **.include** | `#include "${expr}"`                    |
+  |     **.define** | `#define ${expr}`                       |
+  |   **.template** | `template <${expr}>`                    |
   |      **.class** | `class ${expr} {}`                      |
   |     **.struct** | `struct ${expr} {}`                     |
   |        **.ptr** | `*${expr} `                             |

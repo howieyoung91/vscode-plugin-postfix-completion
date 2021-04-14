@@ -66,22 +66,22 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |  **.matrix** | `用于生成二维矩阵 输入 1 2 3 4 2(矩阵的行) 2(矩阵的列).matrix 会生成一个 2 行 2 列的矩阵[[1,2],[3,4]]` |
 - ### golang
 
-  |           后缀 | 补全结果                          |
-  | -------------: | --------------------------------- |
-  |       **.var** | `varName := ${expr}`              |
-  |     **.const** | `const varName type = ${expr}`    |
-  |       **.for** | `for i, elem in range ${expr}{ }` |
-  |        **.if** | `if (${expr}) { }`                |
-  |       **.nil** | `if ${expr} == nil { }`           |
-  |    **.notnil** | `if ${expr} != nil { }`           |
-  |    **.switch** | `switch ${expr} { }`              |
-  |       **.err** | `errors.New(${expr}) `            |
-  | **.interface** | `type ${expr} interface { }`      |
-  |    **.struct** | `type ${expr} struct { }`         |
-  |    **.printf** | `fmt.Printf("%+v\n",${expr})`     |
-  |   **.println** | `fmt.Println(${expr})`            |
-  |       **.len** | `len(${expr})`                    |
-  |    **.return** | `return ${expr}`                  |
+  |           后缀 | 补全结果                         |
+  | -------------: | -------------------------------- |
+  |       **.var** | `varName := ${expr}`             |
+  |     **.const** | `const varName type = ${expr}`   |
+  |       **.for** | `for i, elem in range ${expr}{}` |
+  |        **.if** | `if (${expr}) {}`                |
+  |       **.nil** | `if ${expr} == nil {}`           |
+  |    **.notnil** | `if ${expr} != nil {}`           |
+  |    **.switch** | `switch ${expr} {}`              |
+  |       **.err** | `errors.New(${expr}) `           |
+  | **.interface** | `type ${expr} interface {}`      |
+  |    **.struct** | `type ${expr} struct {}`         |
+  |    **.printf** | `fmt.Printf("%+v\n",${expr})`    |
+  |   **.println** | `fmt.Println(${expr})`           |
+  |       **.len** | `len(${expr})`                   |
+  |    **.return** | `return ${expr}`                 |
 
 ## 许可证
 
@@ -97,7 +97,7 @@ MIT © Yang Haoyu
 
 # FastComplete
 
-This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so on) so that you can complete code quicklier!
+This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so on) so that you can complete code more quickly!
 
 ## Features
 

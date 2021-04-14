@@ -17,7 +17,7 @@ class PtrPostfixHandler4Cpp extends BasePostfixHandler {
       detail: `postfix`,
       documentation: newText,
       deleteText: {
-        startIndex: startIndex,
+        startIndex,
         endIndex: endIndex + 1,
       },
     };

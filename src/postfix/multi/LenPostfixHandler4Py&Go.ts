@@ -3,7 +3,6 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
-
 @PostfixHandler(
   { language: "python", label: "len" },
   { language: "go", label: "len" }

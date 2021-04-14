@@ -3,10 +3,9 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
-
 @PostfixHandler(
-  {language: "python", label: "return"},
-  {language: "go", label: "return"}
+  { language: "python", label: "return" },
+  { language: "go", label: "return" }
 )
 class ReturnPostfixHandler extends BasePostfixHandler {
   handleLineText(

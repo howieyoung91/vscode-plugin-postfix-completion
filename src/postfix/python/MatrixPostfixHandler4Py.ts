@@ -5,7 +5,6 @@ import LinetextHandleResult from "../../base/LinetextHandleResult";
 import DocumentUtil from "../../util/DocumentUtil";
 import StringUtil from "../../util/StringUtil";
 
-
 @PostfixHandler({ language: "python", label: "matrix" })
 class MatrixPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(lineText: string): LinetextHandleResult | null {

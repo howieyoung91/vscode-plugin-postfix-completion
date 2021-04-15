@@ -1,8 +1,8 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
+import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "c", label: "null" })
 class NullPostfixHandler4C extends BasePostfixHandler {
@@ -13,13 +13,11 @@ class NullPostfixHandler4C extends BasePostfixHandler {
     let startIndex = firstWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText.substring(startIndex, endIndex);
-    const newText = `if (${replacement} == NULL){\n${DocumentUtil.indentCharacters()}$1\n}`;
+    const newText = `if (${replacement} == NULL){\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
-      documentation: newText,
       deleteText: {
-        startIndex: startIndex,
+        startIndex,
         endIndex: endIndex + 1,
       },
     };

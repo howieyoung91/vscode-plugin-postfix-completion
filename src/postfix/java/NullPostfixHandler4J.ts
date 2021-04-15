@@ -1,11 +1,11 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
+import {indent} from "../../util/DocumentUtil";
 
 
-@PostfixHandler({ language: "java", label: "null" })
+@PostfixHandler({language: "java", label: "null"})
 class NullPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,
@@ -16,11 +16,9 @@ class NullPostfixHandler4J extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `if (${replacement} == null) {\n${DocumentUtil.indentCharacters()}$1\n}`;
+    const newText = `if (${replacement} == null) {\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
-      documentation: newText,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

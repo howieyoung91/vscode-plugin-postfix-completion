@@ -1,6 +1,6 @@
 import * as vsc from "vscode";
 
-export default class DocumentUtil {
+class DocumentUtil {
   private constructor() {
   }
 
@@ -11,4 +11,9 @@ export default class DocumentUtil {
       return "\t";
     }
   };
+}
+
+const indent = DocumentUtil.indentCharacters;
+export {
+  indent
 }

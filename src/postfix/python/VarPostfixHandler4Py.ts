@@ -1,10 +1,10 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 
-@PostfixHandler({ language: "python", label: "var" })
+@PostfixHandler({language: "python", label: "var"})
 class VarPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,
@@ -15,8 +15,6 @@ class VarPostfixHandler4Py extends BasePostfixHandler {
     const newText = `\${1:varName} = ${replacement}`;
     return {
       text: new SnippetString(newText),
-      detail: "postfix",
-      documentation: newText,
       deleteText: {
         startIndex: firstNonWhiteSpaceIndex,
         endIndex: endIndex + 1,

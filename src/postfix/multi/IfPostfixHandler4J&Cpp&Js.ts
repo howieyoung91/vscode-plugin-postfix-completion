@@ -1,16 +1,16 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
+import {indent} from "../../util/DocumentUtil";
 
 
 @PostfixHandler(
-  { language: "java", label: "if" },
-  { language: "c", label: "if" },
-  { language: "cpp", label: "if" },
-  { language: "javascript", label: "if" },
-  { language: "typescript", label: "if" }
+  {language: "java", label: "if"},
+  {language: "c", label: "if"},
+  {language: "cpp", label: "if"},
+  {language: "javascript", label: "if"},
+  {language: "typescript", label: "if"}
 )
 class IfPostfixHandler extends BasePostfixHandler {
   handleLineText(
@@ -22,11 +22,9 @@ class IfPostfixHandler extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `if (${replacement}) {\n${DocumentUtil.indentCharacters()}$1\n}`;
+    const newText = `if (${replacement}) {\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),
-      detail: "postfix",
-      documentation: newText,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

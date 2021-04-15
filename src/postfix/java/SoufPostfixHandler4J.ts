@@ -1,6 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 
@@ -18,8 +18,6 @@ class SoufPostfixHandler4J extends BasePostfixHandler {
     const newText = `System.out.printf("$1",${replacement});`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
-      documentation: newText,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

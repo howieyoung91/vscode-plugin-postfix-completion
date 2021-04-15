@@ -1,6 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 
@@ -14,8 +14,6 @@ class NotPostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(startIndex, endIndex);
     return {
       text: new SnippetString(`not ${replacement}`),
-      detail: "postfix",
-      documentation: `not ${replacement}`,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

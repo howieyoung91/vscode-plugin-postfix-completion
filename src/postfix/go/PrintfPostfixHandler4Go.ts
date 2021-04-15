@@ -1,6 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "go", label: "printf" })
@@ -18,8 +18,6 @@ class PrintfPostfixHandler4Go extends BasePostfixHandler {
         startIndex: firstNotWhileSpaceIndex,
         endIndex: endIndex + 1,
       },
-      detail: `postfix`,
-      documentation: newText,
     };
   }
 }

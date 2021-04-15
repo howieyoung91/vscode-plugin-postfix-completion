@@ -1,12 +1,12 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
 import StringUtil from "../../util/StringUtil";
+import {indent} from "../../util/DocumentUtil";
 
 
-@PostfixHandler({ language: "python", label: "for" })
+@PostfixHandler({language: "python", label: "for"})
 class ForPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,
@@ -16,7 +16,7 @@ class ForPostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     let newText;
     let documentation;
-    let indentChars = DocumentUtil.indentCharacters();
+    let indentChars = indent();
     if (StringUtil.isInt(replacement)) {
       newText = `for \${1:i} in range(${replacement}):\n${indentChars}`;
       documentation = `for \${1:i} in range(${replacement}):\n${indentChars}`;
@@ -26,8 +26,6 @@ class ForPostfixHandler4Py extends BasePostfixHandler {
     }
     return {
       text: new SnippetString(newText),
-      detail: "postfix",
-      documentation: documentation,
       deleteText: {
         startIndex: firstNonWhiteSpaceIndex,
         endIndex: endIndex + 1,

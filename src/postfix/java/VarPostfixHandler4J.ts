@@ -1,8 +1,7 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-
 
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
@@ -20,8 +19,6 @@ class VarPostfixHandler4J extends BasePostfixHandler {
       text: new SnippetString(
         `${clazz} \${1:${clazz.toLowerCase()}} = ${replacement};`
       ),
-      detail: `postfix`,
-      documentation: `${clazz} varName = ${replacement}`,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

@@ -1,6 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
@@ -17,8 +17,6 @@ class LenPostfixHandler extends BasePostfixHandler {
     const replacement = lineText.substring(startIndex, endIndex);
     return {
       text: new SnippetString(`len(${replacement})`),
-      detail: "postfix",
-      documentation: `len(${replacement})`,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

@@ -1,12 +1,11 @@
-import {isObject} from "node:util";
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
-  {language: "cpp", label: "include"},
-  {language: "c`", label: "include"}
+  { language: "cpp", label: "include" },
+  { language: "c", label: "include" }
 )
 class IncludePostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
@@ -16,10 +15,8 @@ class IncludePostfixHandler4Cpp extends BasePostfixHandler {
     const newText = `#include "${replacement}"`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
-      documentation: newText,
       deleteText: {
-        startIndex: startIndex,
+        startIndex,
         endIndex: endIndex + 1,
       },
     };

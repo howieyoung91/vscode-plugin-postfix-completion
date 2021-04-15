@@ -90,12 +90,6 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
 
 MIT © Yang Haoyu
 
-## 联系我
-
-- gmail : ishowieyoung@gmail.com<br/>
-- outlook : ishowieyoung@outlook.com<br/>
-- 163 :ishowieyoung@163.com
-
 ---
 
 # FastComplete
@@ -189,11 +183,5 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
 ## License
 
 MIT © Howie Young
-
-## Contact me
-
-- gmail : ishowieyoung@gmail.com<br/>
-- outlook : ishowieyoung@outlook.com<br/>
-- 163 :ishowieyoung@163.com
 
 **Happy coding!**

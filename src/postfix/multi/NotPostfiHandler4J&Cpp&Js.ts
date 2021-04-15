@@ -1,5 +1,5 @@
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 
@@ -19,8 +19,6 @@ class NotPostfixHandler extends BasePostfixHandler {
     let replacement = lineText.substring(startIndex, endIndex);
     return {
       text: `!${replacement}`,
-      detail: `postfix`,
-      documentation: `!${replacement}`,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { window } from "vscode";
 import BasePostfix from "../BasePostfix";
+import BasePostfixHandler from "../BasePostfixHandler";
 import { Constructor, iocContainer } from "./IocContainer";
 
 /**
@@ -20,15 +21,13 @@ interface PostfixHandlerPosition {
  */
 export function PostfixHandler(...positions: PostfixHandlerPosition[]) {
   return (postfixHandlerCtor: Constructor) => {
-    // console.log(postfixHandlerCtor);
+    console.log(postfixHandlerCtor);
+    if (!(postfixHandlerCtor.prototype instanceof BasePostfixHandler)) {
+      return;
+    }
     let postfixHandler = new postfixHandlerCtor();
     // TODO 目前只实现了postHandler的复用,可以优化postfix的复用
     for (const pos of positions) {
-      // if (!iocContainer.postfixProvidersOf(pos.language)) {
-      //   iocContainer.postfixProviders()[pos.language] = new BasePostfixProvider(
-      //     pos.language
-      //   );
-      // }
       iocContainer
         .postfixProvidersOf(pos.language)
         .push(new BasePostfix(postfixHandler, pos.label));

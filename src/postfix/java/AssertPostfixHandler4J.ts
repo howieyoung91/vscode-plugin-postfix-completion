@@ -1,10 +1,10 @@
-import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-@PostfixHandler({ language: "java", label: "serr" })
-class SerrPostfixHandler4J extends BasePostfixHandler {
+
+@PostfixHandler({language: "java", label: "assert"})
+class AssertPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
@@ -14,9 +14,9 @@ class SerrPostfixHandler4J extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `System.err.println(${replacement});`;
+    const newText = `assert ${replacement};`;
     return {
-      text: new SnippetString(newText),
+      text: newText,
       deleteText: {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,

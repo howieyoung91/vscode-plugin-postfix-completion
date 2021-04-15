@@ -1,8 +1,8 @@
 import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
+import {indent} from "../../util/DocumentUtil";
 
 
 @PostfixHandler({language: "go", label: "notnil"})
@@ -16,7 +16,7 @@ class NotNilPostfixHandler4Go extends BasePostfixHandler {
       firstNotWhileSpaceIndex,
       endIndex
     );
-    const newText = `if ${replacement} != nil {\n${DocumentUtil.indentCharacters()}$1\n}`;
+    const newText = `if ${replacement} != nil {\n${indent()}$1\n}`;
     return {
       text: new SnippetString(
         newText
@@ -25,8 +25,6 @@ class NotNilPostfixHandler4Go extends BasePostfixHandler {
         startIndex: firstNotWhileSpaceIndex,
         endIndex: endIndex + 1,
       },
-      detail: `postfix`,
-      documentation: newText,
     };
   }
 }

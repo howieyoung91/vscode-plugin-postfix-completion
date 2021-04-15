@@ -1,9 +1,9 @@
 import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
 import StringUtil from "../../util/StringUtil";
+import {indent} from "../../util/DocumentUtil";
 
 @PostfixHandler({language: "python", label: "matrix"})
 class MatrixPostfixHandler4Py extends BasePostfixHandler {
@@ -44,7 +44,7 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
     // 生成矩阵的行和列
     let rowAndCol = ``;
     for (let row = 0; row < maxRow; row++) {
-      let temp = `${DocumentUtil.indentCharacters()}[`;
+      let temp = `${indent()}[`;
       for (let col = 0; col < maxCol; col++) {
         let index = row * maxCol + col;
         if (index >= realLength) {
@@ -62,8 +62,6 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
     const newText = `[\n${rowAndCol}]`;
     return {
       text: new SnippetString(newText),
-      detail: "postfix",
-      documentation: newText,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

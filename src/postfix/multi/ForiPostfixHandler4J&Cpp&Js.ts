@@ -1,9 +1,8 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
-
+import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
   { language: "java", label: "fori" },
@@ -17,17 +16,14 @@ class ForiPostfixHandler extends BasePostfixHandler {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
     // 获取数字
-    let numberString = lineText.substring(startIndex, endIndex);
-    // 判断是否是数字
-    if (!numberString.match(/^[0-9]+.?[0-9]*$/)) {
-      return null;
-    }
+    let replacement = lineText.substring(startIndex, endIndex);
+    // if (!numberString.match(/^[0-9]+.?[0-9]*$/)) {
+    //   return null;
+    // }
     return {
       text: new SnippetString(
-        `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n${DocumentUtil.indentCharacters()}$2\n}`
+        `for (int \${1:i} = 0; \${1:i} < ${replacement}; \${1:i}++) {\n${indent()}$2\n}`
       ),
-      detail: `postfix`,
-      documentation: `for (int \${1:i} = 0; \${1:i} < ${numberString}; \${1:i}++) {\n\n}`,
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

@@ -1,6 +1,6 @@
 /**
  * 数据存储类
- * @description 这个类用于PostfixHandler几个方法之间的数据传递,同时也可以作为一个PostfixProvide中不同的CompletionItem的公共数据
+ * @description 这个类用于PostfixHandler几个方法之间的数据传递
  */
 export default class Store {
   protected _store: any = {};

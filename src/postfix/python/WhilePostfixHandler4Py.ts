@@ -1,11 +1,11 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import DocumentUtil from "../../util/DocumentUtil";
+import {indent} from "../../util/DocumentUtil";
 
 
-@PostfixHandler({ language: "python", label: "while" })
+@PostfixHandler({language: "python", label: "while"})
 class WhilePostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,
@@ -15,10 +15,8 @@ class WhilePostfixHandler4Py extends BasePostfixHandler {
     const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
     return {
       text: new SnippetString(
-        `while ${replacement}:\n${DocumentUtil.indentCharacters()}`
+        `while ${replacement}:\n${indent()}`
       ),
-      detail: "postfix",
-      documentation: `while ${replacement}:\n`,
       deleteText: {
         startIndex: firstNonWhiteSpaceIndex,
         endIndex: endIndex + 1,

@@ -44,7 +44,6 @@ class LetPostfix4TsAndJs extends BasePostfixHandler {
     replacement = lineText.substring(whiteSpaceIndex, endIndex);
     return {
       text: `let varName = ${replacement};`,
-      detail: `postfix`,
       deleteText: {
         startIndex: whiteSpaceIndex,
         endIndex: endIndex + 1,

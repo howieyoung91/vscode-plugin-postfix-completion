@@ -111,10 +111,22 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 设置新的详情
       if (detail) {
         postfix.detail = detail;
+      } else {
+        // 默认为 postfix
+        postfix.detail = `postfix`;
       }
+      // 可以优化
       // 设置新的文档
       if (documentation) {
         postfix.documentation = documentation;
+      } else {
+        if (text instanceof SnippetString) {
+          // 如果是Snippet
+          postfix.documentation = text.value;
+        } else {
+          // 如果是string
+          postfix.documentation = text;
+        }
       }
       // 添加参数
       if (datas) {

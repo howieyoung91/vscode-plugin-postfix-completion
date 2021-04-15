@@ -1,11 +1,11 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
-  {language: "cpp", label: "define"},
-  {language: "c`", label: "define"}
+  { language: "cpp", label: "define" },
+  { language: "c", label: "define" }
 )
 class DefinePostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
@@ -15,10 +15,8 @@ class DefinePostfixHandler4Cpp extends BasePostfixHandler {
     const newText = `#define ${replacement}`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
-      documentation: newText,
       deleteText: {
-        startIndex: startIndex,
+        startIndex,
         endIndex: endIndex + 1,
       },
     };

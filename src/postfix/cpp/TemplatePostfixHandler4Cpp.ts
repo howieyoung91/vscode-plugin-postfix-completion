@@ -1,6 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "cpp", label: "template" })
@@ -25,8 +25,6 @@ class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
     const newText = `template <${typeString}>`;
     return {
       text: new SnippetString(newText),
-      detail: `postfix`,
-      documentation: newText,
       deleteText: {
         startIndex: startIndex,
         endIndex: endIndex + 1,

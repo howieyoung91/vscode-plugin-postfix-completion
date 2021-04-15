@@ -46,5 +46,8 @@ class IocContainer {
   }
 }
 
+
+
 const iocContainer = new IocContainer();
+
 export { iocContainer, Constructor };

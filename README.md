@@ -4,7 +4,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
 
 ## 特性
 
-- ### c/c++
+- ### C/C++
 
   |         postfix | outcome                                                                        |
   | --------------: | ------------------------------------------------------------------------------ |
@@ -16,7 +16,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |     **.return** | `return {expr};`                                                               |
   |    **.include** | `#include "${expr}"`                                                           |
   |     **.define** | `#define ${expr}`                                                              |
-  |   **.template** | `template <${expr}>` 输入: E t.template 生成:`template<typename E,typename T>` |
+  |   **.template** | `template <${expr}>` 输入: E T.template 生成:`template<typename E,typename T>` |
   |      **.class** | `class ${expr} {}`                                                             |
   |     **.struct** | `struct ${expr} {}`                                                            |
   |        **.ptr** | `*${expr} `                                                                    |
@@ -25,7 +25,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |    **.nullptr** | `if (${expr} == nullptr) {}`                                                   |
   | **.notnullptr** | `if (${expr} != nullptr) {}`                                                   |
 
-- ## java
+- ## Java
 
   |         后缀 | 补全结果                                |
   | -----------: | --------------------------------------- |
@@ -44,7 +44,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |  **.assert** | `assert ${expr};`                       |
   |  **.return** | `return {expr};`                        |
 
-- ### js/ts
+- ### JavaScript/TypeScript
 
   |        后缀 | 补全结果                                |
   | ----------: | --------------------------------------- |
@@ -55,7 +55,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |  **.while** | `while(${expr}) {}`                     |
   | **.return** | `return {expr};`                        |
 
-- ### python
+- ### Python
   |         后缀 | 补全结果                                                                                               |
   | -----------: | ------------------------------------------------------------------------------------------------------ |
   |     **.len** | `len(${expr})`                                                                                         |
@@ -69,7 +69,7 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |     **.var** | `varName = ${expr}`                                                                                    |
   |   **.while** | `while ${expr}:`                                                                                       |
   |  **.matrix** | `用于生成二维矩阵 输入 1 2 3 4 2(矩阵的行) 2(矩阵的列).matrix 会生成一个 2 行 2 列的矩阵[[1,2],[3,4]]` |
-- ### golang
+- ### Golang
 
   |           后缀 | 补全结果                         |
   | -------------: | -------------------------------- |
@@ -112,7 +112,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   |     **.return** | `return {expr};`                                                                    |
   |    **.include** | `#include "${expr}"`                                                                |
   |     **.define** | `#define ${expr}`                                                                   |
-  |   **.template** | `template <${expr}>` input: E t.template generate:`template<typename E,typename T>` |
+  |   **.template** | `template <${expr}>` input: E T.template generate:`template<typename E,typename T>` |
   |      **.class** | `class ${expr} {}`                                                                  |
   |     **.struct** | `struct ${expr} {}`                                                                 |
   |        **.ptr** | `*${expr} `                                                                         |

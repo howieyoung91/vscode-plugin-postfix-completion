@@ -12,10 +12,6 @@
   "engines": {
     "vscode": "^1.46.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Ozral/vscode-plugin-fastcomplete"
-  },
   "categories": [
     "Programming Languages",
     "Snippets",

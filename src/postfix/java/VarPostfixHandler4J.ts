@@ -13,18 +13,25 @@ class VarPostfixHandler4J extends BasePostfixHandler {
     let endIndex = lineText.lastIndexOf(".");
     // 需要替换的文本
     let replacement = lineText.substring(startIndex, endIndex);
-    // 获取类名
-    let clazz = replacement.substring(
-      startIndex + 4,
-      lineText.lastIndexOf("(")
-    );
-    let tempIndex = clazz.indexOf("<");
-    if (tempIndex !== -1) {
-      clazz = clazz.substring(0, tempIndex);
+    // 获取带泛型的类名
+    let clazzWithType = replacement
+      .substring(4, replacement.indexOf("("))
+      .trim();
+    // 纯净的类名
+    let clazz = clazzWithType;
+    let typeIndexInClazz = clazzWithType.indexOf("<");
+    // 如果存在泛型
+    // 获取纯净的类名
+    if (typeIndexInClazz !== -1) {
+      // 去除泛型
+      clazz = clazzWithType.substring(0, typeIndexInClazz);
+      replacement =
+        replacement.substring(0, replacement.indexOf("<") + 1) +
+        replacement.substring(replacement.lastIndexOf(">"));
     }
     return {
       text: new SnippetString(
-        `${clazz} \${1:${clazz.toLowerCase()}} = ${replacement};`
+        `${clazzWithType} \${1:${clazz.toLowerCase()}} = ${replacement};`
       ),
       deleteText: {
         startIndex,

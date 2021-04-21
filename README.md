@@ -1,6 +1,6 @@
-# FastComplete
+# Fast Complete
 
-FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用于补全代码. 你可以使用本插件来更好地完成代码!
+Fast Complete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用于补全代码. 你可以使用本插件来更好地完成代码!
 
 ## 特性
 
@@ -16,6 +16,8 @@ FastComplete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |     **.return** | `return {expr};`                                                               |
   |    **.include** | `#include "${expr}"`                                                           |
   |     **.define** | `#define ${expr}`                                                              |
+  |       **.cout** | `std::cout << ${expr} <<std::endl;`                                            |
+  |        **.cin** | `std::cin >> ${expr};`                                                         |
   |   **.template** | `template <${expr}>` 输入: E T.template 生成:`template<typename E,typename T>` |
   |      **.class** | `class ${expr} {}`                                                             |
   |     **.struct** | `struct ${expr} {}`                                                            |

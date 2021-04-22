@@ -3,7 +3,6 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-
 @PostfixHandler({ language: "java", label: "souf" })
 class SoufPostfixHandler4J extends BasePostfixHandler {
   handleLineText(

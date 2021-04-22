@@ -3,7 +3,6 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
-
 @PostfixHandler({ language: "python", label: "not" })
 class NotPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(

@@ -1,10 +1,9 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
-
-@PostfixHandler({language: "python", label: "var"})
+@PostfixHandler({ language: "python", label: "var" })
 class VarPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,

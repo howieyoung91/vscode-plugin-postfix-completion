@@ -5,22 +5,20 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "cpp", label: "struct" },
-  { language: "c", label: "struct" }
+  { language: "javascript", label: "forof" },
+  { language: "typescript", label: "forof" }
 )
-class StructPostfixHandler4Cpp extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
+class ForofPostfixHandler extends BasePostfixHandler {
+  handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText
-      .substring(startIndex, endIndex)
-      .trim()
-      .trimEnd();
-    const newText = `struct ${replacement} {\n${indent()}$1\n}`;
+    let replacement = lineText.substring(startIndex, endIndex);
     return {
-      text: new SnippetString(newText),
+      text: new SnippetString(
+        `for (const \${1:item} of ${replacement}){\n${indent()}$2\n}`
+      ),
       deleteText: {
-        startIndex: startIndex,
+        startIndex,
         endIndex: endIndex + 1,
       },
     };

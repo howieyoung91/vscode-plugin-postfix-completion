@@ -1,13 +1,35 @@
 # Change Log
 
-## 0.0.6 / 2021-04-16
+## 1.0.0 / 2021-04-22
 
 c/cpp:
 
 - 新增 `.cout`
 - 新增 `.cin`
+- 优化 `.template`
 
-## 0.0.5 / 2021-04-16
+java:
+
+- 优化 `.var`
+- 优化 `.fori`
+- 新增 `.foreach`
+- 新增 `.for`
+- 新增 `.assert`
+
+typescript/javascript:
+
+- 修复 `.fori`
+- 修复 `.forr`
+- 新增 `.forin`
+- 新增 `.forof`
+- 新增 `.cast`
+- 新增 `.log`
+- 新增 `.warn`
+- 新增 `.error`
+- 新增 `.null`
+- 新增 `.notnull`
+
+## 0.0.5 / 2021-04-17
 
 java:
 

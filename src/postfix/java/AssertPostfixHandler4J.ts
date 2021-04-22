@@ -1,9 +1,8 @@
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-
-@PostfixHandler({language: "java", label: "assert"})
+@PostfixHandler({ language: "java", label: "assert" })
 class AssertPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,

@@ -1,4 +1,3 @@
-
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";

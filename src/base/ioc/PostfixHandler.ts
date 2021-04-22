@@ -21,7 +21,7 @@ interface PostfixHandlerPosition {
  */
 export function PostfixHandler(...positions: PostfixHandlerPosition[]) {
   return (postfixHandlerCtor: Constructor) => {
-    console.log(postfixHandlerCtor);
+    // console.log(postfixHandlerCtor);
     if (!(postfixHandlerCtor.prototype instanceof BasePostfixHandler)) {
       return;
     }

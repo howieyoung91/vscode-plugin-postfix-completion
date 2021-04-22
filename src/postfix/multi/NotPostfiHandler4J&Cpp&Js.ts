@@ -2,7 +2,6 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-
 @PostfixHandler(
   { language: "java", label: "not" },
   { language: "c", label: "not" },

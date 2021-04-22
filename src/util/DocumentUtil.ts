@@ -1,8 +1,7 @@
 import * as vsc from "vscode";
 
 class DocumentUtil {
-  private constructor() {
-  }
+  private constructor() {}
 
   public static indentCharacters = () => {
     if (vsc.window.activeTextEditor?.options.insertSpaces) {
@@ -14,6 +13,4 @@ class DocumentUtil {
 }
 
 const indent = DocumentUtil.indentCharacters;
-export {
-  indent
-}
+export { indent };

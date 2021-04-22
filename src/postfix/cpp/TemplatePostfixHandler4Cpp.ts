@@ -11,12 +11,12 @@ class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
   ): LineTextHandleResult {
     let startIndex = firstWihteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex);
     // 这个匹配项要求不出现数字,待优化~
     if (!replacement.match(/^\s*[a-zA-Z_]+[\s+a-zA-Z_]*\s*$/)) {
       return null;
     }
-    const types = replacement.split(/\s+/);
+    const types = replacement.trim().trimEnd().split(/\s+/);
     let typeString = ``;
     for (let type of types) {
       typeString += `typename ${type},`;

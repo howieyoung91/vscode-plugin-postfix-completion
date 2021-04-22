@@ -1,11 +1,11 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 import StringUtil from "../../util/StringUtil";
-import {indent} from "../../util/DocumentUtil";
+import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({language: "python", label: "matrix"})
+@PostfixHandler({ language: "python", label: "matrix" })
 class MatrixPostfixHandler4Py extends BasePostfixHandler {
   handleLineText(lineText: string): LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");

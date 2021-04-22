@@ -1,11 +1,10 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import {indent} from "../../util/DocumentUtil";
+import { indent } from "../../util/DocumentUtil";
 
-
-@PostfixHandler({language: "python", label: "notnone"})
+@PostfixHandler({ language: "python", label: "notnone" })
 class NotNonePostfixHandler4Py extends BasePostfixHandler {
   handleLineText(
     lineText: string,

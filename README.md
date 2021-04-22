@@ -52,8 +52,13 @@ Fast Complete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   | ----------: | --------------------------------------- |
   |     **.if** | `if (${expr}) {}`                       |
   |    **.not** | `!{expr}`                               |
-  |   **.fori** | `for (int i = 0; i < ${expr}; i++) {}`  |
-  |   **.forr** | `for (int i = ${expr}; i >= 0; i--) {}` |
+  |   **.fori** | `for (let i = 0; i < ${expr}; i++) {}`  |
+  |   **.forr** | `for (let i = ${expr}; i >= 0; i--) {}` |
+  |  **.forof** | `for (const item of ${expr}) {}`        |
+  |  **.forin** | `for (let i in ${expr}) {}`             |
+  |    **.log** | `console.log(${expr})`                  |
+  |   **.warn** | `console.warn(${expr})`                 |
+  |  **.error** | `console.error(${expr})`                |
   |  **.while** | `while(${expr}) {}`                     |
   | **.return** | `return {expr};`                        |
 
@@ -61,7 +66,7 @@ Fast Complete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |         后缀 | 补全结果                                                                                               |
   | -----------: | ------------------------------------------------------------------------------------------------------ |
   |     **.len** | `len(${expr})`                                                                                         |
-  |  **.return** | `return ${expr}`                                                                                       |
+  |  **.return** | `**return** ${expr}`                                                                                   |
   |     **.for** | `for i in range(${expr}): ` or `for i in ${expr}`                                                      |
   |      **.if** | `if ${expr}:`                                                                                          |
   |    **.none** | `if ${expr} is None:`                                                                                  |
@@ -114,6 +119,8 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   |     **.return** | `return {expr};`                                                                    |
   |    **.include** | `#include "${expr}"`                                                                |
   |     **.define** | `#define ${expr}`                                                                   |
+  |       **.cout** | `std::cout << ${expr} <<std::endl;`                                                 |
+  |        **.cin** | `std::cin >> ${expr};`                                                              |
   |   **.template** | `template <${expr}>` input: E T.template generate:`template<typename E,typename T>` |
   |      **.class** | `class ${expr} {}`                                                                  |
   |     **.struct** | `struct ${expr} {}`                                                                 |
@@ -146,8 +153,13 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   | ----------: | --------------------------------------- |
   |     **.if** | `if (${expr}) {}`                       |
   |    **.not** | `!{expr}`                               |
-  |   **.fori** | `for (int i = 0; i < ${expr}; i++) {}`  |
-  |   **.forr** | `for (int i = ${expr}; i >= 0; i--) {}` |
+  |   **.fori** | `for (let i = 0; i < ${expr}; i++) {}`  |
+  |   **.forr** | `for (let i = ${expr}; i >= 0; i--) {}` |
+  |  **.forof** | `for (const item of ${expr}) {}`        |
+  |  **.forin** | `for (let i in ${expr}) {}`             |
+  |    **.log** | `console.log(${expr})`                  |
+  |   **.warn** | `console.warn(${expr})`                 |
+  |  **.error** | `console.error(${expr})`                |
   |  **.while** | `while(${expr}) {}`                     |
   | **.return** | `return {expr};`                        |
 

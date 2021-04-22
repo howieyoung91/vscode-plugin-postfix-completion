@@ -1,7 +1,6 @@
 import { items } from "../extension";
-import { CompletionItemProvider, languages } from "vscode";
+import { languages } from "vscode";
 import BasePostfixProvider from "../base/BasePostfixProvider";
-import { assert } from "node:console";
 
 /**
  * 注册器

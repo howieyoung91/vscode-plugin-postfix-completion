@@ -1,3 +1,4 @@
+import { removeAllListeners } from "node:process";
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";
@@ -17,10 +18,12 @@ class WhilePostfixHandler extends BasePostfixHandler {
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
+    const replacement = lineText
+      .substring(firstNonWhitespaceCharacterIndex, endIndex)
+      .trimEnd();
+    if (replacement.length === 0) {
+      return null;
+    }
     return {
       text: new SnippetString(`while (${replacement}) {\n${indent()}$1\n}`),
       deleteText: {

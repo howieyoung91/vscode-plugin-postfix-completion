@@ -13,10 +13,12 @@ class ReturnPostfixHandler extends BasePostfixHandler {
     firstNonWhitespaceCharacterIndex: number
   ): LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
+    const replacement = lineText
+      .substring(firstNonWhitespaceCharacterIndex, endIndex)
+      .trimEnd();
+    if (replacement.length === 0) {
+      return null;
+    }
     return {
       text: new SnippetString(`return ${replacement}`),
       deleteText: {

@@ -9,18 +9,24 @@ class SoutPostfixHandler4J extends BasePostfixHandler {
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
+    let res = {
+      text: null,
+      deleteText: null,
+    };
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
-    const newText = `System.out.println(${replacement});`;
-    return {
-      text: new SnippetString(newText),
-      deleteText: {
+    const replacement = lineText
+      .substring(firstNonWhitespaceCharacterIndex, endIndex)
+      .trimEnd();
+    // 判断是否为空
+    if (replacement.length === 0) {
+      res.text = new SnippetString(`System.out.println($1);`);
+    } else {
+      res.text = new SnippetString(`System.out.println(${replacement});`);
+      res.deleteText = {
         startIndex: firstNonWhitespaceCharacterIndex,
         endIndex: endIndex + 1,
-      },
-    };
+      };
+    }
+    return res;
   }
 }

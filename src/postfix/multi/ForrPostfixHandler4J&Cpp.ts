@@ -1,26 +1,26 @@
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
+import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "java", label: "not" },
-  { language: "c", label: "not" },
-  { language: "cpp", label: "not" },
-  { language: "javascript", label: "not" },
-  { language: "typescript", label: "not" }
+  { language: "java", label: "forr" },
+  { language: "c", label: "forr" },
+  { language: "cpp", label: "forr" }
 )
-class NotPostfixHandler extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
-    // 截取
+class ForrPostfixHandler extends BasePostfixHandler {
+  handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    // 需要替换的文本
     let replacement = lineText.substring(startIndex, endIndex).trimEnd();
     if (replacement.length === 0) {
       return null;
     }
     return {
-      text: `!${replacement}`,
+      text: new SnippetString(
+        `for (int \${1:i} = ${replacement}; \${1:i} >= 0; \${1:i}--) {\n${indent()}$2\n}`
+      ),
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

@@ -10,10 +10,10 @@ class SoufPostfixHandler4J extends BasePostfixHandler {
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
+    let replacement = lineText
+      .substring(firstNonWhitespaceCharacterIndex, endIndex)
+      .trim()
+      .trimEnd();
     const newText = `System.out.printf("$1",${replacement});`;
     return {
       text: new SnippetString(newText),

@@ -9,10 +9,12 @@ class AssertPostfixHandler4J extends BasePostfixHandler {
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
+    const replacement = lineText
+      .substring(firstNonWhitespaceCharacterIndex, endIndex)
+      .trimEnd();
+    if (replacement.length === 0) {
+      return null;
+    }
     const newText = `assert ${replacement};`;
     return {
       text: newText,

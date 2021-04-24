@@ -10,7 +10,10 @@ class ForeachPostfixHandler extends BasePostfixHandler {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
     // 获取数字
-    let replacement = lineText.substring(startIndex, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
+    if (replacement.length === 0) {
+      return null;
+    }
     let newText = ``;
     // 判断是否是数字
     if (replacement.match(/^[0-9]+.?[0-9]*$/)) {

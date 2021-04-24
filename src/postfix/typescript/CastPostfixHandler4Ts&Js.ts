@@ -11,7 +11,10 @@ class CastPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex).trim();
+    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
+    if (replacement.length === null) {
+      return null;
+    }
     return {
       text: new SnippetString(`(<\${1:type}> ${replacement})`),
       deleteText: {

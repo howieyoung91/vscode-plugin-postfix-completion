@@ -12,6 +12,11 @@ java:
 
 - 优化 `.var`
 - 优化 `.fori`
+- 优化 `.sout`
+- 优化 `.serr`
+- 优化 `.null`
+- 优化 `.notnull`
+- 优化 `.assert`
 - 新增 `.foreach`
 - 新增 `.for`
 - 新增 `.assert`

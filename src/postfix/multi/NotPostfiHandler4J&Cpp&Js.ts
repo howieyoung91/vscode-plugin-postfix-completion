@@ -7,7 +7,9 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
   { language: "c", label: "not" },
   { language: "cpp", label: "not" },
   { language: "javascript", label: "not" },
-  { language: "typescript", label: "not" }
+  { language: "typescript", label: "not" },
+  { language: "vue", label: "not" },
+  { language: "html", label: "not" }
 )
 class NotPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {

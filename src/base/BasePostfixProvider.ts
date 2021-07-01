@@ -10,7 +10,7 @@ import {
   TextDocument,
   TextLine,
 } from "vscode";
-import Register from "../util/Registry";
+import Registry from "../util/Registry";
 import TextEditUtil from "../util/TextEditUtil";
 import BasePostfix from "./BasePostfix";
 
@@ -44,7 +44,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
    */
   public register(): BasePostfixProvider {
     // console.log("register!");
-    Register.registerPostfixDispatcher(this);
+    Registry.registerPostfixProvider(this);
     return this;
   }
 

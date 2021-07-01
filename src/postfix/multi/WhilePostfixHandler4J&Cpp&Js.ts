@@ -10,7 +10,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "c", label: "while" },
   { language: "cpp", label: "while" },
   { language: "javascript", label: "while" },
-  { language: "typescript", label: "while" }
+  { language: "typescript", label: "while" },
+  { language: "vue", label: "while" },
+  { language: "html", label: "while" }
 )
 class WhilePostfixHandler extends BasePostfixHandler {
   handleLineText(

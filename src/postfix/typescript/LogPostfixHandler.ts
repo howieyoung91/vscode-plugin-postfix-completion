@@ -5,7 +5,9 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
   { language: "javascript", label: "log" },
-  { language: "typescript", label: "log" }
+  { language: "typescript", label: "log" },
+  { language: "vue", label: "log" },
+  { language: "html", label: "log" }
 )
 class LogPostfixHandler extends BasePostfixHandler {
   handleLineText(

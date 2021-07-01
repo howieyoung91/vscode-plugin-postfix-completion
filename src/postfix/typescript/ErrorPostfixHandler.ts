@@ -4,10 +4,12 @@ import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
-  { language: "javascript", label: "warn" },
-  { language: "typescript", label: "warn" }
+  { language: "javascript", label: "err" },
+  { language: "typescript", label: "err" },
+  { language: "vue", label: "err" },
+  { language: "html", label: "err" }
 )
-class WarnPostfixHandler extends BasePostfixHandler {
+class ErrorPostfixHandler extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhiteSpaceIndex: number
@@ -16,7 +18,7 @@ class WarnPostfixHandler extends BasePostfixHandler {
     let endIndex = lineText.lastIndexOf(".");
     let replacement = lineText.substring(startIndex, endIndex);
     return {
-      text: new SnippetString(`console.warn(${replacement});`),
+      text: new SnippetString(`console.error(${replacement});`),
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

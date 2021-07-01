@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "c", label: "if" },
   { language: "cpp", label: "if" },
   { language: "javascript", label: "if" },
-  { language: "typescript", label: "if" }
+  { language: "typescript", label: "if" },
+  { language: "vue", label: "if" },
+  { language: "html", label: "if" }
 )
 class IfPostfixHandler extends BasePostfixHandler {
   handleLineText(

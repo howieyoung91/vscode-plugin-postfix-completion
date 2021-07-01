@@ -5,10 +5,12 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "javascript", label: "undefined" },
-  { language: "typescript", label: "undefined" }
+  { language: "javascript", label: "notnull" },
+  { language: "typescript", label: "notnull" },
+  { language: "vue", label: "notnull" },
+  { language: "html", label: "notnull" }
 )
-class UndefinedPostfixHandler4TsJs extends BasePostfixHandler {
+class NotNullPostfixHandler4TsJs extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNonWhitespaceCharacterIndex: number
@@ -18,7 +20,7 @@ class UndefinedPostfixHandler4TsJs extends BasePostfixHandler {
       firstNonWhitespaceCharacterIndex,
       endIndex
     );
-    const newText = `if (${replacement} === undefined) {\n${indent()}$1\n}`;
+    const newText = `if (${replacement} !== null) {\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),
       deleteText: {

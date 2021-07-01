@@ -1,9 +1,9 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import {PostfixHandler} from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-@PostfixHandler({ language: "java", label: "sout" })
+@PostfixHandler({language: "java", label: "sout"})
 class SoutPostfixHandler4J extends BasePostfixHandler {
   handleLineText(
     lineText: string,

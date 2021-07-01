@@ -6,7 +6,7 @@ Fast Complete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
 
 - ### C/C++
 
-  |         postfix | outcome                                                                        |
+  |         postfix | result                                                                         |
   | --------------: | ------------------------------------------------------------------------------ |
   |         **.if** | `if (${expr}) {}`                                                              |
   |        **.not** | `!{expr}`                                                                      |
@@ -66,7 +66,7 @@ Fast Complete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用�
   |         后缀 | 补全结果                                                                                               |
   | -----------: | ------------------------------------------------------------------------------------------------------ |
   |     **.len** | `len(${expr})`                                                                                         |
-  |  **.return** | `**return** ${expr}`                                                                                   |
+  |  **.return** | `return ${expr}`                                                                                       |
   |     **.for** | `for i in range(${expr}): ` or `for i in ${expr}`                                                      |
   |      **.if** | `if ${expr}:`                                                                                          |
   |    **.none** | `if ${expr} is None:`                                                                                  |
@@ -109,7 +109,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
 
 - ### C/C++
 
-  |         postfix | outcome                                                                             |
+  |         postfix | result                                                                              |
   | --------------: | ----------------------------------------------------------------------------------- |
   |         **.if** | `if (${expr}) {}`                                                                   |
   |        **.not** | `!{expr}`                                                                           |
@@ -132,7 +132,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
 
 - ## Java
 
-  |      postfix | outcome                                 |
+  |      postfix | result                                  |
   | -----------: | --------------------------------------- |
   |     **.var** | `class varName = ${expr};`              |
   |      **.if** | `if (${expr}) {}`                       |
@@ -149,7 +149,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
 
 - ### JavaScript/TypeScript
 
-  |     postfix | outcome                                 |
+  |     postfix | result                                  |
   | ----------: | --------------------------------------- |
   |     **.if** | `if (${expr}) {}`                       |
   |    **.not** | `!{expr}`                               |
@@ -164,7 +164,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   | **.return** | `return {expr};`                        |
 
 - ### Python
-  |      postfix | outcome                                                                         |
+  |      postfix | result                                                                          |
   | -----------: | ------------------------------------------------------------------------------- |
   |     **.len** | `len(${expr})`                                                                  |
   |  **.return** | `return ${expr}`                                                                |
@@ -179,7 +179,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   |  **.matrix** | `generate a matrix, input:1 2 3 4 2(row) 2(col).matrix, generate:[[1,2],[3,4]]` |
 - ### Golang
 
-  |        postfix | outcome                          |
+  |        postfix | result                           |
   | -------------: | -------------------------------- |
   |       **.var** | `varName := ${expr}`             |
   |     **.const** | `const varName type = ${expr}`   |

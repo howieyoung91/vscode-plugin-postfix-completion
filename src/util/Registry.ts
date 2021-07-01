@@ -5,12 +5,12 @@ import BasePostfixProvider from "../base/BasePostfixProvider";
 /**
  * 注册器
  */
-export default class Register {
+export default class Registry {
   private constructor() {}
   /**
    * 注册分发器
    */
-  public static registerPostfixDispatcher(
+  public static registerPostfixProvider(
     postfixDispatcher: BasePostfixProvider
   ) {
     if (postfixDispatcher.language === null) {

@@ -8,7 +8,9 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
   { language: "c", label: "return" },
   { language: "cpp", label: "return" },
   { language: "javascript", label: "return" },
-  { language: "typescript", label: "return" }
+  { language: "typescript", label: "return" },
+  { language: "vue", label: "return" },
+  { language: "html", label: "return" }
 )
 class ReturnPostfixHandler extends BasePostfixHandler {
   handleLineText(

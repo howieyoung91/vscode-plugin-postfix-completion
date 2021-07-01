@@ -2,21 +2,23 @@ import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "javascript", label: "fori" },
-  { language: "typescript", label: "fori" }
+  { language: "javascript", label: "cast" },
+  { language: "typescript", label: "cast" },
+  { language: "vue", label: "cast" },
+  { language: "html", label: "cast" }
 )
-class ForiPostfixHandler4TsAndJs extends BasePostfixHandler {
+class CastPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
+    if (replacement.length === null) {
+      return null;
+    }
     return {
-      text: new SnippetString(
-        `for (let \${1:i} = 0; \${1:i} < ${replacement}; \${1:i}++) {\n${indent()}$2\n}`
-      ),
+      text: new SnippetString(`(<\${1:type}> ${replacement})`),
       deleteText: {
         startIndex,
         endIndex: endIndex + 1,

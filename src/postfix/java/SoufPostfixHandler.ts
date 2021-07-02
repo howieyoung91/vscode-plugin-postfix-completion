@@ -1,25 +1,19 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "java", label: "souf" })
 class SoufPostfixHandler4J extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstNonWhitespaceCharacterIndex: number
-  ): LineTextHandleResult {
-    let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText
-      .substring(firstNonWhitespaceCharacterIndex, endIndex)
-      .trim()
-      .trimEnd();
+  @Target.Interval({})
+  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     const newText = `System.out.printf("$1",${replacement});`;
     return {
       text: new SnippetString(newText),
       deleteText: {
-        startIndex: firstNonWhitespaceCharacterIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

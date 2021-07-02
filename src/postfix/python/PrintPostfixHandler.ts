@@ -1,23 +1,18 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "python", label: "print" })
 class PrintPostfixHandler4Py extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstNonWhiteSpaceIndex
-  ): string | SnippetString | LinetextHandleResult | null {
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText
-      .substring(firstNonWhiteSpaceIndex, endIndex)
-      .trimEnd();
+  @Target.Interval({})
+  handleLineText(replacement: string, datas: {}): LinetextHandleResult {
     return {
       text: new SnippetString(`print (${replacement})`),
       deleteText: {
-        startIndex: firstNonWhiteSpaceIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

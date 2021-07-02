@@ -1,23 +1,19 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "cpp", label: "cout" })
 class CoutPostfixHandler4Cpp extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstNonWhiteSpaceIndex: number
-  ): LineTextHandleResult {
-    let startIndex = firstNonWhiteSpaceIndex;
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
+  @Target.Interval({ end: "." })
+  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     const newText = `std::cout << ${replacement} << std::endl;`;
     return {
       text: new SnippetString(newText),
       deleteText: {
-        startIndex: startIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

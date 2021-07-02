@@ -62,7 +62,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     for (const postfix of this._postfixs) {
       // 设置参数
       let postfixHandler = postfix.postfixHandler;
-      postfix.datas.setData({
+      postfix.datas.addData({
         document,
         position,
         token,
@@ -73,10 +73,13 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 获取行文本
       const line: TextLine = document.lineAt(position);
       let lineText: string = line.text.substring(0, position.character);
+      postfix.datas.addData({
+        firstWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex,
+      });
       // 处理行文本
       let result = postfixHandler.handleLineText(
         lineText,
-        line.firstNonWhitespaceCharacterIndex,
+        // line.firstNonWhitespaceCharacterIndex,
         postfix.datas.store
       );
       // 如果返回null 则直接返回,不添加item
@@ -86,7 +89,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       let text: string | SnippetString | undefined = undefined;
       let documentation: string | undefined = undefined;
       let detail: string | undefined = undefined;
-      let datas: object | undefined = undefined;
+      let addition: object | undefined = undefined;
       let deleteText: { startIndex; endIndex } | undefined = undefined;
       switch (typeof result) {
         case "object":
@@ -96,7 +99,8 @@ export default class BasePostfixProvider implements CompletionItemProvider {
             text = result.text;
             documentation = result.documentation;
             detail = result.detail;
-            datas = result.datas;
+            postfix.datas.setData(addition);
+            // datas = result.datas;
             deleteText = result.deleteText;
           }
           break;
@@ -129,8 +133,8 @@ export default class BasePostfixProvider implements CompletionItemProvider {
         }
       }
       // 添加参数
-      if (datas) {
-        postfix.datas.setData(datas);
+      if (addition) {
+        postfix.datas.addData(addition);
       }
       // 是否删除原有文本
       if (deleteText) {
@@ -149,7 +153,6 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 添加补全项
       completionItems.push(postfix);
     }
-    console.log(completionItems.length);
     return completionItems;
   }
 

@@ -1,6 +1,7 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
@@ -8,22 +9,13 @@ import LinetextHandleResult from "../../base/LinetextHandleResult";
   { language: "go", label: "return" }
 )
 class ReturnPostfixHandler extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstNonWhitespaceCharacterIndex: number
-  ): LinetextHandleResult {
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText
-      .substring(firstNonWhitespaceCharacterIndex, endIndex)
-      .trimEnd();
-    if (replacement.length === 0) {
-      return null;
-    }
+  @Target.Interval({})
+  handleLineText(replacement: string, datas: {}): LinetextHandleResult {
     return {
       text: new SnippetString(`return ${replacement}`),
       deleteText: {
-        startIndex: firstNonWhitespaceCharacterIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

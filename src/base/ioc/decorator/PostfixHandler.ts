@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { window } from "vscode";
-import BasePostfix from "../BasePostfix";
-import BasePostfixHandler from "../BasePostfixHandler";
-import { Constructor, iocContainer } from "./IocContainer";
+import BasePostfix from "../../BasePostfix";
+import BasePostfixHandler from "../../BasePostfixHandler";
+import { Constructor, iocContainer } from "../IocContainer";
 
 /**
  * @description PostfixHandlerPosition 表示PostHandler作用的位置,

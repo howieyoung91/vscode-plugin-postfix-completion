@@ -1,17 +1,13 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "cpp", label: "template" })
 class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstWihteSpaceIndex: number
-  ): LineTextHandleResult {
-    let startIndex = firstWihteSpaceIndex;
-    let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
+  @Target.Interval({ end: "." })
+  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     // 这个匹配项要求不出现数字,待优化~
     if (!replacement.match(/^\s*[a-zA-Z_]+[\s+a-zA-Z_]*\s*$/)) {
       return null;
@@ -26,8 +22,8 @@ class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
     return {
       text: new SnippetString(newText),
       deleteText: {
-        startIndex: startIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

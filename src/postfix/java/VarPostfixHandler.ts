@@ -1,19 +1,15 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import StringUtil from "../../util/StringUtil";
 
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstNonWhiteSpaceIndex: number
-  ): null | LineTextHandleResult {
+  @Target.Interval({})
+  handleLineText(replacement: string, datas: {}): null | LineTextHandleResult {
     // 判断是否是 new ...(...)
-    let endIndex = lineText.lastIndexOf(".");
-    let startIndex = firstNonWhiteSpaceIndex;
-    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
     let newText = null;
     if (replacement.match(/^new (.+?)\(.*\)$/)) {
       newText = VarPostfixHandler4J.handleNew(replacement);
@@ -26,8 +22,8 @@ class VarPostfixHandler4J extends BasePostfixHandler {
     return {
       text: newText,
       deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

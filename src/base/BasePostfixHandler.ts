@@ -1,3 +1,4 @@
+import { Deserializer } from "node:v8";
 import { CompletionItem, SnippetString } from "vscode";
 import LineTextHandleResult from "./LinetextHandleResult";
 
@@ -21,7 +22,7 @@ export default abstract class BasePostfixHandler {
    */
   abstract handleLineText(
     lineText: string,
-    firstNotWhileSpaceIndex: number,
+    // firstNotWhiteSpaceIndex: number,
     datas: {}
   ): string | SnippetString | LineTextHandleResult | null;
 

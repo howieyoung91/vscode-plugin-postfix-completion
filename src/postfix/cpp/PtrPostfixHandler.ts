@@ -1,22 +1,21 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 @PostfixHandler(
   { language: "cpp", label: "ptr" },
   { language: "c", label: "ptr" }
 )
 class PtrPostfixHandler4Cpp extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
+  @Target.Interval({ end: "." })
+  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     const newText = `*${replacement}`;
     return {
       text: new SnippetString(newText),
       deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

@@ -1,24 +1,20 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "c", label: "null" })
 class NullPostfixHandler4C extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstWhiteSpaceIndex: number
-  ): LineTextHandleResult {
-    let startIndex = firstWhiteSpaceIndex;
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
+  @Target.Interval({ end: "." })
+  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     const newText = `if (${replacement} == NULL){\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),
       deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

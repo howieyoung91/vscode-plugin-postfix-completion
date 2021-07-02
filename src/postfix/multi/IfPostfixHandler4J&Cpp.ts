@@ -1,6 +1,7 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
@@ -14,14 +15,8 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "if" }
 )
 class IfPostfixHandler extends BasePostfixHandler {
-  handleLineText(
-    lineText: string,
-    firstNonWhitespaceCharacterIndex: number
-  ): LineTextHandleResult {
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText
-      .substring(firstNonWhitespaceCharacterIndex, endIndex)
-      .trimEnd();
+  @Target.Interval({})
+  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     if (replacement.length === 0) {
       return null;
     }
@@ -29,8 +24,8 @@ class IfPostfixHandler extends BasePostfixHandler {
     return {
       text: new SnippetString(newText),
       deleteText: {
-        startIndex: firstNonWhitespaceCharacterIndex,
-        endIndex: endIndex + 1,
+        startIndex: datas["startIndex"],
+        endIndex: datas["endIndex"] + 1,
       },
     };
   }

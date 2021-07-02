@@ -11,7 +11,7 @@ class ForPostfixHandler4Go extends BasePostfixHandler {
     firstNotWhileSpaceIndex: number
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNotWhileSpaceIndex, endIndex);
+    const replacement = lineText.substring(firstNotWhileSpaceIndex, endIndex).trimEnd();
     const newText = `for \${1:i}, \${2:elem} := range ${replacement} {\n${indent()}\$3\n}`;
     return {
       text: new SnippetString(newText),

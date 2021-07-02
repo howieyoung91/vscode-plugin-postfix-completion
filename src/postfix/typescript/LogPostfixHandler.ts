@@ -16,7 +16,7 @@ class LogPostfixHandler extends BasePostfixHandler {
   ): LineTextHandleResult | null {
     let startIndex = firstNonWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
     return {
       text: new SnippetString(`console.log(${replacement});`),
       deleteText: {

@@ -14,7 +14,7 @@ class ForinPostfixHandler extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
     return {
       text: new SnippetString(
         `for (let \${1:i} in ${replacement}){\n${indent()}$2\n}`

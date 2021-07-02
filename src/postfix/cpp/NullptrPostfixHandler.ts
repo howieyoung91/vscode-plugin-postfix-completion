@@ -1,10 +1,10 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
-import {indent} from "../../util/DocumentUtil";
+import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({language: "cpp", label: "nullptr"})
+@PostfixHandler({ language: "cpp", label: "nullptr" })
 class NullptrPostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(
     lineText: string,
@@ -12,7 +12,7 @@ class NullptrPostfixHandler4Cpp extends BasePostfixHandler {
   ): LineTextHandleResult {
     let startIndex = firstWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `if (${replacement} == nullptr){\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),

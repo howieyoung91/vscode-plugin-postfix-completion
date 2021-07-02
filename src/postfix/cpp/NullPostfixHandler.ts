@@ -12,7 +12,7 @@ class NullPostfixHandler4C extends BasePostfixHandler {
   ): LineTextHandleResult {
     let startIndex = firstWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `if (${replacement} == NULL){\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),

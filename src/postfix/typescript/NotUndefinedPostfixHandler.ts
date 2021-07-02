@@ -16,10 +16,9 @@ class NotUndefinedPostfixHandler4TsJs extends BasePostfixHandler {
     firstNonWhitespaceCharacterIndex: number
   ): LineTextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNonWhitespaceCharacterIndex,
-      endIndex
-    );
+    const replacement = lineText
+      .substring(firstNonWhitespaceCharacterIndex, endIndex)
+      .trimEnd();
     const newText = `if (${replacement} !== undefine) {\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),

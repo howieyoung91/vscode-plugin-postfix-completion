@@ -10,7 +10,9 @@ class PrintPostfixHandler4Py extends BasePostfixHandler {
     firstNonWhiteSpaceIndex
   ): string | SnippetString | LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
+    const replacement = lineText
+      .substring(firstNonWhiteSpaceIndex, endIndex)
+      .trimEnd();
     return {
       text: new SnippetString(`print (${replacement})`),
       deleteText: {

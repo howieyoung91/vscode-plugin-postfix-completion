@@ -12,7 +12,9 @@ class ForPostfixHandler4Py extends BasePostfixHandler {
     firstNonWhiteSpaceIndex: number
   ): LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
+    const replacement = lineText
+      .substring(firstNonWhiteSpaceIndex, endIndex)
+      .trimEnd();
     let newText;
     let documentation;
     let indentChars = indent();

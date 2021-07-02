@@ -10,7 +10,7 @@ class NotPostfixHandler4Py extends BasePostfixHandler {
   ): string | SnippetString | LinetextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     return {
       text: new SnippetString(`not ${replacement}`),
       deleteText: {

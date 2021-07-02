@@ -9,7 +9,7 @@ class ClassPostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `class ${replacement} {\n${indent()}$1\n};`;
     return {
       text: new SnippetString(newText),

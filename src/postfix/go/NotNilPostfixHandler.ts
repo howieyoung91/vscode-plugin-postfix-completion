@@ -1,26 +1,22 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/PostfixHandler";
+import { PostfixHandler } from "../../base/ioc/PostfixHandler";
 import LinetextHandleResult from "../../base/LinetextHandleResult";
-import {indent} from "../../util/DocumentUtil";
+import { indent } from "../../util/DocumentUtil";
 
-
-@PostfixHandler({language: "go", label: "notnil"})
+@PostfixHandler({ language: "go", label: "notnil" })
 class NotNilPostfixHandler4Go extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     firstNotWhileSpaceIndex: number
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(
-      firstNotWhileSpaceIndex,
-      endIndex
-    );
+    const replacement = lineText
+      .substring(firstNotWhileSpaceIndex, endIndex)
+      .trimEnd();
     const newText = `if ${replacement} != nil {\n${indent()}$1\n}`;
     return {
-      text: new SnippetString(
-        newText
-      ),
+      text: new SnippetString(newText),
       deleteText: {
         startIndex: firstNotWhileSpaceIndex,
         endIndex: endIndex + 1,

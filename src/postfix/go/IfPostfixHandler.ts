@@ -13,7 +13,7 @@ class IfPostfixHandler4Go extends BasePostfixHandler {
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
     let startIndex = firstNotWhileSpaceIndex;
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `if ${replacement} {\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),

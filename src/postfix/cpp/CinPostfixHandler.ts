@@ -11,7 +11,7 @@ class CoutPostfixHandler4Cpp extends BasePostfixHandler {
   ): LineTextHandleResult {
     let startIndex = firstNonWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `std::cin >> ${replacement};`;
     return {
       text: new SnippetString(newText),

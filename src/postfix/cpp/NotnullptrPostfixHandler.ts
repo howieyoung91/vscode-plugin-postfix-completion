@@ -12,7 +12,7 @@ class NotnullptrPostfixHandler4Cpp extends BasePostfixHandler {
   ): LineTextHandleResult {
     let startIndex = firstWhiteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `if (${replacement} != nullptr){\n${indent()}$1\n}`;
     return {
       text: new SnippetString(newText),

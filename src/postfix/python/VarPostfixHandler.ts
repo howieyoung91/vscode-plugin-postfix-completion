@@ -10,7 +10,9 @@ class VarPostfixHandler4Py extends BasePostfixHandler {
     firstNonWhiteSpaceIndex: number
   ): string | SnippetString | LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
+    const replacement = lineText
+      .substring(firstNonWhiteSpaceIndex, endIndex)
+      .trimEnd();
     const newText = `\${1:varName} = ${replacement}`;
     return {
       text: new SnippetString(newText),

@@ -11,7 +11,7 @@ class DefinePostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(lineText: string): LineTextHandleResult {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(startIndex, endIndex);
+    const replacement = lineText.substring(startIndex, endIndex).trimEnd();
     const newText = `#define ${replacement}`;
     return {
       text: new SnippetString(newText),

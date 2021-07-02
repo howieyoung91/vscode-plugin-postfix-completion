@@ -11,7 +11,9 @@ class SwitchPostfixHandler4Go extends BasePostfixHandler {
     firstNotWhileSpaceIndex: number
   ): string | SnippetString | LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNotWhileSpaceIndex, endIndex);
+    const replacement = lineText
+      .substring(firstNotWhileSpaceIndex, endIndex)
+      .trimEnd();
     const newText = `switch ${replacement} {\n${indent()}case \${1:condition}:\n${indent()}${indent()}$2\n}`;
     return {
       text: new SnippetString(newText),

@@ -11,7 +11,9 @@ class NonePostfixHandler4Py extends BasePostfixHandler {
     firstNonWhiteSpaceIndex: number
   ): string | SnippetString | LinetextHandleResult | null {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
+    const replacement = lineText
+      .substring(firstNonWhiteSpaceIndex, endIndex)
+      .trimEnd();
     return {
       text: new SnippetString(`if ${replacement} is None:\n${indent()}`),
       deleteText: {

@@ -149,6 +149,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 添加补全项
       completionItems.push(postfix);
     }
+    console.log(completionItems.length);
     return completionItems;
   }
 

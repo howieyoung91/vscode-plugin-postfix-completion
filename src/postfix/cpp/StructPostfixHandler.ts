@@ -14,7 +14,7 @@ class StructPostfixHandler4Cpp extends BasePostfixHandler {
     let endIndex = lineText.lastIndexOf(".");
     const replacement = lineText
       .substring(startIndex, endIndex)
-      .trim()
+      // .trim()
       .trimEnd();
     const newText = `struct ${replacement} {\n${indent()}$1\n}`;
     return {

@@ -11,7 +11,7 @@ class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
   ): LineTextHandleResult {
     let startIndex = firstWihteSpaceIndex;
     let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex);
+    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
     // 这个匹配项要求不出现数字,待优化~
     if (!replacement.match(/^\s*[a-zA-Z_]+[\s+a-zA-Z_]*\s*$/)) {
       return null;

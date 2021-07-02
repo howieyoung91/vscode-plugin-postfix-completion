@@ -11,7 +11,9 @@ class WhilePostfixHandler4Py extends BasePostfixHandler {
     firstNonWhiteSpaceIndex: number
   ): LinetextHandleResult {
     let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText.substring(firstNonWhiteSpaceIndex, endIndex);
+    const replacement = lineText
+      .substring(firstNonWhiteSpaceIndex, endIndex)
+      .trimEnd();
     return {
       text: new SnippetString(`while ${replacement}:\n${indent()}`),
       deleteText: {

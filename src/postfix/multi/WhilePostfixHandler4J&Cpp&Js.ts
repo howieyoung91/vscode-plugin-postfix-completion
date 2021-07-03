@@ -1,6 +1,7 @@
 import { removeAllListeners } from "node:process";
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
@@ -17,13 +18,8 @@ import { indent } from "../../util/DocumentUtil";
 )
 class WhilePostfixHandler extends BasePostfixHandler {
   @Target.Interval({})
-  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
-    return {
-      text: new SnippetString(`while (${replacement}) {\n${indent()}$1\n}`),
-      deleteText: {
-        startIndex: datas["startIndex"],
-        endIndex: datas["endIndex"] + 1,
-      },
-    };
+  @Return.DeleteText({})
+  handleLineText(replacement: string) {
+    return new SnippetString(`while (${replacement}) {\n${indent()}$1\n}`);
   }
 }

@@ -147,7 +147,7 @@ This plugin provides many postfixs of popular languages(e.g. c/cpp, java and so 
   |    **.serr** | `System.err.println(${expr});`          |
   |  **.return** | `return {expr};`                        |
 
-- ### JavaScript/TypeScript
+- ### JavaScript/TypeScript/Vue
 
   |     postfix | result                                  |
   | ----------: | --------------------------------------- |

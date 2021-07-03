@@ -1,13 +1,18 @@
-import { Constructor } from "../ioc/IocContainer";
-import "reflect-metadata";
+import {start} from "node:repl";
+import {Constructor} from "../ioc/IocContainer";
 
-export interface Interval {
+export interface TargetInterval {
   start?: string;
   end?: string;
 }
 
-export abstract class Target {
-  static Interval(interval: Interval): MethodDecorator {
+export interface TargetRegex {
+  regex: RegExp;
+  end?: string;
+}
+
+export namespace Target {
+  export function Interval(interval: TargetInterval): MethodDecorator {
     return function (
       target: any,
       methodName: any,
@@ -28,6 +33,9 @@ export abstract class Target {
           endIndex = lineText.lastIndexOf(".");
         }
         const replacement = lineText.substring(startIndex, endIndex).trimEnd();
+        if (replacement.length == 0) {
+          return null;
+        }
         // 加入 datas
         datas["startIndex"] = startIndex;
         datas["endIndex"] = endIndex;
@@ -36,9 +44,68 @@ export abstract class Target {
     };
   }
 
-  static Regex() {
-    return (postfixHandlerCtor: Constructor) => {
-      return null;
-    };
+  export namespace Regex {
+    export function Search(targetRegex: TargetRegex) {
+      return function (
+        target: any,
+        methodName: any,
+        descriptor: TypedPropertyDescriptor<any>
+      ) {
+        if (!targetRegex.regex) {
+          return null;
+        }
+        const realMethod = descriptor.value;
+        descriptor.value = (lineText: string, datas: {}) => {
+          if (!targetRegex.end) {
+            targetRegex.end = ".";
+          }
+          let endIndex = lineText.lastIndexOf(targetRegex.end);
+          let startIndex = datas["firstNotWhiteSpaceIndex"];
+          startIndex = lineText
+            .substring(startIndex, endIndex)
+            .search(targetRegex.regex);
+          if (startIndex == -1) {
+            return null;
+          }
+          let replacement = lineText.substring(startIndex, endIndex);
+          if (replacement.length == 0) {
+            return null;
+          }
+          datas["startIndex"] = startIndex;
+          datas["endIndex"] = endIndex;
+          return realMethod(replacement, datas);
+        };
+      };
+    }
+
+    export function Match(targetRegex: TargetRegex) {
+      return function (
+        target: any,
+        methodName: any,
+        descriptor: TypedPropertyDescriptor<any>
+      ) {
+        if (!targetRegex.regex) {
+          return null;
+        }
+        const realMethod = descriptor.value;
+        descriptor.value = (lineText: string, datas: {}) => {
+          if (!targetRegex.end) {
+            targetRegex.end = ".";
+          }
+          const startIndex = datas["firstNotWhiteSpaceIndex"];
+          const endIndex = lineText.lastIndexOf(targetRegex.end);
+          let matchedArray = lineText
+            .substring(startIndex, endIndex)
+            .match(targetRegex.regex);
+          if (matchedArray.length == 0) {
+            return null;
+          }
+          const replacement = matchedArray[0];
+          datas["startIndex"] = startIndex;
+          datas["endIndex"] = endIndex;
+          return realMethod(replacement, datas);
+        };
+      };
+    }
   }
 }

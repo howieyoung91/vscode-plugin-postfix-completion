@@ -1,7 +1,8 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { Return } from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
@@ -11,18 +12,12 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "forof" }
 )
 class ForofPostfixHandler extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult | null {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
-    let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
-    return {
-      text: new SnippetString(
-        `for (const \${1:item} of ${replacement}){\n${indent()}$2\n}`
-      ),
-      deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
-      },
-    };
+  @Target.Interval({ start: " " })
+  @Return.DeleteText({})
+  handleLineText(replacement: string, datas: any) {
+    datas.startIndex++;
+    return new SnippetString(
+      `for (const \${1:item} of ${replacement}){\n${indent()}$2\n}`
+    );
   }
 }

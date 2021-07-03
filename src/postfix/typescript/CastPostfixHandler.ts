@@ -1,5 +1,7 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { Return } from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
@@ -10,19 +12,10 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
   { language: "html", label: "cast" }
 )
 class CastPostfixHandler extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult | null {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
-    let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
-    if (replacement.length === null) {
-      return null;
-    }
-    return {
-      text: new SnippetString(`(<\${1:type}> ${replacement})`),
-      deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
-      },
-    };
+  @Target.Interval({ start: " " })
+  @Return.DeleteText({})
+  handleLineText(replacement: string, datas: any) {
+    datas.startIndex++;
+    return new SnippetString(`(<\${1:type}> ${replacement})`);
   }
 }

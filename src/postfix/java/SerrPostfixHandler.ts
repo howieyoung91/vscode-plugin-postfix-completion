@@ -1,10 +1,10 @@
-import { SnippetString } from "vscode";
+import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import {Target} from "../../base/decorator/Target";
+import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 
-@PostfixHandler({ language: "java", label: "serr" })
+@PostfixHandler({language: "java", label: "serr"})
 class SerrPostfixHandler4J extends BasePostfixHandler {
   @Target.Interval({})
   handleLineText(replacement: string, datas: {}): LineTextHandleResult {

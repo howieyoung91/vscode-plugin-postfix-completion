@@ -1,23 +1,15 @@
-import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LinetextHandleResult from "../../base/LinetextHandleResult";
 import StringUtil from "../../util/StringUtil";
 import { indent } from "../../util/DocumentUtil";
+import { Target } from "../../base/decorator/Target";
+import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "python", label: "matrix" })
 class MatrixPostfixHandler4Py extends BasePostfixHandler {
-  handleLineText(lineText: string): LinetextHandleResult | null {
-    let endIndex = lineText.lastIndexOf(".");
-    // 搜索目标字符串
-    let startIndex = lineText.search(
-      /[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)*\s*\.[matrix]{0,6}$/
-    );
-    if (startIndex === -1) {
-      return null;
-    }
-    // 找到需要替换的部分
-    let replacement = lineText.substring(startIndex, endIndex).trim();
+  @Target.Regex.Search({ regex: /[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)*\s*$/ })
+  @Return.DeleteText({})
+  handleLineText(replacement: string, datas: {}) {
     // 分割空格,找到数据
     let nums = replacement.split(/\s+/);
     // 如果行和列不是整数
@@ -57,15 +49,8 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
       // 补全方括号
       temp += `],\n`;
       rowAndCol += temp;
-      // console.log(temp);
     }
     const newText = `[\n${rowAndCol}]`;
-    return {
-      text: new SnippetString(newText),
-      deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
-      },
-    };
+    return newText;
   }
 }

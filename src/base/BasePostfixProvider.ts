@@ -74,7 +74,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       const line: TextLine = document.lineAt(position);
       let lineText: string = line.text.substring(0, position.character);
       postfix.datas.addData({
-        firstWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex,
+        firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex,
       });
       // 处理行文本
       let result = postfixHandler.handleLineText(

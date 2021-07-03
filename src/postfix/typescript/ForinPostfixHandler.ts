@@ -1,5 +1,7 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { Return } from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
@@ -11,6 +13,8 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "forin" }
 )
 class ForinPostfixHandler extends BasePostfixHandler {
+  @Target.Interval({ start: " " })
+  @Return.DeleteText({})
   handleLineText(lineText: string): LineTextHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");

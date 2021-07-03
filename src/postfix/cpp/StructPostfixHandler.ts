@@ -4,26 +4,19 @@ import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
+import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler(
   { language: "cpp", label: "struct" },
   { language: "c", label: "struct" }
 )
 class StructPostfixHandler4Cpp extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
-    let endIndex = lineText.lastIndexOf(".");
-    const replacement = lineText
-      .substring(startIndex, endIndex)
-      // .trim()
-      .trimEnd();
-    const newText = `struct ${replacement} {\n${indent()}$1\n}`;
-    return {
-      text: new SnippetString(newText),
-      deleteText: {
-        startIndex: startIndex,
-        endIndex: endIndex + 1,
-      },
-    };
+  @Target.Interval({ start: " " })
+  @Return.DeleteText({})
+  handleLineText(replacement: string, datas: {}) {
+    datas["startIndex"]++;
+    return new SnippetString(
+      `struct ${replacement.trim()} {\n${indent()}$1\n}`
+    );
   }
 }

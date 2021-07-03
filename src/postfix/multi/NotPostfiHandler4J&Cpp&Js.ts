@@ -1,6 +1,7 @@
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { Return } from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
   { language: "java", label: "not" },
@@ -12,21 +13,10 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
   { language: "html", label: "not" }
 )
 class NotPostfixHandler extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult {
-    // 截取
-    let startIndex = lineText.lastIndexOf(" ") + 1;
-    let endIndex = lineText.lastIndexOf(".");
-    // 需要替换的文本
-    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
-    if (replacement.length === 0) {
-      return null;
-    }
-    return {
-      text: `!${replacement}`,
-      deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
-      },
-    };
+  @Target.Interval({ start: " " })
+  @Return.DeleteText({})
+  handleLineText(replacement: string, datas: any) {
+    datas.startIndex++;
+    return `!${replacement.trim()}`;
   }
 }

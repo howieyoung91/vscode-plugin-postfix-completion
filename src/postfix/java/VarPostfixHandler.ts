@@ -1,5 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
+import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import LineTextHandleResult from "../../base/LinetextHandleResult";
@@ -8,6 +9,7 @@ import StringUtil from "../../util/StringUtil";
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
   @Target.Interval({})
+  @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}): null | LineTextHandleResult {
     // 判断是否是 new ...(...)
     let newText = null;
@@ -19,13 +21,7 @@ class VarPostfixHandler4J extends BasePostfixHandler {
     if (newText === null) {
       return null;
     }
-    return {
-      text: newText,
-      deleteText: {
-        startIndex: datas["startIndex"],
-        endIndex: datas["endIndex"] + 1,
-      },
-    };
+    return newText;
   }
 
   private static handleSimpleType(replacement: string) {

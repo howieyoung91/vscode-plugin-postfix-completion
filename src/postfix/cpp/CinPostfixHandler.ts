@@ -1,20 +1,13 @@
-import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
+import {Return} from "../../base/decorator/Return";
+import {Target} from "../../base/decorator/Target";
+import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
 
-@PostfixHandler({ language: "cpp", label: "cin" })
+@PostfixHandler({language: "cpp", label: "cin"})
 export class CinPostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Interval({ end: "." })
-  handleLineText(replacement: string, datas: {}): LineTextHandleResult {
-    const newText = `std::cin >> ${replacement};`;
-    return {
-      text: new SnippetString(newText),
-      deleteText: {
-        startIndex: datas["startIndex"],
-        endIndex: datas["endIndex"] + 1,
-      },
-    };
+  @Target.Interval({end: "."})
+  @Return.DeleteText({})
+  handleLineText(replacement: string, datas: {}) {
+    return `std::cin >> ${replacement};`;
   }
 }

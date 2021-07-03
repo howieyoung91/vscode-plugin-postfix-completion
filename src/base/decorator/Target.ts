@@ -1,6 +1,3 @@
-import {start} from "node:repl";
-import {Constructor} from "../ioc/IocContainer";
-
 export interface TargetInterval {
   start?: string;
   end?: string;
@@ -56,18 +53,15 @@ export namespace Target {
         }
         const realMethod = descriptor.value;
         descriptor.value = (lineText: string, datas: {}) => {
-          if (!targetRegex.end) {
-            targetRegex.end = ".";
-          }
-          let endIndex = lineText.lastIndexOf(targetRegex.end);
-          let startIndex = datas["firstNotWhiteSpaceIndex"];
-          startIndex = lineText
-            .substring(startIndex, endIndex)
-            .search(targetRegex.regex);
+          const startIndex = lineText.search(targetRegex.regex);
           if (startIndex == -1) {
             return null;
           }
-          let replacement = lineText.substring(startIndex, endIndex);
+          if (!targetRegex.end) {
+            targetRegex.end = ".";
+          }
+          const endIndex = lineText.lastIndexOf(targetRegex.end);
+          const replacement = lineText.substring(startIndex, endIndex);
           if (replacement.length == 0) {
             return null;
           }
@@ -78,6 +72,7 @@ export namespace Target {
       };
     }
 
+    // !BUG
     export function Match(targetRegex: TargetRegex) {
       return function (
         target: any,
@@ -95,9 +90,9 @@ export namespace Target {
           const startIndex = datas["firstNotWhiteSpaceIndex"];
           const endIndex = lineText.lastIndexOf(targetRegex.end);
           let matchedArray = lineText
-            .substring(startIndex, endIndex)
+            .substring(datas["firstNotWhiteSpaceIndex"], endIndex)
             .match(targetRegex.regex);
-          if (matchedArray.length == 0) {
+          if (!matchedArray || matchedArray.length == 0) {
             return null;
           }
           const replacement = matchedArray[0];

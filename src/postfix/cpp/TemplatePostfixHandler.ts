@@ -7,10 +7,11 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 @PostfixHandler({ language: "cpp", label: "template" })
 class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
   // 这个匹配项要求不出现数字,待优化~
-  @Target.Regex.Search({ regex: /^\s*[a-zA-Z_]+[\s+a-zA-Z_]*\s*$/ })
+  @Target.Regex.Match({ regex: /^[a-zA-Z_]+[\s+a-zA-Z_]*\s*$/ })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    const types = replacement.trim().trimEnd().split(/\s+/);
+    replacement = replacement.trimEnd();
+    const types = replacement.split(/\s+/);
     let typeString = ``;
     for (let type of types) {
       typeString += `typename ${type},`;

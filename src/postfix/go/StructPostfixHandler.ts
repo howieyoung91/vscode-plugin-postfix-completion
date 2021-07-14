@@ -1,11 +1,11 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {Target} from "../../base/decorator/Target";
-import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
-import {indent} from "../../util/DocumentUtil";
-import {Return} from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import { indent } from "../../util/DocumentUtil";
+import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({language: "go", label: "struct"})
+@PostfixHandler({ language: "go", label: "struct" })
 class StructPostfixHandler4Go extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})

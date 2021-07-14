@@ -1,9 +1,7 @@
-import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler(
   { language: "cpp", label: "include" },

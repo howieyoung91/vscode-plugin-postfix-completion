@@ -1,4 +1,3 @@
-import { Deserializer } from "node:v8";
 import { CompletionItem, SnippetString } from "vscode";
 import LineTextHandleResult from "./LinetextHandleResult";
 

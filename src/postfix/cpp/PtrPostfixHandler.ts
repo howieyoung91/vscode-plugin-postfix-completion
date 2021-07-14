@@ -1,13 +1,11 @@
-import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
-import {Return} from "../../base/decorator/Return";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 
 @PostfixHandler(
-  {language: "cpp", label: "ptr"},
-  {language: "c", label: "ptr"}
+  { language: "cpp", label: "ptr" },
+  { language: "c", label: "ptr" }
 )
 class PtrPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Interval({})

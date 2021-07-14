@@ -1,10 +1,9 @@
-import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {Target} from "../../base/decorator/Target";
-import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
-import {Return} from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({language: "go", label: "printf"})
+@PostfixHandler({ language: "go", label: "printf" })
 class PrintfPostfixHandler4Go extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})

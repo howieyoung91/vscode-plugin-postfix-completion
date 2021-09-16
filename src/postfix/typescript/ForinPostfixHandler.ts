@@ -15,18 +15,10 @@ import { indent } from "../../util/DocumentUtil";
 class ForinPostfixHandler extends BasePostfixHandler {
   @Target.Interval({ start: " " })
   @Return.DeleteText({})
-  handleLineText(lineText: string): LineTextHandleResult | null {
-    let startIndex = lineText.lastIndexOf(" ") + 1;
-    let endIndex = lineText.lastIndexOf(".");
-    let replacement = lineText.substring(startIndex, endIndex).trimEnd();
-    return {
-      text: new SnippetString(
-        `for (let \${1:i} in ${replacement}){\n${indent()}$2\n}`
-      ),
-      deleteText: {
-        startIndex,
-        endIndex: endIndex + 1,
-      },
-    };
+  handleLineText(replacement: string, datas) {
+    datas.startIndex++;
+    return new SnippetString(
+      `for (const \${1:item} in ${replacement.trim()}){\n${indent()}$2\n}`
+    );
   }
 }

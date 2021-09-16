@@ -17,7 +17,7 @@ class ForrPostfixHandler extends BasePostfixHandler {
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;
     return new SnippetString(
-      `for (let \${1:i} = ${replacement}; \${1:i} >= 0; \${1:i}--) {\n${indent()}$2\n}`
+      `for (let \${1:i} = ${replacement.trim()}; \${1:i} >= 0; \${1:i}--) {\n${indent()}$2\n}`
     );
   }
 }

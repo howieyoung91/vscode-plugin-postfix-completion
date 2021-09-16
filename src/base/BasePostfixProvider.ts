@@ -50,6 +50,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
 
   /**
    * 提供补全项
+   * TODO 这个方法可以解耦
    * @description 这是一个模板方法
    */
   provideCompletionItems(

@@ -7,7 +7,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 @PostfixHandler({ language: "cpp", label: "template" })
 class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
   // 这个匹配项要求不出现数字,待优化~
-  @Target.Regex.Match({ regex: /^[a-zA-Z_]+[\s+a-zA-Z_]*\s*$/ })
+  @Target.Regex.Match({ regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/ })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     replacement = replacement.trimEnd();

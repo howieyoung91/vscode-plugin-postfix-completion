@@ -1,6 +1,6 @@
 import { Disposable, ExtensionContext } from "vscode";
 import { iocContainer } from "./base/ioc/IocContainer";
-import "./ComponentScan";
+import "./PostfixScan";
 // 扫描postfix
 let items: Disposable[] = [];
 export function activate(context: ExtensionContext) {

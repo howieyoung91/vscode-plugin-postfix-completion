@@ -1,5 +1,7 @@
 export interface TargetInterval {
+  // 起始位置
   start?: string;
+  // 结束为止
   end?: string;
 }
 
@@ -7,28 +9,28 @@ export interface TargetRegex {
   regex: RegExp;
   end?: string;
 }
-
 export namespace Target {
+  /**
+   * 在行文本中获取目标字符串
+   * @param interval 默认为 {start=datas["firstNotWhiteSpaceIndex"],end=lineText.lastIndexOf(".")}, 即行文本
+   * @returns
+   */
   export function Interval(interval: TargetInterval): MethodDecorator {
     return function (
       target: any,
       methodName: any,
       descriptor: TypedPropertyDescriptor<any>
     ) {
-      //接受参数为当前类 和 接受参数为当前方法名称  和  方法的描述
+      // 接受参数为当前类 和 接受参数为当前方法名称  和  方法的描述
       const realMethod = descriptor.value;
       descriptor.value = (lineText: string, datas: {}) => {
-        let startIndex, endIndex;
-        if (interval.start) {
-          startIndex = lineText.lastIndexOf(interval.start);
-        } else {
-          startIndex = datas["firstNotWhiteSpaceIndex"];
-        }
-        if (interval.end) {
-          endIndex = lineText.lastIndexOf(interval.end);
-        } else {
-          endIndex = lineText.lastIndexOf(".");
-        }
+        let startIndex: number, endIndex: number;
+        startIndex = interval.start
+          ? lineText.lastIndexOf(interval.start)
+          : datas["firstNotWhiteSpaceIndex"];
+        endIndex = interval.end
+          ? lineText.lastIndexOf(interval.end)
+          : lineText.lastIndexOf(".");
         const replacement = lineText.substring(startIndex, endIndex).trimEnd();
         if (replacement.length == 0) {
           return null;

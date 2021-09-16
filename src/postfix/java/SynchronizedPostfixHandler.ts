@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { Return } from "../../base/decorator/Return";
@@ -5,14 +6,15 @@ import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({ language: "cpp", label: "class" })
-class ClassPostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Interval({ start: " " })
+@PostfixHandler({ language: "java", label: "synchronized" })
+class SynchronizedPostfixHandler extends BasePostfixHandler {
+  @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    datas["startIndex"]++;
+
+
     return new SnippetString(
-      `class ${replacement.trim()} {\n${indent()}$1\n};`
+      `synchronized(${replacement}) {\n${indent()}$1\n}`
     );
   }
 }

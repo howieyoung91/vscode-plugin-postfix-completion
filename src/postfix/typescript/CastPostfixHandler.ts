@@ -15,6 +15,6 @@ class CastPostfixHandler extends BasePostfixHandler {
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;
-    return new SnippetString(`(<\${1:type}> ${replacement})`);
+    return new SnippetString(`(<\${1:type}> ${replacement.trim()})`);
   }
 }

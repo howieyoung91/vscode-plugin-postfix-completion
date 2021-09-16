@@ -1,4 +1,4 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import LineTextHandleResult from "../LinetextHandleResult";
 
 export interface ReturnInterval {
@@ -19,6 +19,9 @@ export namespace Return {
         datas: {}
       ): LineTextHandleResult => {
         let res = realMethod(lineText, datas);
+        if (res == null) {
+          return null;
+        }
         // enhance result
         switch (typeof res) {
           case "object":

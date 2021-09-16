@@ -1,9 +1,9 @@
 {
-  "name": "fastcomplete",
-  "displayName": "Fast Complete",
+  "name": "postfixcompletion",
+  "displayName": "Postfix Completion",
   "description": "postfix completion",
   "publisher": "HowieYoung",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "postfix",
     "language",

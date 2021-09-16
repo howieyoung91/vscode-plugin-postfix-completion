@@ -25,7 +25,7 @@ export function PostfixHandler(...positions: PostfixHandlerPosition[]) {
       return;
     }
     let postfixHandler = new postfixHandlerCtor();
-    // TODO 目前只实现了postHandler的复用,可以优化postfix的复用
+    // TODO 目前只实现了 postfixHandler 的复用,可以优化 postfix 的复用
     for (const pos of positions) {
       iocContainer
         .postfixProvidersOf(pos.language)

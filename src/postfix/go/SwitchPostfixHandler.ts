@@ -11,7 +11,7 @@ class SwitchPostfixHandler4Go extends BasePostfixHandler {
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return new SnippetString(
-      `switch ${replacement} {\n${indent()}case \${1:condition}:\n${indent()}${indent()}$2\n}`
+      `switch ${replacement} {\n${indent()}case \${1:condition}:\n${indent()}${indent()}$0\n}`
     );
   }
 }

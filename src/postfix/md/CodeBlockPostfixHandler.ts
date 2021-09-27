@@ -200,7 +200,7 @@ class CodeBlockPostfixHandler extends BasePostfixHandler {
       replacement = replacement.substring(1);
     }
     if (CodeBlockPostfixHandler.SET.has(replacement)) {
-      return new SnippetString("```" + replacement + "\n${1}\n```");
+      return new SnippetString("```" + replacement + "\n${0}\n```");
     }
     return null;
   }

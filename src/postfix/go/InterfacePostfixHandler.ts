@@ -11,7 +11,7 @@ class InterfacePostfixHandler4Go extends BasePostfixHandler {
   @Return.DeleteText({})
   handleLineText(replacement: string): SnippetString {
     return new SnippetString(
-      `type ${replacement} interface {\n${indent()}$1\n}`
+      `type ${replacement} interface {\n${indent()}$0\n}`
     );
   }
 }

@@ -10,11 +10,9 @@ import { indent } from "../../util/DocumentUtil";
 class SynchronizedPostfixHandler extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
-  handleLineText(replacement: string, datas: {}) {
-
-
+  handleLineText(replacement: string) {
     return new SnippetString(
-      `synchronized(${replacement}) {\n${indent()}$1\n}`
+      `synchronized(${replacement}) {\n${indent()}$0\n}`
     );
   }
 }

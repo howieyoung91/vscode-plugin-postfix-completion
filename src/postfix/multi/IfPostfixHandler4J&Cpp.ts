@@ -18,6 +18,6 @@ class IfPostfixHandler extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
-    return new SnippetString(`if (${replacement}) {\n${indent()}$1\n}`);
+    return new SnippetString(`if (${replacement}) {\n${indent()}$0\n}`);
   }
 }

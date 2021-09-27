@@ -16,7 +16,7 @@ class NullPostfixHandler4TsJs extends BasePostfixHandler {
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(
-      `if (${replacement} === null) {\n${indent()}$1\n}`
+      `if (${replacement} === null) {\n${indent()}$0\n}`
     );
   }
 }

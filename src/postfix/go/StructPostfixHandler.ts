@@ -10,7 +10,7 @@ class StructPostfixHandler4Go extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
-    const newText = `type ${replacement} struct {\n${indent()}$1\n}`;
+    const newText = `type ${replacement} struct {\n${indent()}$0\n}`;
     return new SnippetString(newText);
   }
 }

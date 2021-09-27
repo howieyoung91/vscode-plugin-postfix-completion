@@ -12,7 +12,7 @@ class ClassPostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;
     return new SnippetString(
-      `class ${replacement.trim()} {\n${indent()}$1\n};`
+      `class ${replacement.trim()} {\n${indent()}$0\n};`
     );
   }
 }

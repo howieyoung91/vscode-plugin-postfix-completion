@@ -11,6 +11,6 @@ class ImgPostfixHandler extends BasePostfixHandler {
   })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    return new SnippetString(`![\${1}](${replacement})`);
+    return new SnippetString(`![\${1:alt}](${replacement})`);
   }
 }

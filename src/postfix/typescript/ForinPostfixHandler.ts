@@ -3,7 +3,6 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
@@ -18,7 +17,7 @@ class ForinPostfixHandler extends BasePostfixHandler {
   handleLineText(replacement: string, datas) {
     datas.startIndex++;
     return new SnippetString(
-      `for (const \${1:item} in ${replacement.trim()}){\n${indent()}$2\n}`
+      `for (const \${1:item} in ${replacement.trim()}){\n${indent()}$0\n}`
     );
   }
 }

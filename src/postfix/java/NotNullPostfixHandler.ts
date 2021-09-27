@@ -10,6 +10,6 @@ class NotNullPostfixHandler4J extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    return new SnippetString(`if (${replacement} != null) {\n${indent()}$1\n}`);
+    return new SnippetString(`if (${replacement} != null) {\n${indent()}$0\n}`);
   }
 }

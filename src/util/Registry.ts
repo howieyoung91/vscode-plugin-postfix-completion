@@ -1,12 +1,14 @@
-import { items } from "../extension";
-import { languages } from "vscode";
+import {items} from "../extension";
+import {languages} from "vscode";
 import BasePostfixProvider from "../base/BasePostfixProvider";
 
 /**
  * 注册器
  */
 export default class Registry {
-  private constructor() {}
+  private constructor() {
+  }
+
   /**
    * 注册分发器
    */

@@ -18,7 +18,7 @@ class ForiPostfixHandler4TsAndJs extends BasePostfixHandler {
   handleLineText(replacement: string, datas) {
     datas.startIndex++;
     return new SnippetString(
-      `for (let \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$2\n}`
+      `for (let \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`
     );
   }
 }

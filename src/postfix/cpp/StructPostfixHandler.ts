@@ -15,7 +15,7 @@ class StructPostfixHandler4Cpp extends BasePostfixHandler {
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;
     return new SnippetString(
-      `struct ${replacement.trim()} {\n${indent()}$1\n}`
+      `struct ${replacement.trim()} {\n${indent()}$0\n}`
     );
   }
 }

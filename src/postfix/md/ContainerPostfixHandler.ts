@@ -9,6 +9,6 @@ class ContainerPostfixHandler extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    return new SnippetString(`::: ${replacement}\n$1\n:::`);
+    return new SnippetString(`::: ${replacement}\n$0\n:::`);
   }
 }

@@ -11,7 +11,7 @@ class ForPostfixHandler4Go extends BasePostfixHandler {
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(
-      `for \${1:i}, \${2:elem} := range ${replacement} {\n${indent()}\$3\n}`
+      `for \${1:i}, \${2:elem} := range ${replacement} {\n${indent()}\$0\n}`
     );
   }
 }

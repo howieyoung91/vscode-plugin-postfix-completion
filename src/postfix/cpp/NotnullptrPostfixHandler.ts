@@ -10,7 +10,7 @@ class NotnullptrPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Interval({ end: "." })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    const newText = `if (${replacement} != nullptr){\n${indent()}$1\n}`;
+    const newText = `if (${replacement} != nullptr){\n${indent()}$0\n}`;
     return new SnippetString(newText);
   }
 }

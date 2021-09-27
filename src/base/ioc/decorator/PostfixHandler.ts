@@ -14,9 +14,9 @@ interface PostfixHandlerPosition {
 /**
  * PostfixHandler 后缀处理器注解
  * @description 这个类是一个装饰器,用于装饰 BasePostfixHandler,
- *              一旦某个BasePostfixHandler被装饰,那么将会被自动
- *              注入IOC容器,IOC容器将接管这个被装饰的类
- * @param positions PostfixHandler作用的位置
+ *              一旦某个 BasePostfixHandler 被装饰,那么将会被自动
+ *              注入 IOC 容器, IOC 容器将接管这个被装饰的类
+ * @param positions PostfixHandler 作用的位置
  */
 export function PostfixHandler(...positions: PostfixHandlerPosition[]) {
   return (postfixHandlerCtor: Constructor) => {

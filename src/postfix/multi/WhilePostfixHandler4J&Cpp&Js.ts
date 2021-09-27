@@ -18,6 +18,6 @@ class WhilePostfixHandler extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
-    return new SnippetString(`while (${replacement}) {\n${indent()}$1\n}`);
+    return new SnippetString(`while (${replacement}) {\n${indent()}$0\n}`);
   }
 }

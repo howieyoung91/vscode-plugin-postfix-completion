@@ -10,6 +10,6 @@ class NilPostfixHandler4Go extends BasePostfixHandler {
   @Target.Interval({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
-    return new SnippetString(`if ${replacement} == nil {\n${indent()}$1\n}`);
+    return new SnippetString(`if ${replacement} == nil {\n${indent()}$0\n}`);
   }
 }

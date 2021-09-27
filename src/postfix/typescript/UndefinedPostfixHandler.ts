@@ -16,7 +16,7 @@ class UndefinedPostfixHandler4TsJs extends BasePostfixHandler {
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(
-      `if (${replacement} === undefined) {\n${indent()}$1\n}`
+      `if (${replacement} === undefined) {\n${indent()}$0\n}`
     );
   }
 }

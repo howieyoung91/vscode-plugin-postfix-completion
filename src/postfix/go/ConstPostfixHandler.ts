@@ -7,7 +7,7 @@ import LinetextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "go", label: "const" })
 class ConstPostfixHandler4Go extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`const \${1:varName} \${2:type} = ${replacement}`);

@@ -12,7 +12,7 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "forof" }
 )
 class ForofPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({ start: " " })
+  @Target.Slice({ start: " " })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;

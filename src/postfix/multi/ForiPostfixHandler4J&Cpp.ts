@@ -11,7 +11,7 @@ import {indent} from "../../util/DocumentUtil";
   {language: "cpp", label: "fori"}
 )
 class ForiPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({start: " "})
+  @Target.Slice({start: " "})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;

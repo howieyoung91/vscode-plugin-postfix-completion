@@ -1,4 +1,4 @@
-export interface TargetInterval {
+export interface TargetSlice {
   // 起始位置
   start?: string;
   // 结束为止
@@ -7,15 +7,18 @@ export interface TargetInterval {
 
 export interface TargetRegex {
   regex: RegExp;
+  // 起始位置
+  start?: string;
   end?: string;
 }
+
 export namespace Target {
   /**
    * 在行文本中获取目标字符串
-   * @param interval 默认为 {start=datas["firstNotWhiteSpaceIndex"],end=lineText.lastIndexOf(".")}, 即行文本
+   * @param slice 默认为 {start=datas["firstNotWhiteSpaceIndex"],end=lineText.lastIndexOf(".")}, 即行文本
    * @returns
    */
-  export function Interval(interval: TargetInterval): MethodDecorator {
+  export function Slice(slice: TargetSlice): MethodDecorator {
     return function (
       target: any,
       methodName: any,
@@ -25,12 +28,13 @@ export namespace Target {
       const realMethod = descriptor.value;
       descriptor.value = (lineText: string, datas: {}) => {
         let startIndex: number, endIndex: number;
-        startIndex = interval.start
-          ? lineText.lastIndexOf(interval.start)
+        startIndex = slice.start
+          ? lineText.lastIndexOf(slice.start)
           : datas["firstNotWhiteSpaceIndex"];
-        endIndex = interval.end
-          ? lineText.lastIndexOf(interval.end)
+        endIndex = slice.end
+          ? lineText.lastIndexOf(slice.end)
           : lineText.lastIndexOf(".");
+        // 把目标字符串选出来
         const replacement = lineText.substring(startIndex, endIndex).trimEnd();
         if (replacement.length == 0) {
           return null;
@@ -62,7 +66,7 @@ export namespace Target {
           if (!targetRegex.end) {
             targetRegex.end = ".";
           }
-          const endIndex = lineText.lastIndexOf(targetRegex.end);
+          let endIndex = lineText.lastIndexOf(targetRegex.end);
           const replacement = lineText.substring(startIndex, endIndex);
           if (replacement.length == 0) {
             return null;
@@ -74,7 +78,6 @@ export namespace Target {
       };
     }
 
-    // !BUG
     export function Match(targetRegex: TargetRegex) {
       return function (
         target: any,
@@ -84,24 +87,30 @@ export namespace Target {
         if (!targetRegex.regex) {
           return null;
         }
+        if (!targetRegex.end) {
+          targetRegex.end = ".";
+        }
         const realMethod = descriptor.value;
-        descriptor.value = (lineText: string, datas: {}) => {
-          if (!targetRegex.end) {
-            targetRegex.end = ".";
+
+        class Wrapper {
+          @Target.Slice({ start: targetRegex.start, end: targetRegex.end })
+          static solve(lineText: string, datas: {}) {
+            // 此时lineText已经被 @Target.Slice 选取出来了
+            // 但是 lineText可能有前导和后导的空白字符, 这里不进行去除
+            let matchedArray = lineText.match(targetRegex.regex);
+            if (
+              !matchedArray ||
+              matchedArray.index !== 0 ||
+              matchedArray.length == 0
+            ) {
+              return null;
+            }
+            const replacement = matchedArray[0];
+            // 调用真实方法
+            return realMethod(replacement, datas);
           }
-          const startIndex = datas["firstNotWhiteSpaceIndex"];
-          const endIndex = lineText.lastIndexOf(targetRegex.end);
-          let matchedArray = lineText
-            .substring(datas["firstNotWhiteSpaceIndex"], endIndex)
-            .match(targetRegex.regex);
-          if (!matchedArray || matchedArray.length == 0) {
-            return null;
-          }
-          const replacement = matchedArray[0];
-          datas["startIndex"] = startIndex;
-          datas["endIndex"] = endIndex;
-          return realMethod(replacement, datas);
-        };
+        }
+        descriptor.value = Wrapper.solve;
       };
     }
   }

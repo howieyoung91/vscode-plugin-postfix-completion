@@ -7,7 +7,7 @@ import {Return} from "../../base/decorator/Return";
 
 @PostfixHandler({language: "cpp", label: "nullptr"})
 class NullptrPostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`if (${replacement} == nullptr){\n${indent()}$0\n}`);

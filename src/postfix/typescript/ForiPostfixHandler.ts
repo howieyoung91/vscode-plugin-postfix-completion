@@ -13,7 +13,7 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "fori" }
 )
 class ForiPostfixHandler4TsAndJs extends BasePostfixHandler {
-  @Target.Interval({ start: " " })
+  @Target.Slice({ start: " " })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas) {
     datas.startIndex++;

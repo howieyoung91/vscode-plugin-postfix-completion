@@ -6,7 +6,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 
 @PostfixHandler({ language: "python", label: "var" })
 class VarPostfixHandler4Py extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`\${1:varName} = ${replacement}`);

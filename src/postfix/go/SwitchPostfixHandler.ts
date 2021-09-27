@@ -7,7 +7,7 @@ import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "go", label: "switch" })
 class SwitchPostfixHandler4Go extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return new SnippetString(

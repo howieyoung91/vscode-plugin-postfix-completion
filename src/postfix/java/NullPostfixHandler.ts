@@ -7,7 +7,7 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "java", label: "null" })
 class NullPostfixHandler4J extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(

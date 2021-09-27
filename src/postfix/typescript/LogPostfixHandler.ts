@@ -10,7 +10,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
   { language: "html", label: "log" }
 )
 class LogPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return `console.log(${replacement});`;

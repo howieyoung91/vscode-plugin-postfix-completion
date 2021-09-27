@@ -11,7 +11,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
   { language: "html", label: "cast" }
 )
 class CastPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({ start: " " })
+  @Target.Slice({ start: " " })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;

@@ -15,7 +15,7 @@ import {indent} from "../../util/DocumentUtil";
   {language: "html", label: "ifelse"}
 )
 class IfelsePostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return new SnippetString(

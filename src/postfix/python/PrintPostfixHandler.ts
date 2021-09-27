@@ -5,7 +5,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 
 @PostfixHandler({ language: "python", label: "print" })
 class PrintPostfixHandler4Py extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return `print (${replacement})`;

@@ -8,7 +8,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
   { language: "c", label: "define" }
 )
 class DefinePostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Interval({ start: " " })
+  @Target.Slice({ start: " " })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas) {
     datas.startIndex++;

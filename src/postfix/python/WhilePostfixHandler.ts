@@ -7,7 +7,7 @@ import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "python", label: "while" })
 class WhilePostfixHandler4Py extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return new SnippetString(`while ${replacement}:\n${indent()}`);

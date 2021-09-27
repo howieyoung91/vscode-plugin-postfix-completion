@@ -74,7 +74,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 初始化参数
       postfixHandler.initArgs(postfix.datas.store);
 
-      let {line, lineText} = this.getLineText(document, position);
+      let { line, lineText } = this.getLineText(document, position);
 
       let result = this.handleLineText(postfix, line, postfixHandler, lineText);
 
@@ -83,7 +83,11 @@ export default class BasePostfixProvider implements CompletionItemProvider {
         continue;
       }
       let resultObject: {
-        text, documentation, detail, addition, deleteText
+        text;
+        documentation;
+        detail;
+        addition;
+        deleteText;
       } = this.parseResult(result, postfix);
       // let {text, documentation, detail, addition, deleteText} = this.parseResult(result, postfix);
       // 设置新的文本
@@ -94,11 +98,16 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       postfix.datas.clearData();
       // 添加补全项
       completionItems.push(postfix);
+      console.log(postfix);
     }
     return completionItems;
   }
 
-  private applyPropertValue(resultObject: { text; documentation; detail; addition; deleteText }, postfix: BasePostfix, position: Position) {
+  private applyPropertValue(
+    resultObject: { text; documentation; detail; addition; deleteText },
+    postfix: BasePostfix,
+    position: Position
+  ) {
     if (resultObject.text) {
       postfix.insertText = resultObject.text;
     }
@@ -138,7 +147,10 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     }
   }
 
-  private parseResult(result: string | SnippetString | LineTextHandleResult, postfix: BasePostfix) {
+  private parseResult(
+    result: string | SnippetString | LineTextHandleResult,
+    postfix: BasePostfix
+  ) {
     let text: string | SnippetString | undefined = undefined;
     let documentation: string | undefined = undefined;
     let detail: string | undefined = undefined;
@@ -162,19 +174,21 @@ export default class BasePostfixProvider implements CompletionItemProvider {
         text = result;
         break;
     }
-    return {text, documentation, detail, addition, deleteText};
+    return { text, documentation, detail, addition, deleteText };
   }
 
-  private handleLineText(postfix: BasePostfix, line: TextLine, postfixHandler: BasePostfixHandler, lineText: string) {
+  private handleLineText(
+    postfix: BasePostfix,
+    line: TextLine,
+    postfixHandler: BasePostfixHandler,
+    lineText: string
+  ) {
     // 把 firstNotWhiteSpaceIndex 放入 datas
     postfix.datas.addData({
       firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex,
     });
     // postfixHandler 处理行文本
-    let result = postfixHandler.handleLineText(
-      lineText,
-      postfix.datas.store
-    );
+    let result = postfixHandler.handleLineText(lineText, postfix.datas.store);
     return result;
   }
 
@@ -182,7 +196,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     // 获取行文本
     const line: TextLine = document.lineAt(position);
     let lineText: string = line.text.substring(0, position.character);
-    return {line, lineText};
+    return { line, lineText };
   }
 
   get postfixs(): BasePostfix[] {

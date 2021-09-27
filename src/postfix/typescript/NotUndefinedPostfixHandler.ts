@@ -12,7 +12,7 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "notundefined" }
 )
 class NotUndefinedPostfixHandler4TsJs extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(

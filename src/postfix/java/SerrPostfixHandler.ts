@@ -6,7 +6,7 @@ import LineTextHandleResult from "../../base/LinetextHandleResult";
 
 @PostfixHandler({ language: "java", label: "serr" })
 class SerrPostfixHandler4J extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   handleLineText(replacement: string, datas: {}): LineTextHandleResult {
     let res = {
       text: null,

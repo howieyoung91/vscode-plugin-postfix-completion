@@ -8,7 +8,7 @@ import StringUtil from "../../util/StringUtil";
 
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}): null | LineTextHandleResult {
     // 判断是否是 new ...(...)

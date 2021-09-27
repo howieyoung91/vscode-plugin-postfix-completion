@@ -6,7 +6,7 @@ import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "python", label: "none" })
 class NonePostfixHandler4Py extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return `if ${replacement} is None:\n${indent()}`;

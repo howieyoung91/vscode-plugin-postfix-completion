@@ -189,7 +189,7 @@ class CodeBlockPostfixHandler extends BasePostfixHandler {
     "zephir",
   ];
   private static readonly SET = new Set<String>(CodeBlockPostfixHandler.LANGS);
-  @Target.Interval({ start: " " })
+  @Target.Slice({ start: " " })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     // 如果 datas["startIndex"]原本 == -1

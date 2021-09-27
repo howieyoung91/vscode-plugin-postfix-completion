@@ -10,7 +10,7 @@ import { Return } from "../../base/decorator/Return";
   { language: "c", label: "struct" }
 )
 class StructPostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Interval({ start: " " })
+  @Target.Slice({ start: " " })
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;

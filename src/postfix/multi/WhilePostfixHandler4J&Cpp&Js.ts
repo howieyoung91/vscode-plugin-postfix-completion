@@ -15,7 +15,7 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "while" }
 )
 class WhilePostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return new SnippetString(`while (${replacement}) {\n${indent()}$0\n}`);

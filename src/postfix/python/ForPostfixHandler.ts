@@ -8,7 +8,7 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "python", label: "for" })
 class ForPostfixHandler4Py extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     let newText;

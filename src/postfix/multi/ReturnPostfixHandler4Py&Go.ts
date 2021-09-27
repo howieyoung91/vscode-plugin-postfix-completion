@@ -8,7 +8,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
   { language: "go", label: "return" }
 )
 class ReturnPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return `return ${replacement}`;

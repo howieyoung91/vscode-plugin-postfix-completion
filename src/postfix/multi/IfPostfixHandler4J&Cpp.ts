@@ -15,7 +15,7 @@ import { indent } from "../../util/DocumentUtil";
   { language: "html", label: "if" }
 )
 class IfPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string) {
     return new SnippetString(`if (${replacement}) {\n${indent()}$0\n}`);

@@ -6,7 +6,7 @@ import {Return} from "../../base/decorator/Return";
 
 @PostfixHandler({language: "markdown", label: "h5"})
 class H5PostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`##### ${replacement}`);

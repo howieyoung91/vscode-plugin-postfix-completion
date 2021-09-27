@@ -10,7 +10,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
   { language: "html", label: "warn" }
 )
 class WarnPostfixHandler extends BasePostfixHandler {
-  @Target.Interval({})
+  @Target.Slice({})
   @Return.DeleteText({})
   handleLineText(replacement: string, datas: {}) {
     return `console.warn(${replacement});`;

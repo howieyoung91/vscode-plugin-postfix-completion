@@ -1,7 +1,7 @@
 export interface TargetSlice {
   // 起始位置
   start?: string;
-  // 结束为止
+  // 结束位置
   end?: string;
 }
 
@@ -48,25 +48,19 @@ export namespace Target {
   }
 
   export namespace Regex {
-    export function Search(targetRegex: TargetRegex) {
+    export function Search(regex: RegExp) {
       return function (
         target: any,
         methodName: any,
         descriptor: TypedPropertyDescriptor<any>
       ) {
-        if (!targetRegex.regex) {
-          return null;
-        }
         const realMethod = descriptor.value;
         descriptor.value = (lineText: string, datas: {}) => {
-          const startIndex = lineText.search(targetRegex.regex);
+          const startIndex = lineText.search(regex);
           if (startIndex == -1) {
             return null;
           }
-          if (!targetRegex.end) {
-            targetRegex.end = ".";
-          }
-          let endIndex = lineText.lastIndexOf(targetRegex.end);
+          let endIndex = lineText.lastIndexOf(".");
           const replacement = lineText.substring(startIndex, endIndex);
           if (replacement.length == 0) {
             return null;

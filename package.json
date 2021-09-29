@@ -1,9 +1,9 @@
 {
-  "name": "postfixcompletion",
+  "name": "fastcomplete",
   "displayName": "Postfix Completion",
-  "description": "postfix completion",
+  "description": "Postfix completion",
   "publisher": "HowieYoung",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "keywords": [
     "postfix",
     "language",
@@ -21,7 +21,16 @@
     "*"
   ],
   "main": "./out/extension.js",
-  "contributes": {},
+  "contributes": {
+    "type": "object",
+    "properties": {
+      "postfixcompletion.support.lang": {
+        "type": "array",
+        "default": "*",
+        "description": "postfix 支持的语言"
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",

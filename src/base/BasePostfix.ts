@@ -10,6 +10,7 @@ export default class BasePostfix extends CompletionItem {
 
   constructor(postfixHandler: BasePostfixHandler, label: string) {
     super(label, CompletionItemKind.Snippet);
+  
     this._postfixHandler = postfixHandler;
   }
 

@@ -1,6 +1,6 @@
-# Fast Complete
+# Postfix Completion
 
-Fast Complete 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用于补全代码. 你可以使用本插件来更好地完成代码!
+Postfix Completion 为主流语言(c/cpp,java 等) 提供了许多后缀(postfix)用于补全代码. 你可以使用本插件来更好地完成代码!
 
 ## 特性
 

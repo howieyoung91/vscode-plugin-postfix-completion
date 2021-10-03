@@ -7,7 +7,8 @@
   "keywords": [
     "postfix",
     "language",
-    "complete"
+    "complete",
+    "completion"
   ],
   "engines": {
     "vscode": "^1.46.0"
@@ -26,7 +27,9 @@
     "properties": {
       "postfixcompletion.support.lang": {
         "type": "array",
-        "default": "*",
+        "default": [
+          "*"
+        ],
         "description": "postfix 支持的语言"
       }
     }

@@ -7,7 +7,7 @@ import { Return } from "../../base/decorator/Return";
 @PostfixHandler({ language: "markdown", label: "container" })
 class ContainerPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`::: ${replacement}\n$0\n:::`);
   }

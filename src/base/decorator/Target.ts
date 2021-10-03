@@ -18,7 +18,7 @@ export namespace Target {
    * @param slice 默认为 {start=datas["firstNotWhiteSpaceIndex"],end=lineText.lastIndexOf(".")}, 即行文本
    * @returns
    */
-  export function Slice(slice: TargetSlice): MethodDecorator {
+  export function Slice(slice?: TargetSlice): MethodDecorator {
     return function (
       target: any,
       methodName: any,
@@ -27,6 +27,9 @@ export namespace Target {
       // 接受参数为当前类 和 接受参数为当前方法名称  和  方法的描述
       const realMethod = descriptor.value;
       descriptor.value = (lineText: string, datas: {}) => {
+        if (!slice) {
+          slice = {};
+        }
         let startIndex: number, endIndex: number;
         startIndex = slice.start
           ? lineText.lastIndexOf(slice.start)
@@ -72,6 +75,11 @@ export namespace Target {
       };
     }
 
+    /**
+     *
+     * @param targetRegex
+     * @returns
+     */
     export function Match(targetRegex: TargetRegex) {
       return function (
         target: any,
@@ -90,7 +98,7 @@ export namespace Target {
           @Target.Slice({ start: targetRegex.start, end: targetRegex.end })
           static solve(lineText: string, datas: {}) {
             // 此时lineText已经被 @Target.Slice 选取出来了
-            // 但是 lineText可能有前导和后导的空白字符, 这里不进行去除
+            // 但是 lineText 可能有前导和后导的空白字符, 这里不进行去除
             let matchedArray = lineText.match(targetRegex.regex);
             if (
               !matchedArray ||

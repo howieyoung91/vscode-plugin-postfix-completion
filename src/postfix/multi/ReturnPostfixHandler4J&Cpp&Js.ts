@@ -14,7 +14,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 )
 class ReturnPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string) {
     return `return ${replacement};`;
   }

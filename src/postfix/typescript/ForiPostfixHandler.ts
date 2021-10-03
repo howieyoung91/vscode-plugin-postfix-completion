@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { Return } from "../../base/decorator/Return";
@@ -14,7 +13,7 @@ import { indent } from "../../util/DocumentUtil";
 )
 class ForiPostfixHandler4TsAndJs extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas) {
     datas.startIndex++;
     return new SnippetString(

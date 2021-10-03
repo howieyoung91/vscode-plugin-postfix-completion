@@ -8,7 +8,7 @@ import { indent } from "../../util/DocumentUtil";
 @PostfixHandler({ language: "cpp", label: "class" })
 class ClassPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;
     return new SnippetString(

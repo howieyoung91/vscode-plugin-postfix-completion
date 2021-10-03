@@ -7,7 +7,7 @@ import {
   Position,
   ProviderResult,
   SnippetString,
-  TextDocument,
+  TextDocument, 
   TextLine,
 } from "vscode";
 import Registry from "../util/Registry";
@@ -45,7 +45,6 @@ export default class BasePostfixProvider implements CompletionItemProvider {
    * 注册到vscode中
    */
   public register(): BasePostfixProvider {
-    // console.log("register!");
     Registry.registerPostfixProvider(this);
     return this;
   }
@@ -73,7 +72,6 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       });
       // 初始化参数
       postfixHandler.initArgs(postfix.datas.store);
-
       let { line, lineText } = this.getLineText(document, position);
 
       let result = this.handleLineText(postfix, line, postfixHandler, lineText);
@@ -98,7 +96,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       postfix.datas.clearData();
       // 添加补全项
       completionItems.push(postfix);
-      console.log(postfix);
+      // console.log(postfix);
     }
     return completionItems;
   }
@@ -118,7 +116,6 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 默认为 postfix
       postfix.detail = `postfix`;
     }
-    // 可以优化
     // 设置新的文档
     if (resultObject.documentation) {
       postfix.documentation = resultObject.documentation;
@@ -132,9 +129,9 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       }
     }
     // 添加参数
-    if (resultObject.addition) {
-      postfix.datas.addData(resultObject.addition);
-    }
+    // if (resultObject.addition) {
+    //   postfix.datas.addData(resultObject.addition);
+    // }
     // 是否删除原有文本
     if (resultObject.deleteText) {
       postfix.additionalTextEdits = [
@@ -165,7 +162,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
           text = result.text;
           documentation = result.documentation;
           detail = result.detail;
-          postfix.datas.setData(addition);
+          // postfix.datas.setData(addition);
           // datas = result.datas;
           deleteText = result.deleteText;
         }

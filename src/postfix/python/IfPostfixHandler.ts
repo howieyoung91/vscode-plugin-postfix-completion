@@ -7,7 +7,7 @@ import {indent} from "../../util/DocumentUtil";
 @PostfixHandler({language: "python", label: "if"})
 class IfPostfixHandler4Py extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string) {
     return `if ${replacement}:\n${indent()}`;
   }

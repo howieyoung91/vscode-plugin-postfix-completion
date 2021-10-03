@@ -7,7 +7,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 @PostfixHandler({ language: "go", label: "var" })
 class VarPostfixHandler4Go extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`\${1:varName} := ${replacement}`);
   }

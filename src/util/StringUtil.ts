@@ -9,21 +9,6 @@ export default class StringUtil {
     return !!raw.match(/^[0-9]+$/);
   }
 
-  public static isMatched(raw: string, char1: string, char2: string): boolean {
-    let cnt: number = 0;
-    for (const char of raw) {
-      switch (char) {
-        case char1:
-          cnt++;
-          continue;
-        case char2:
-          cnt--;
-      }
-    }
-    console.log(cnt);
-    return cnt === 0;
-  }
-
   public static javaTypeOf(text: string): string {
     let type = null;
     if (text.match(/^[0-9_]+$/) || text.match(/^0[Xx][0-9a-fA-F_]+$/)) {

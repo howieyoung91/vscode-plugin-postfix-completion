@@ -8,7 +8,7 @@ import { indent } from "../../util/DocumentUtil";
 @PostfixHandler({ language: "go", label: "for" })
 class ForPostfixHandler4Go extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(
       `for \${1:i}, \${2:elem} := range ${replacement} {\n${indent()}\$0\n}`

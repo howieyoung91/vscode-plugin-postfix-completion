@@ -13,7 +13,7 @@ import { indent } from "../../util/DocumentUtil";
 )
 class NotNullPostfixHandler4TsJs extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string) {
     return new SnippetString(
       `if (${replacement} !== null) {\n${indent()}$0\n}`

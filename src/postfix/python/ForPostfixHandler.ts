@@ -9,7 +9,7 @@ import { Return } from "../../base/decorator/Return";
 @PostfixHandler({ language: "python", label: "for" })
 class ForPostfixHandler4Py extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     let newText;
     let indentChars = indent();

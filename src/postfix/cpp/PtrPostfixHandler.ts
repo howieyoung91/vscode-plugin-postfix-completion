@@ -11,9 +11,11 @@ class PtrPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Regex.Match({
     regex: /\s*[a-zA-Z_][a-zA-Z_0-9]*$/,
     start: " ",
+    end: ".",
   })
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
+    
     datas["startIndex"]++;
     return `*${replacement.trim()}`;
   }

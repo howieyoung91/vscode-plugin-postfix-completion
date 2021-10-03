@@ -190,7 +190,7 @@ class CodeBlockPostfixHandler extends BasePostfixHandler {
   ];
   private static readonly SET = new Set<String>(CodeBlockPostfixHandler.LANGS);
   @Target.Slice({ start: " " })
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     // 如果 datas["startIndex"]原本 == -1
     if (datas["startIndex"] === -1) {

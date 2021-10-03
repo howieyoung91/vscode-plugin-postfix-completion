@@ -12,7 +12,7 @@ import { indent } from "../../util/DocumentUtil";
 )
 class ForrPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText({})
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;
     return new SnippetString(

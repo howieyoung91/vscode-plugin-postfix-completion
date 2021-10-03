@@ -6,8 +6,10 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 
 @PostfixHandler({ language: "cpp", label: "template" })
 class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Regex.Match({ regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/ })
-  @Return.DeleteText({})
+  @Target.Regex.Match({
+    regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/,
+  })
+  @Return.DeleteText()
   handleLineText(replacement: string, datas: {}) {
     replacement = replacement.trimEnd();
     const types = replacement.split(/\s+/);

@@ -7,7 +7,7 @@ export interface ReturnInterval {
 }
 
 export namespace Return {
-  export function DeleteText(returnInterval: ReturnInterval) {
+  export function DeleteText(returnInterval?: ReturnInterval) {
     return function (
       target: any,
       methodName: any,
@@ -19,6 +19,8 @@ export namespace Return {
         datas: {}
       ): LineTextHandleResult => {
         let res = realMethod(lineText, datas);
+        let start = 0;
+        let end = 0;
         if (res == null) {
           return null;
         }
@@ -34,6 +36,7 @@ export namespace Return {
                 },
               };
             } else {
+              // 把要删除的区间附加进去
               res.deleteText = {
                 startIndex: datas["startIndex"],
                 endIndex: datas["endIndex"] + 1,

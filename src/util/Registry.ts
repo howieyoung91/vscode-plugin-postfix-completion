@@ -1,6 +1,6 @@
-import {items} from "../extension";
 import {languages} from "vscode";
 import BasePostfixProvider from "../base/BasePostfixProvider";
+import { items } from "../context/FastCompleteContext";
 
 /**
  * 注册器

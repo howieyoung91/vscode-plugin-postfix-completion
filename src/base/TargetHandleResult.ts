@@ -2,7 +2,7 @@ import { SnippetString } from "vscode";
 /**
  * 行文本处理结果
  */
-export default interface LineTextHandleResult {
+export default interface TargetHandleResult {
   text: string | SnippetString;
   documentation?: string;
   detail?: string;

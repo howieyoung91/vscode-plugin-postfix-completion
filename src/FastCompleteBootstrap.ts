@@ -1,9 +1,6 @@
 import {ExtensionContext} from "vscode";
-import FastCompleteContext from "./context/FastCompleteContext";
+import FastCompleteContext from "./base/context/FastCompleteContext";
 
-/**
- * 这个是插件的启动类
- */
 export default class FastCompleteBootstrap {
   private static context = new FastCompleteContext();
 
@@ -15,5 +12,6 @@ export default class FastCompleteBootstrap {
   }
 
   static end() {
+    FastCompleteBootstrap.context.destroy();
   }
 }

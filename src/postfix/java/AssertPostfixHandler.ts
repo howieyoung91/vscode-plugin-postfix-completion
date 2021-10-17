@@ -6,7 +6,7 @@ import { Return } from "../../base/decorator/Return";
 @PostfixHandler({ language: "java", label: "assert" })
 class AssertPostfixHandler4J extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     return `assert ${replacement};`;
   }

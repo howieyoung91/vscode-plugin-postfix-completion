@@ -12,7 +12,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 )
 class CastPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;
     return new SnippetString(`(<\${1:type}> ${replacement.trim()})`);

@@ -1,5 +1,5 @@
 import {CompletionItem, SnippetString} from "vscode";
-import LineTextHandleResult from "./LinetextHandleResult";
+import TargetHandleResult from "./TargetHandleResult";
 
 /**
  * 后缀处理类
@@ -23,7 +23,7 @@ export default abstract class BasePostfixHandler {
   abstract handleLineText(
     lineText: string,
     datas: {}
-  ): string | SnippetString | LineTextHandleResult | null;
+  ): string | SnippetString | TargetHandleResult | null;
 
   /**
    * 处理补全项

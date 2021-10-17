@@ -7,7 +7,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 @PostfixHandler({ language: "go", label: "err" })
 class ErrPostfixHandler4Go extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string) {
     return new SnippetString(`errors.New(${replacement})`);
   }

@@ -1,17 +1,17 @@
 import {Disposable, ExtensionContext, workspace} from "vscode";
-import {iocContainer} from "../base/ioc/IocContainer";
-import {CONSTANT} from "../base/config/Constant";
+import {iocContainer} from "../ioc/IocContainer";
+import {CONSTANT} from "../config/Constant";
 import * as glob from "glob";
 
-let files = glob.sync("../postfix/**/*.js", {cwd: __dirname});
+let files = glob.sync("../../postfix/**/*.js", {cwd: __dirname});
 files.forEach((path) => {
   import(path);
 });
+
 /**
  * 插件的运行环境
  */
 let items: Disposable[] = [];
-
 export default class FastCompleteContext {
   config = {
     supportLanguages: [],
@@ -22,6 +22,15 @@ export default class FastCompleteContext {
     this.readConfig();
     // 应用配置
     this.applyConfig();
+    // 注册进入 vscode
+    this.registerIntoVscode(context);
+  }
+
+  public destroy() {
+
+  }
+
+  private registerIntoVscode(context: ExtensionContext) {
     context.subscriptions.push(...items);
   }
 

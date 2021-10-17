@@ -9,7 +9,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 )
 class LenPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: any) {
     datas.startIndex++;
     return `len(${replacement.trim()})`;

@@ -1,13 +1,13 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
+import TargetHandleResult from "../../base/TargetHandleResult";
 
 // @PostfixHandler({ language: "javascript", label: "let" })
 class LetPostfix4TsAndJs extends BasePostfixHandler {
   handleLineText(
     lineText: string,
     datas: {}
-  ): string | SnippetString | LineTextHandleResult | null {
+  ): string | SnippetString | TargetHandleResult | null {
     /*
       ① new  String().let -> let varName = new String();
       ② \s+ sb.    doSth(sb.doSth(arg1, arg2), arg3).let -> let varName = sb.doSth( sb.doSth(arg1, arg2), arg3);

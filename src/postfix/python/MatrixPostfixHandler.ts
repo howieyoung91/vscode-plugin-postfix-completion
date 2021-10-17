@@ -8,7 +8,7 @@ import { Return } from "../../base/decorator/Return";
 @PostfixHandler({ language: "python", label: "matrix" })
 class MatrixPostfixHandler4Py extends BasePostfixHandler {
   @Target.Regex.Search(/[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)+\s*$/)
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     // 分割空格,找到数据
     let nums = replacement.split(/\s+/);

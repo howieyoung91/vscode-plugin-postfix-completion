@@ -1,12 +1,12 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
+import TargetHandleResult from "../../base/TargetHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "java", label: "foreach" })
 class ForeachPostfixHandler extends BasePostfixHandler {
-  handleLineText(lineText: string): LineTextHandleResult | null {
+  handleLineText(lineText: string): TargetHandleResult | null {
     let startIndex = lineText.lastIndexOf(" ") + 1;
     let endIndex = lineText.lastIndexOf(".");
     // 获取数字

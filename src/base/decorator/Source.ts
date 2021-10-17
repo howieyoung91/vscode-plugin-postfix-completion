@@ -1,5 +1,8 @@
-import { Range } from "vscode";
+import {Range} from "vscode";
 
+/**
+ * 修改源文本
+ */
 export namespace Source {
   /**
    * 获取到全部文本
@@ -18,6 +21,7 @@ export namespace Source {
       };
     };
   }
+
   /**
    * 获取到某个指定行的文本
    * @param lineNumber 指定行号
@@ -41,6 +45,7 @@ export namespace Source {
       };
     };
   }
+
   /**
    * 获取到某个区间之内的文本
    * @param startLineNumber 起始行
@@ -61,7 +66,7 @@ export namespace Source {
         let document = datas["document"];
         let realStartLineNumber = startLineNumber;
         let realEndLineNumber = endLineNumber;
-        
+
         if (realStartLineNumber < 0) {
           realStartLineNumber = 0;
         }

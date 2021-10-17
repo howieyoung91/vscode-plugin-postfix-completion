@@ -1,11 +1,11 @@
-export interface TargetSlice {
+interface TargetSlice {
   // 起始位置
   start?: string;
   // 结束位置
   end?: string;
 }
 
-export interface TargetRegex {
+interface TargetRegex {
   regex: RegExp;
   // 起始位置
   start?: string;

@@ -7,13 +7,13 @@ import {
   Position,
   ProviderResult,
   SnippetString,
-  TextDocument, 
+  TextDocument,
   TextLine,
 } from "vscode";
 import Registry from "../util/Registry";
 import TextEditUtil from "../util/TextEditUtil";
 import BasePostfix from "./BasePostfix";
-import LineTextHandleResult from "./LineTextHandleResult";
+import TargetHandleResult from "./TargetHandleResult";
 import BasePostfixHandler from "./BasePostfixHandler";
 
 /**
@@ -145,7 +145,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
   }
 
   private parseResult(
-    result: string | SnippetString | LineTextHandleResult,
+    result: string | SnippetString | TargetHandleResult,
     postfix: BasePostfix
   ) {
     let text: string | SnippetString | undefined = undefined;

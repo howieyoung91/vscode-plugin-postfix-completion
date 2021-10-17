@@ -1,40 +1,32 @@
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {Target} from "../../base/decorator/Target";
-import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
-import {Return} from "../../base/decorator/Return";
-import {SnippetString} from "vscode";
-import {indent} from "../../util/DocumentUtil";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import { Return } from "../../base/decorator/Return";
+import { SnippetString } from "vscode";
+import { indent } from "../../util/DocumentUtil";
 import StringUtil from "../../util/StringUtil";
 
-@PostfixHandler({language: "java", label: "recordToClass"})
+@PostfixHandler({ language: "java", label: "recordToClass" })
 class RecordToClassPostfixHandler extends BasePostfixHandler {
   @Target.Regex.Match({
     regex: /record\s+\w+\s*\(.*\)/,
   })
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
-    let className = RecordToClassPostfixHandler.clazzName(replacement);
-    let propertiesString =
-      RecordToClassPostfixHandler.propertiesString(replacement);
-    let propertiesArray =
-      RecordToClassPostfixHandler.propertiesArray(propertiesString);
-    let field = RecordToClassPostfixHandler.field(propertiesArray);
-    let propertyObjectsArray =
-      RecordToClassPostfixHandler.propertyObjectsArray(propertiesArray);
-    let ctor = RecordToClassPostfixHandler.ctor(
-      className,
-      propertiesString,
-      propertyObjectsArray
-    );
-    let methods = RecordToClassPostfixHandler.methods(
-      className,
-      propertyObjectsArray
-    );
+    let className = Parser.clazzName(replacement);
+    let propertiesString = Parser.propertiesString(replacement);
+    let propertiesArray = Parser.propertiesArray(propertiesString);
+    let field = Parser.field(propertiesArray);
+    let propertyObjectsArray = Parser.propertyObjectsArray(propertiesArray);
+    let ctor = Parser.ctor(className, propertiesString, propertyObjectsArray);
+    let methods = Parser.methods(className, propertyObjectsArray);
     return new SnippetString(
       `class ${className} {\n${field}\n${ctor}\n${methods}\n}`
     );
   }
+}
 
+class Parser {
   static propertiesString(replacement: string) {
     return replacement.substring(
       replacement.indexOf("(") + 1,
@@ -108,12 +100,14 @@ class RecordToClassPostfixHandler extends BasePostfixHandler {
     let eq = ``;
     eq += `${indent()}@Override\n${indent()}public boolean equals(Object obj) {\n${indent().repeat(
       2
-    )}if (obj == this) return true;\n${indent().repeat(
+    )}if (obj == this) { return true; }\n${indent().repeat(
       2
-    )}if (obj == null || obj.getClass() != this.getClass()) return false;\n${indent().repeat(2)}${className} that = (${className}) obj;\n${indent().repeat(2)}`;
+    )}if (obj == null || obj.getClass() != this.getClass()) { return false; }\n${indent().repeat(
+      2
+    )}${className} that = (${className}) obj;\n${indent().repeat(2)}`;
     eq += `return `;
     for (let i = 0; i < propertiesObjectsArray.length - 1; i++) {
-      eq += `Objects.equals(this.${propertiesObjectsArray[i].name},that.${propertiesObjectsArray[i].name}) &&`;
+      eq += `Objects.equals(this.${propertiesObjectsArray[i].name},that.${propertiesObjectsArray[i].name}) && `;
     }
     eq += `Objects.equals(this.${
       propertiesObjectsArray[propertiesObjectsArray.length - 1].name

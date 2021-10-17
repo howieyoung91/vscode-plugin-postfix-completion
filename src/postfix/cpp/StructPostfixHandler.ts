@@ -11,7 +11,7 @@ import { Return } from "../../base/decorator/Return";
 )
 class StructPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;
     return new SnippetString(

@@ -9,7 +9,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 )
 class DefinePostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ start: " " })
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas) {
     datas.startIndex++;
     return `#define ${replacement.trim()} `;

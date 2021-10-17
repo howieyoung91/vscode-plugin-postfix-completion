@@ -16,7 +16,7 @@ import {indent} from "../../util/DocumentUtil";
 )
 class IfPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string) {
     return new SnippetString(`if (${replacement}) {\n${indent()}$0\n}`);
   }

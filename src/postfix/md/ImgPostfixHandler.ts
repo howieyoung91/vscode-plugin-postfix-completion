@@ -7,7 +7,7 @@ import { Return } from "../../base/decorator/Return";
 @PostfixHandler({ language: "markdown", label: "img" })
 class ImgPostfixHandler extends BasePostfixHandler {
   @Target.Regex.Search(/(http|https):\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/)
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`![\${1:alt}](${replacement})`);
   }

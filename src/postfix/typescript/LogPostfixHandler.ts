@@ -11,7 +11,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 )
 class LogPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     return `console.log(${replacement});`;
   }

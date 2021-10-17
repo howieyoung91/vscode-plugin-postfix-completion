@@ -13,7 +13,7 @@ class AddrPostfixHandler4Cpp extends BasePostfixHandler {
     start: " ",
     end: ".",
   })
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;
     return `&${replacement.trim()}`;

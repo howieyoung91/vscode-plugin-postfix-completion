@@ -7,7 +7,7 @@ import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
 @PostfixHandler({ language: "java", label: "souf" })
 class SoufPostfixHandler4J extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText()
+  @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     return new SnippetString(`System.out.printf("$1",${replacement});`);
   }

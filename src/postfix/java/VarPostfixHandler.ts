@@ -3,14 +3,14 @@ import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
-import LineTextHandleResult from "../../base/LinetextHandleResult";
+import TargetHandleResult from "../../base/TargetHandleResult";
 import StringUtil from "../../util/StringUtil";
 
 @PostfixHandler({ language: "java", label: "var" })
 class VarPostfixHandler4J extends BasePostfixHandler {
   @Target.Slice({})
-  @Return.DeleteText()
-  handleLineText(replacement: string, datas: {}): null | LineTextHandleResult {
+  @Return.Replace()
+  handleLineText(replacement: string, datas: {}): null | TargetHandleResult {
     // 判断是否是 new ...(...)
     let newText = null;
     if (replacement.match(/^new (.+?)\(.*\)$/)) {

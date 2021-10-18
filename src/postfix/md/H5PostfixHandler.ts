@@ -1,6 +1,6 @@
 import {SnippetString} from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/ioc/decorator/PostfixHandler";
+import {PostfixHandler} from "../../base/decorator/PostfixHandler";
 import {Target} from "../../base/decorator/Target";
 import {Return} from "../../base/decorator/Return";
 

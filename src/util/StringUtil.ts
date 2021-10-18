@@ -1,10 +1,8 @@
 export default class StringUtil {
-  private constructor() {
-  }
-
+  private constructor() {}
 
   public static UpperFirstChar(raw: string): string {
-    return raw.replace(/^\S/, s => s.toUpperCase())
+    return raw.replace(/^\S/, (s) => s.toUpperCase());
   }
 
   public static isNumber(raw: string): boolean {

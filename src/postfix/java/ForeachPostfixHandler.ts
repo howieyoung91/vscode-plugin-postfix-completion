@@ -1,6 +1,6 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import TargetHandleResult from "../../base/TargetHandleResult";
 import { indent } from "../../util/DocumentUtil";
 

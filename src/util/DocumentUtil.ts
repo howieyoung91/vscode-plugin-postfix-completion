@@ -1,8 +1,7 @@
 import * as vsc from "vscode";
 
 class DocumentUtil {
-  private constructor() {
-  }
+  private constructor() {}
 
   /**
    * 获取当前的缩进
@@ -17,4 +16,4 @@ class DocumentUtil {
 }
 
 const indent = DocumentUtil.indentCharacters;
-export {indent};
+export { indent };

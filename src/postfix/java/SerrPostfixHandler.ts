@@ -1,7 +1,7 @@
 import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/ioc/decorator/PostfixHandler";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import TargetHandleResult from "../../base/TargetHandleResult";
 
 @PostfixHandler({ language: "java", label: "serr" })

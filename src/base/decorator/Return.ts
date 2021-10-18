@@ -7,7 +7,7 @@ interface ReturnInterval {
 }
 
 export namespace Return {
-  export function Replace(returnInterval?: ReturnInterval) {
+  export function Replace(returnSlice?: ReturnInterval) {
     return function (
       target: any,
       methodName: any,

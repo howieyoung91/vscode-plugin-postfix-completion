@@ -1,16 +1,4 @@
-interface TargetSlice {
-  // 起始位置
-  start?: string;
-  // 结束位置
-  end?: string;
-}
-
-interface TargetRegex {
-  regex: RegExp;
-  // 起始位置
-  start?: string;
-  end?: string;
-}
+import { stringify } from "querystring";
 
 export namespace Target {
   /**
@@ -58,13 +46,13 @@ export namespace Target {
         descriptor: TypedPropertyDescriptor<any>
       ) {
         const realMethod = descriptor.value;
-        descriptor.value = (lineText: string, datas: {}) => {
-          const startIndex = lineText.search(regex);
+        descriptor.value = (target: string, datas: {}) => {
+          const startIndex = target.search(regex);
           if (startIndex == -1) {
             return null;
           }
-          let endIndex = lineText.lastIndexOf(".");
-          const replacement = lineText.substring(startIndex, endIndex);
+          let endIndex = target.lastIndexOf(".");
+          const replacement = target.substring(startIndex, endIndex);
           if (replacement.length == 0) {
             return null;
           }
@@ -112,8 +100,23 @@ export namespace Target {
             return realMethod(replacement, datas);
           }
         }
+
         descriptor.value = Wrapper.solve;
       };
     }
   }
+}
+
+interface TargetSlice {
+  // 起始位置
+  start?: string;
+  // 结束位置
+  end?: string;
+}
+
+interface TargetRegex {
+  regex: RegExp;
+  // 起始位置
+  start?: string;
+  end?: string;
 }

@@ -1,6 +1,7 @@
 import BasePostfixProvider from "../BasePostfixProvider";
 
 type Constructor<T = any> = new (...args: any[]) => T;
+
 /**
  * ioc容器
  */
@@ -9,7 +10,8 @@ class IocContainer {
     postfixProviders: {},
   };
 
-  private IocContainer() {}
+  private IocContainer() {
+  }
 
   public postfixProviders() {
     return this.instances.postfixProviders;
@@ -65,4 +67,4 @@ class IocContainer {
 
 const iocContainer = new IocContainer();
 
-export { iocContainer, Constructor };
+export {iocContainer, Constructor};

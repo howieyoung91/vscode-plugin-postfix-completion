@@ -1,12 +1,12 @@
 import {ExtensionContext} from "vscode";
-import FastCompleteBootstrap from "./FastCompleteBootstrap";
+import FastCompleteExtensionBootstrap from "./FastCompleteExtensionBootstrap";
 
 // 在这里启动插件
 export function activate(context: ExtensionContext) {
-  FastCompleteBootstrap.start(context);
+  FastCompleteExtensionBootstrap.start(context);
 }
 
 // 在这里销毁插件
 export function deactivate() {
-  FastCompleteBootstrap.end();
+  FastCompleteExtensionBootstrap.end();
 }

@@ -7,12 +7,12 @@ let files = glob.sync("../../postfix/**/*.js", {cwd: __dirname});
 files.forEach((path) => {
   import(path);
 });
+export let items: Disposable[] = [];
 
 /**
  * 插件的运行环境
  */
-let items: Disposable[] = [];
-export default class FastCompleteContext {
+export default class FastCompleteExtensionContext {
   config = {
     supportLanguages: [],
   };
@@ -36,9 +36,7 @@ export default class FastCompleteContext {
 
   private readConfig() {
     let configuration = workspace.getConfiguration();
-    let supportLanguages: string[] = configuration.get(
-      CONSTANT.PROPERTY.SUPPORT_LANG
-    );
+    let supportLanguages: string[] = configuration.get(CONSTANT.PROPERTY.SUPPORT_LANG);
     if (supportLanguages === undefined) {
       supportLanguages = ["*"];
     }
@@ -50,4 +48,3 @@ export default class FastCompleteContext {
     iocContainer.register(this.config.supportLanguages);
   }
 }
-export {items};

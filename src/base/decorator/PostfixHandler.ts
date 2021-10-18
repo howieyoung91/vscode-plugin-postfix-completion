@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import BasePostfix from "../../BasePostfix";
-import BasePostfixHandler from "../../BasePostfixHandler";
-import { Constructor, iocContainer } from "../IocContainer";
+import BasePostfix from "../BasePostfix";
+import BasePostfixHandler from "../BasePostfixHandler";
+import {Constructor, iocContainer} from "../ioc/IocContainer";
 
 /**
  * @description PostfixHandlerPosition 表示PostHandler作用的位置,
@@ -11,6 +11,7 @@ interface PostfixHandlerPosition {
   language: string;
   label: string;
 }
+
 /**
  * PostfixHandler 后缀处理器注解
  * @description 这个类是一个装饰器,用于装饰 BasePostfixHandler,

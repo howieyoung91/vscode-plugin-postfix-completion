@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "javascript", label: "undefined" },
   { language: "typescript", label: "undefined" },
   { language: "vue", label: "undefined" },
-  { language: "html", label: "undefined" }
+  { language: "html", label: "undefined" },
+  { language: "javascriptreact", label: "undefined" },
+  { language: "typescriptreact", label: "undefined" }
 )
 class UndefinedPostfixHandler4TsJs extends BasePostfixHandler {
   @Target.Slice({})

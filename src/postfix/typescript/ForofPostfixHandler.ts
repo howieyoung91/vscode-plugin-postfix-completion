@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "javascript", label: "forof" },
   { language: "typescript", label: "forof" },
   { language: "vue", label: "forof" },
-  { language: "html", label: "forof" }
+  { language: "html", label: "forof" },
+  { language: "javascriptreact", label: "forof" },
+  { language: "typescriptreact", label: "forof" }
 )
 class ForofPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })

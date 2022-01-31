@@ -1,8 +1,8 @@
 import * as vsc from "vscode";
 
 class DocumentUtil {
-  private constructor() {}
-
+  private constructor() { }
+  
   /**
    * 获取当前的缩进
    */

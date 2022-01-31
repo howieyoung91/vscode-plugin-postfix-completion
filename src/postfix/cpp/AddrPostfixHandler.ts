@@ -1,11 +1,11 @@
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/decorator/PostfixHandler";
-import {Return} from "../../base/decorator/Return";
-import {Target} from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { Return } from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
 
 @PostfixHandler(
-  {language: "cpp", label: "addr"},
-  {language: "c", label: "addr"}
+  { language: "cpp", label: "addr" },
+  { language: "c", label: "addr" }
 )
 class AddrPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Regex.Match({

@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "javascript", label: "fori" },
   { language: "typescript", label: "fori" },
   { language: "vue", label: "fori" },
-  { language: "html", label: "fori" }
+  { language: "html", label: "fori" },
+  { language: "javascriptreact", label: "fori" },
+  { language: "typescriptreact", label: "fori" }
 )
 class ForiPostfixHandler4TsAndJs extends BasePostfixHandler {
   @Target.Slice({ start: " " })

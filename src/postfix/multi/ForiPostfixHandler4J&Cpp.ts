@@ -1,17 +1,18 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {Return} from "../../base/decorator/Return";
-import {Target} from "../../base/decorator/Target";
-import {PostfixHandler} from "../../base/decorator/PostfixHandler";
-import {indent} from "../../util/DocumentUtil";
+import { Return } from "../../base/decorator/Return";
+import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  {language: "java", label: "fori"},
-  {language: "c", label: "fori"},
-  {language: "cpp", label: "fori"}
+  { language: "java", label: "fori" },
+  { language: "c", label: "fori" },
+  { language: "cpp", label: "fori" },
+  { language: "csharp", label: "fori" }
 )
 class ForiPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({start: " "})
+  @Target.Slice({ start: " " })
   @Return.Replace()
   handleLineText(replacement: string, datas: {}) {
     datas["startIndex"]++;

@@ -8,7 +8,9 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
   { language: "javascript", label: "cast" },
   { language: "typescript", label: "cast" },
   { language: "vue", label: "cast" },
-  { language: "html", label: "cast" }
+  { language: "html", label: "cast" },
+  { language: "javascriptreact", label: "cast" },
+  { language: "typescriptreact", label: "cast" }
 )
 class CastPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })

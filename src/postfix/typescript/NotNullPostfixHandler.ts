@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "javascript", label: "notnull" },
   { language: "typescript", label: "notnull" },
   { language: "vue", label: "notnull" },
-  { language: "html", label: "notnull" }
+  { language: "html", label: "notnull" },
+  { language: "javascriptreact", label: "notnull" },
+  { language: "typescriptreact", label: "notnull" }
 )
 class NotNullPostfixHandler4TsJs extends BasePostfixHandler {
   @Target.Slice({})

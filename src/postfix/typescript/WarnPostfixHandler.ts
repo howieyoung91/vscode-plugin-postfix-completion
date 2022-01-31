@@ -7,7 +7,9 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
   { language: "javascript", label: "warn" },
   { language: "typescript", label: "warn" },
   { language: "vue", label: "warn" },
-  { language: "html", label: "warn" }
+  { language: "html", label: "warn" },
+  { language: "javascriptreact", label: "warn" },
+  { language: "typescriptreact", label: "warn" }
 )
 class WarnPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})

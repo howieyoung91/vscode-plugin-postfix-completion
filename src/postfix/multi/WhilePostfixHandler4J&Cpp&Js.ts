@@ -9,6 +9,7 @@ import { indent } from "../../util/DocumentUtil";
   { language: "java", label: "while" },
   { language: "c", label: "while" },
   { language: "cpp", label: "while" },
+  { language: "csharp", label: "while" },
   { language: "javascript", label: "while" },
   { language: "typescript", label: "while" },
   { language: "vue", label: "while" },

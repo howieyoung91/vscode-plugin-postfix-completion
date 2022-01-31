@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "javascript", label: "forin" },
   { language: "typescript", label: "forin" },
   { language: "vue", label: "forin" },
-  { language: "html", label: "forin" }
+  { language: "html", label: "forin" },
+  { language: "javascriptreact", label: "forin" },
+  { language: "typescriptreact", label: "forin" }
 )
 class ForinPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })

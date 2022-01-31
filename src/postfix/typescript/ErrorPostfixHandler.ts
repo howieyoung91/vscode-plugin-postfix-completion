@@ -7,7 +7,9 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
   { language: "javascript", label: "err" },
   { language: "typescript", label: "err" },
   { language: "vue", label: "err" },
-  { language: "html", label: "err" }
+  { language: "html", label: "err" },
+  { language: "javascriptreact", label: "err" },
+  { language: "typescriptreact", label: "err" }
 )
 class ErrorPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})

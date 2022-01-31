@@ -7,6 +7,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
   { language: "java", label: "return" },
   { language: "c", label: "return" },
   { language: "cpp", label: "return" },
+  { language: "csharp", label: "return" },
   { language: "javascript", label: "return" },
   { language: "typescript", label: "return" },
   { language: "vue", label: "return" },

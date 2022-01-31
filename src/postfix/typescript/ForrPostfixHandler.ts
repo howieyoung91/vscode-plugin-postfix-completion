@@ -9,7 +9,9 @@ import { indent } from "../../util/DocumentUtil";
   { language: "javascript", label: "forr" },
   { language: "typescript", label: "forr" },
   { language: "vue", label: "forr" },
-  { language: "html", label: "forr" }
+  { language: "html", label: "forr" },
+  { language: "javascriptreact", label: "forr" },
+  { language: "typescriptreact", label: "forr" }
 )
 class ForrPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })

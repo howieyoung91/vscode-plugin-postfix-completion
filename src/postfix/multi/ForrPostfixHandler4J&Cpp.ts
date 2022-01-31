@@ -8,7 +8,8 @@ import { indent } from "../../util/DocumentUtil";
 @PostfixHandler(
   { language: "java", label: "forr" },
   { language: "c", label: "forr" },
-  { language: "cpp", label: "forr" }
+  { language: "cpp", label: "forr" },
+  { language: "csharp", label: "forr" }
 )
 class ForrPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })

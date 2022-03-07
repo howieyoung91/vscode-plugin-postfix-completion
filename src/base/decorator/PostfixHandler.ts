@@ -4,7 +4,7 @@ import BasePostfixHandler from "../BasePostfixHandler";
 import {Constructor, iocContainer} from "../ioc/IocContainer";
 
 /**
- * @description PostfixHandlerPosition 表示PostHandler作用的位置,
+ * @description PostfixHandlerPosition 表示PostfixHandler作用的位置,
  *              { language:java, label:if } 表示在java文件下使用`if`触发补全
  */
 interface PostfixHandlerPosition {

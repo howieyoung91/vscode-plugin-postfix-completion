@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 export namespace Target {
   /**
    * 在行文本中获取目标字符串
@@ -39,7 +37,10 @@ export namespace Target {
   }
 
   export namespace Regex {
-    export function Search(regex: RegExp) {
+    export function Search(
+      regex: RegExp,
+      ignoreTriggerCharacter: boolean = false
+    ) {
       return function (
         target: any,
         methodName: any,
@@ -47,6 +48,10 @@ export namespace Target {
       ) {
         const realMethod = descriptor.value;
         descriptor.value = (target: string, datas: {}) => {
+          if (ignoreTriggerCharacter) {
+            
+          }
+
           const startIndex = target.search(regex);
           if (startIndex == -1) {
             return null;

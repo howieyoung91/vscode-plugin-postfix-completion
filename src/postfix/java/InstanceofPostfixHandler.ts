@@ -9,7 +9,7 @@ import { SnippetString } from "vscode";
 class InstanceofPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     return new SnippetString(
       `if (${replacement} instanceof $1) {\n${indent()}$0\n}`
     );

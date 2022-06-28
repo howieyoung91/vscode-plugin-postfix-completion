@@ -12,7 +12,7 @@ class RecordToClassPostfixHandler extends BasePostfixHandler {
     regex: /record\s+\w+\s*\(.*\)/,
   })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     let className = Parser.clazzName(replacement);
     let propertiesString = Parser.propertiesString(replacement);
     let propertiesArray = Parser.propertiesArray(propertiesString);

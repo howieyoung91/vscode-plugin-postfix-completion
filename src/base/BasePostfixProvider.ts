@@ -21,18 +21,15 @@ import BasePostfixHandler from "./BasePostfixHandler";
  */
 export default class BasePostfixProvider implements CompletionItemProvider {
   protected _postfixs: BasePostfix[] = [];
-  protected _triggerCharacters: string[] = [`.`];
+  protected _triggerCharacters: string[];
   protected _language: string | null = null;
 
-  constructor(language: string, ...triggerCharacters: string[]) {
+  constructor(language: string) {
     this._language = language;
     this._triggerCharacters = [`.`];
   }
 
-  public push(
-    postfix: BasePostfix,
-    ...postfixs: BasePostfix[]
-  ): BasePostfixProvider {
+  public push(postfix: BasePostfix, ...postfixs: BasePostfix[]): BasePostfixProvider {
     this._postfixs.push(postfix, ...postfixs);
     return this;
   }
@@ -64,12 +61,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     for (const postfix of this._postfixs) {
       // 设置参数
       let postfixHandler = postfix.postfixHandler;
-      postfix.data.addData({
-        document,
-        position,
-        token,
-        context,
-      });
+      postfix.data.add({ document, position, token, context });
       // 初始化参数
       postfixHandler.initArgs(postfix.data.store);
       let { line, lineText } = this.getLineText(document, position);
@@ -89,7 +81,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       } = this.parseResult(result, postfix);
       // let {text, documentation, detail, addition, deleteText} = this.parseResult(result, postfix);
       // 设置新的文本
-      this.applyPropertValue(resultObject, postfix, position);
+      this.applyPropertyValue(resultObject, postfix, position);
       // 处理补全项
       postfixHandler.handleCompletionItem(postfix, postfix.data.store);
       // 重置参数
@@ -101,7 +93,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     return completionItems;
   }
 
-  private applyPropertValue(
+  private applyPropertyValue(
     resultObject: { text; documentation; detail; addition; deleteText },
     postfix: BasePostfix,
     position: Position
@@ -144,10 +136,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     }
   }
 
-  private parseResult(
-    result: string | SnippetString | TargetHandleResult,
-    postfix: BasePostfix
-  ) {
+  private parseResult(result: string | SnippetString | TargetHandleResult, postfix: BasePostfix) {
     let text: string | SnippetString | undefined = undefined;
     let documentation: string | undefined = undefined;
     let detail: string | undefined = undefined;
@@ -181,7 +170,7 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     lineText: string
   ) {
     // 把 firstNotWhiteSpaceIndex 放入 datas
-    postfix.data.addData({
+    postfix.data.add({
       firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex,
     });
     // postfixHandler 处理行文本

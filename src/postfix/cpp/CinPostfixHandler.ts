@@ -7,7 +7,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 export class CinPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ end: "." })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string, data: {}) {
     return `std::cin >> ${replacement};`;
   }
 }

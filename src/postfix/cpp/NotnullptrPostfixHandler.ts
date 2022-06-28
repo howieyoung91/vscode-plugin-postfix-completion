@@ -9,7 +9,7 @@ import { indent } from "../../util/DocumentUtil";
 class NotnullptrPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ end: "." })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string, data: {}) {
     const newText = `if (${replacement} != nullptr) {\n${indent()}$0\n}`;
     return new SnippetString(newText);
   }

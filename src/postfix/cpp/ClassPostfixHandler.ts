@@ -9,8 +9,8 @@ import { indent } from "../../util/DocumentUtil";
 class ClassPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ start: " " })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
-    datas["startIndex"]++;
+  handleLineText(replacement: string, data: {}) {
+    data["startIndex"]++;
     return new SnippetString(
       `class ${replacement.trim()} {\n${indent()}$0\n};`
     );

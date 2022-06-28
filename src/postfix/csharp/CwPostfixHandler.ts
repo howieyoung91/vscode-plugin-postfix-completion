@@ -6,7 +6,7 @@ import { Target } from "../../base/decorator/Target";
 @PostfixHandler({ language: "csharp", label: "cw" })
 class CwPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string, data: {}) {
     let res = {
       text: null,
       deleteText: null,
@@ -17,8 +17,8 @@ class CwPostfixHandler extends BasePostfixHandler {
     } else {
       res.text = new SnippetString(`Console.WriteLine(${replacement});`);
       res.deleteText = {
-        startIndex: datas["startIndex"],
-        endIndex: datas["endIndex"] + 1,
+        startIndex: data["startIndex"],
+        endIndex: data["endIndex"] + 1,
       };
     }
     return res;

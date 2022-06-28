@@ -1,3 +1,4 @@
+// todo
 export namespace Validation {
   export function Match(regex: RegExp): MethodDecorator {
     return function (
@@ -7,10 +8,10 @@ export namespace Validation {
     ) {
       const realMethod = descriptor.value;
 
-      descriptor.value = (target: string, datas: {}) => {
-
+      descriptor.value = (target: string, data: {}) => {
         let matchedArray = target.match(regex);
-        if (!matchedArray ||
+        if (
+          !matchedArray ||
           matchedArray.index !== 0 ||
           matchedArray.length == 0
         ) {
@@ -18,8 +19,8 @@ export namespace Validation {
         }
 
         // 不对 target 进行任何处理 调用真实方法
-        return realMethod(target, datas);
-      }
+        return realMethod(target, data);
+      };
     };
   }
 

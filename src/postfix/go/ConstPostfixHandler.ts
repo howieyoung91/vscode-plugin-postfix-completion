@@ -8,7 +8,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 class ConstPostfixHandler4Go extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string, data: {}) {
     return new SnippetString(`const \${1:varName} \${2:type} = ${replacement}`);
   }
 }

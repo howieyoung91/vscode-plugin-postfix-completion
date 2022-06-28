@@ -7,7 +7,7 @@ import TargetHandleResult from "../../base/TargetHandleResult";
 @PostfixHandler({ language: "java", label: "serr" })
 class SerrPostfixHandler4J extends BasePostfixHandler {
   @Target.Slice({})
-  handleLineText(replacement: string, datas: {}): TargetHandleResult {
+  handleLineText(replacement: string, data: {}): TargetHandleResult {
     let res = {
       text: null,
       deleteText: null,
@@ -18,8 +18,8 @@ class SerrPostfixHandler4J extends BasePostfixHandler {
     } else {
       res.text = new SnippetString(`System.err.println(${replacement});`);
       res.deleteText = {
-        startIndex: datas["startIndex"],
-        endIndex: datas["endIndex"] + 1,
+        startIndex: data["startIndex"],
+        endIndex: data["endIndex"] + 1,
       };
     }
     return res;

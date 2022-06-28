@@ -16,7 +16,7 @@ import { indent } from "../../util/DocumentUtil";
 class UndefinedPostfixHandler4TsJs extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     return new SnippetString(
       `if (${replacement} === undefined) {\n${indent()}$0\n}`
     );

@@ -5,22 +5,21 @@
 export default class Store {
   protected _store: any = {};
 
-  public addData(datas: {}): Store {
-    this._store = Object.assign(datas, this._store);
+  public add(data: {}): Store {
+    this._store = Object.assign(data, this._store);
     return this;
   }
 
-  public getData(key: string) {
+  public get(key: string) {
     return this._store[key];
   }
 
-  public setData(obj: {}) {
-    for (let key in obj) {
-      this._store[key] = obj[key];
-    }
-    // this._store[key] = value;
-    return this;
-  }
+  // public setData(obj: {}) {
+  //   for (let key in obj) {
+  //     this._store[key] = obj[key];
+  //   }
+  //   return this;
+  // }
 
   public clearData() {
     this._store = {};

@@ -10,8 +10,7 @@ class IocContainer {
     postfixProviders: {},
   };
 
-  private IocContainer() {
-  }
+  private IocContainer() {}
 
   public postfixProviders() {
     return this.instances.postfixProviders;
@@ -20,9 +19,7 @@ class IocContainer {
   public postfixProvidersOf(language: string) {
     // 判断是否存在language对应的PostfixProvider
     if (!this.instances.postfixProviders[language]) {
-      this.instances.postfixProviders[language] = new BasePostfixProvider(
-        language
-      );
+      this.instances.postfixProviders[language] = new BasePostfixProvider(language);
     }
 
     return this.instances.postfixProviders[language];
@@ -67,4 +64,4 @@ class IocContainer {
 
 const iocContainer = new IocContainer();
 
-export {iocContainer, Constructor};
+export { iocContainer, Constructor };

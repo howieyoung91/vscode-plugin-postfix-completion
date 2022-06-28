@@ -8,7 +8,7 @@ import { Return } from "../../base/decorator/Return";
 class H1PostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     return new SnippetString(`# ${replacement}`);
   }
 }

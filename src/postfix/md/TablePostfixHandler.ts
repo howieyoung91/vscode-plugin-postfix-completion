@@ -1,14 +1,14 @@
-import {SnippetString} from "vscode";
+import { SnippetString } from "vscode";
 import BasePostfixHandler from "../../base/BasePostfixHandler";
-import {PostfixHandler} from "../../base/decorator/PostfixHandler";
-import {Target} from "../../base/decorator/Target";
-import {Return} from "../../base/decorator/Return";
+import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { Target } from "../../base/decorator/Target";
+import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({language: "markdown", label: "table"})
+@PostfixHandler({ language: "markdown", label: "table" })
 class TablePostfixHandler extends BasePostfixHandler {
   @Target.Regex.Search(/[0-9]+\s+[0-9]+./)
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     // 分割空格,找到数据
     let nums = replacement.split(/\s+/);
     // 如果行和列不是整数

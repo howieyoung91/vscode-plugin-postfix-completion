@@ -10,8 +10,8 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 class DeleteArrayPostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ start: " " })
   @Return.Replace()
-  handleLineText(replacement: string, datas) {
-    datas.startIndex++; 
+  handleLineText(replacement: string, data) {
+    data.startIndex++;
     return `delete[] ${replacement.trim().trimEnd()};`;
   }
 }

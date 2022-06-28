@@ -14,8 +14,8 @@ class AddrPostfixHandler4Cpp extends BasePostfixHandler {
     end: ".",
   })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
-    datas["startIndex"]++;
+  handleLineText(replacement: string, data: {}) {
+    data["startIndex"]++;
     return `&${replacement.trim()}`;
   }
 }

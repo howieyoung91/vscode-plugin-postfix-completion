@@ -10,7 +10,7 @@ class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
     regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/,
   })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string, data: {}) {
     replacement = replacement.trimEnd();
     const types = replacement.split(/\s+/);
     let typeString = ``;

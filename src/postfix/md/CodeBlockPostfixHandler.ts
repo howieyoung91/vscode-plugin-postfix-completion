@@ -7,7 +7,7 @@ import { Return } from "../../base/decorator/Return";
 @PostfixHandler({ language: "markdown", label: "codeblock" })
 class CodeBlockPostfixHandler extends BasePostfixHandler {
   private static readonly LANGS = [
-    "1c",
+    "c",
     "abnf",
     "accesslog",
     "actionscript",
@@ -191,12 +191,12 @@ class CodeBlockPostfixHandler extends BasePostfixHandler {
   private static readonly SET = new Set<String>(CodeBlockPostfixHandler.LANGS);
   @Target.Slice({ start: " " })
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
-    // 如果 datas["startIndex"]原本 == -1
-    if (datas["startIndex"] === -1) {
-      datas["startIndex"] = datas["firstNotWhiteSpaceIndex"];
+  handleLineText(replacement: string, data: {}) {
+    // 如果 datas["startIndex"] 原本 == -1
+    if (data["startIndex"] === -1) {
+      data["startIndex"] = data["firstNotWhiteSpaceIndex"];
     } else {
-      datas["startIndex"]++;
+      data["startIndex"]++;
       replacement = replacement.substring(1);
     }
     if (CodeBlockPostfixHandler.SET.has(replacement)) {

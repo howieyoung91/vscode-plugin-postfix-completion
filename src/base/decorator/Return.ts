@@ -8,11 +8,7 @@ interface ReturnInterval {
 
 export namespace Return {
   export function Replace(returnSlice?: ReturnInterval) {
-    return function (
-      target: any,
-      methodName: any,
-      descriptor: TypedPropertyDescriptor<any>
-    ) {
+    return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {
       const realMethod = descriptor.value;
       descriptor.value = (lineText: string, datas: {}): TargetHandleResult => {
         let res = realMethod(lineText, datas);

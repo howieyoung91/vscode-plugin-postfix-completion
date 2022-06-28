@@ -7,8 +7,8 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 class NotPostfixHandler4Py extends BasePostfixHandler {
   @Target.Slice({ start: " " })
   @Return.Replace()
-  handleLineText(replacement: string, datas: any) {
-    datas.startIndex++;
+  handleLineText(replacement: string, data: any) {
+    data.startIndex++;
     return `not ${replacement.trim()}`;
   }
 }

@@ -10,7 +10,7 @@ import StringUtil from "../../util/StringUtil";
 class VarPostfixHandler4J extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}): null | TargetHandleResult {
+  handleLineText(replacement: string): null | TargetHandleResult {
     // 判断是否是 new ...(...)
     let newText = null;
     if (replacement.match(/^new (.+?)\(.*\)$/)) {

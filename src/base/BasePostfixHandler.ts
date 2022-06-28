@@ -1,4 +1,4 @@
-import {CompletionItem, SnippetString} from "vscode";
+import { CompletionItem, SnippetString } from "vscode";
 import TargetHandleResult from "./TargetHandleResult";
 
 /**
@@ -12,17 +12,16 @@ export default abstract class BasePostfixHandler {
    * 初始化参数
    * @param datas 参数
    */
-  initArgs(datas: {}) {
-  }
+  initArgs(datas: {}) {}
 
   /**
    * 处理行文本
    * @param lineText 行文本
-   * @param datas
+   * @param data
    */
   abstract handleLineText(
     lineText: string,
-    datas: {}
+    data: {}
   ): string | SnippetString | TargetHandleResult | null;
 
   /**
@@ -30,6 +29,5 @@ export default abstract class BasePostfixHandler {
    * @param item 补全项
    * @Param args 参数
    */
-  handleCompletionItem(item: CompletionItem, datas: {}) {
-  }
+  handleCompletionItem(item: CompletionItem, datas: {}) {}
 }

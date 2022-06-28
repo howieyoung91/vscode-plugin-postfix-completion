@@ -8,7 +8,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 class VarPostfixHandler4Py extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     return new SnippetString(`\${1:varName} = ${replacement}`);
   }
 }

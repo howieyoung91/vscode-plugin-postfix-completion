@@ -10,8 +10,8 @@ import { Return } from "../../base/decorator/Return";
 class ForPostfixHandler4Py extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
-    let newText;
+  handleLineText(replacement: string) {
+    let newText = "";
     let indentChars = indent();
     if (StringUtil.isInt(replacement)) {
       newText = `for \${1:i} in range(${replacement}):\n${indentChars}`;

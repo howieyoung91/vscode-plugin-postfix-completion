@@ -1,13 +1,13 @@
 import { languages } from "vscode";
 import BasePostfixProvider from "../base/BasePostfixProvider";
-import { items } from "../base/context/FastCompleteExtensionContext";
+import { items } from "../base/context/PostfixCompletionContext";
 
 /**
  * 注册器
  */
 export default class Registry {
-  private constructor() { }
-  
+  private constructor() {}
+
   /**
    * 注册分发器
    */

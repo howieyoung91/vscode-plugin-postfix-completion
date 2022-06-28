@@ -10,8 +10,8 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 class DefinePostfixHandler4Cpp extends BasePostfixHandler {
   @Target.Slice({ start: " " })
   @Return.Replace()
-  handleLineText(replacement: string, datas) {
-    datas.startIndex++;
+  handleLineText(replacement: string, data) {
+    data.startIndex++;
     return `#define ${replacement.trim()} `;
   }
 }

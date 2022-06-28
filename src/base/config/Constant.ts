@@ -1,5 +1,5 @@
 export namespace CONSTANT {
   export enum PROPERTY {
-    SUPPORT_LANG = `postfixcompletion.support.lang`,
+    SUPPORTED_LANGUAGES = `postfixcompletion.support.languages`,
   }
 }

@@ -9,7 +9,7 @@ import { Return } from "../../base/decorator/Return";
 class NotNullPostfixHandler4J extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     return new SnippetString(`if (${replacement} != null) {\n${indent()}$0\n}`);
   }
 }

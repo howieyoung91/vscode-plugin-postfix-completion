@@ -16,8 +16,8 @@ import { indent } from "../../util/DocumentUtil";
 class ForrPostfixHandler extends BasePostfixHandler {
   @Target.Slice({ start: " " })
   @Return.Replace()
-  handleLineText(replacement: string, datas: any) {
-    datas.startIndex++;
+  handleLineText(replacement: string, data: any) {
+    data.startIndex++;
     return new SnippetString(
       `for (let \${1:i} = ${replacement.trim()}; \${1:i} >= 0; \${1:i}--) {\n${indent()}$0\n}`
     );

@@ -5,8 +5,7 @@ import TargetHandleResult from "../../base/TargetHandleResult";
 // @PostfixHandler({ language: "javascript", label: "let" })
 class LetPostfix4TsAndJs extends BasePostfixHandler {
   handleLineText(
-    lineText: string,
-    datas: {}
+    lineText: string
   ): string | SnippetString | TargetHandleResult | null {
     /*
       ① new  String().let -> let varName = new String();

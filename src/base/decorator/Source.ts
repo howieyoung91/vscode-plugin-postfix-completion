@@ -1,4 +1,4 @@
-import {Range} from "vscode";
+import { Range } from "vscode";
 
 /**
  * 修改源文本
@@ -8,16 +8,12 @@ export namespace Source {
    * 获取到全部文本
    */
   export function Document(): MethodDecorator {
-    return function (
-      target: any,
-      methodName: any,
-      descriptor: TypedPropertyDescriptor<any>
-    ) {
+    return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {
       const realMethod = descriptor.value;
-      descriptor.value = (lineText: string, datas: {}) => {
+      descriptor.value = (lineText: string, data: {}) => {
         let source = lineText;
-        source = datas["document"].getText();
-        return realMethod(source, datas);
+        source = data["document"].getText();
+        return realMethod(source, data);
       };
     };
   }
@@ -27,17 +23,13 @@ export namespace Source {
    * @param lineNumber 指定行号
    */
   export function LineTextAt(lineNumber: number): MethodDecorator {
-    return function (
-      target: any,
-      methodName: any,
-      descriptor: TypedPropertyDescriptor<any>
-    ) {
+    return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {
       const realMethod = descriptor.value;
-      descriptor.value = (lineText: string, datas: {}) => {
+      descriptor.value = (lineText: string, data: {}) => {
         let source = lineText;
         try {
-          source = datas["document"].lineAt(lineNumber).text;
-          return realMethod(source, datas);
+          source = data["document"].lineAt(lineNumber).text;
+          return realMethod(source, data);
         } catch (e) {
           // 防止 lineNumber 溢出
           return null;
@@ -51,16 +43,8 @@ export namespace Source {
    * @param startLineNumber 起始行
    * @param endLineNumber 结束行 -1 表示到文件结尾
    */
-  export function DocumentBetween(
-    startLineNumber: number,
-    endLineNumber: number,
-    limit?: number
-  ): MethodDecorator {
-    return function (
-      target: any,
-      methodName: any,
-      descriptor: TypedPropertyDescriptor<any>
-    ) {
+  export function DocumentBetween(startLineNumber: number, endLineNumber: number, limit?: number): MethodDecorator {
+    return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {
       const realMethod = descriptor.value;
       descriptor.value = (lineText: string, datas: {}) => {
         let document = datas["document"];
@@ -81,9 +65,7 @@ export namespace Source {
         }
         let source = lineText;
         try {
-          source = document.getText(
-            new Range(realStartLineNumber, 0, realEndLineNumber, 0)
-          );
+          source = document.getText(new Range(realStartLineNumber, 0, realEndLineNumber, 0));
           return realMethod(source, datas);
         } catch (e) {
           // 防止 lineNumber 溢出

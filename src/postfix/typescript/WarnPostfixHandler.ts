@@ -14,7 +14,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 class WarnPostfixHandler extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string, data: {}) {
     return `console.warn(${replacement});`;
   }
 }

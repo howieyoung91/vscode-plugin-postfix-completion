@@ -7,7 +7,7 @@ import { Return } from "../../base/decorator/Return";
 class PrintfPostfixHandler4Go extends BasePostfixHandler {
   @Target.Slice({})
   @Return.Replace()
-  handleLineText(replacement: string, datas: {}) {
+  handleLineText(replacement: string) {
     return `fmt.Printf("%+v\\n",${replacement})`;
   }
 }

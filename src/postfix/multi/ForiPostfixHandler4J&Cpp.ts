@@ -6,18 +6,18 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "java", label: "fori" },
-  { language: "c", label: "fori" },
-  { language: "cpp", label: "fori" },
-  { language: "csharp", label: "fori" }
+    { language: "java", label: "fori" },
+    { language: "c", label: "fori" },
+    { language: "cpp", label: "fori" },
+    { language: "csharp", label: "fori" }
 )
 class ForiPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({ start: " " })
-  @Return.Replace()
-  handleLineText(replacement: string, data: {}) {
-    data["startIndex"]++;
-    return new SnippetString(
-      `for (int \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleLineText(replacement: string, data: {}) {
+        data["startIndex"]++;
+        return new SnippetString(
+            `for (int \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`
+        );
+    }
 }

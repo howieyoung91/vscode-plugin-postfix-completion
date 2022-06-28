@@ -4,17 +4,17 @@ import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler(
-  { language: "javascript", label: "log" },
-  { language: "typescript", label: "log" },
-  { language: "vue", label: "log" },
-  { language: "html", label: "log" },
-  { language: "javascriptreact", label: "log" },
-  { language: "typescriptreact", label: "log" }
+    { language: "javascript", label: "log" },
+    { language: "typescript", label: "log" },
+    { language: "vue", label: "log" },
+    { language: "html", label: "log" },
+    { language: "javascriptreact", label: "log" },
+    { language: "typescriptreact", label: "log" }
 )
 class LogPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return `console.log(${replacement});`;
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return `console.log(${replacement});`;
+    }
 }

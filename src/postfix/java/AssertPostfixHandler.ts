@@ -5,9 +5,9 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "java", label: "assert" })
 class AssertPostfixHandler4J extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return `assert ${replacement};`;
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return `assert ${replacement};`;
+    }
 }

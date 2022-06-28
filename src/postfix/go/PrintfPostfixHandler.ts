@@ -5,9 +5,9 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "go", label: "printf" })
 class PrintfPostfixHandler4Go extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return `fmt.Printf("%+v\\n",${replacement})`;
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return `fmt.Printf("%+v\\n",${replacement})`;
+    }
 }

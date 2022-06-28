@@ -5,10 +5,10 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler({ language: "python", label: "not" })
 class NotPostfixHandler4Py extends BasePostfixHandler {
-  @Target.Slice({ start: " " })
-  @Return.Replace()
-  handleLineText(replacement: string, data: any) {
-    data.startIndex++;
-    return `not ${replacement.trim()}`;
-  }
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleLineText(replacement: string, data: any) {
+        data.startIndex++;
+        return `not ${replacement.trim()}`;
+    }
 }

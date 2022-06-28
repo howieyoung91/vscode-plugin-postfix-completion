@@ -6,9 +6,9 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "markdown", label: "h4" })
 class H4PostfixHandler extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return new SnippetString(`#### ${replacement}`);
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return new SnippetString(`#### ${replacement}`);
+    }
 }

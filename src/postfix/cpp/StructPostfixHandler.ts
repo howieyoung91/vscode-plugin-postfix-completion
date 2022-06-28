@@ -5,17 +5,12 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import { indent } from "../../util/DocumentUtil";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler(
-  { language: "cpp", label: "struct" },
-  { language: "c", label: "struct" }
-)
+@PostfixHandler({ language: "cpp", label: "struct" }, { language: "c", label: "struct" })
 class StructPostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Slice({ start: " " })
-  @Return.Replace()
-  handleLineText(replacement: string, data: {}) {
-    data["startIndex"]++;
-    return new SnippetString(
-      `struct ${replacement.trim()} {\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleLineText(replacement: string, data: {}) {
+        data["startIndex"]++;
+        return new SnippetString(`struct ${replacement.trim()} {\n${indent()}$0\n}`);
+    }
 }

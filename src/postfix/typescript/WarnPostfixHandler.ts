@@ -4,17 +4,17 @@ import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler(
-  { language: "javascript", label: "warn" },
-  { language: "typescript", label: "warn" },
-  { language: "vue", label: "warn" },
-  { language: "html", label: "warn" },
-  { language: "javascriptreact", label: "warn" },
-  { language: "typescriptreact", label: "warn" }
+    { language: "javascript", label: "warn" },
+    { language: "typescript", label: "warn" },
+    { language: "vue", label: "warn" },
+    { language: "html", label: "warn" },
+    { language: "javascriptreact", label: "warn" },
+    { language: "typescriptreact", label: "warn" }
 )
 class WarnPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string, data: {}) {
-    return `console.warn(${replacement});`;
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string, data: {}) {
+        return `console.warn(${replacement});`;
+    }
 }

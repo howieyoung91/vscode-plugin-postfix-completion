@@ -5,9 +5,9 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler({ language: "python", label: "print" })
 class PrintPostfixHandler4Py extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return `print(${replacement})`;
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return `print(${replacement})`;
+    }
 }

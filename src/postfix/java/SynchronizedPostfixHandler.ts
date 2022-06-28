@@ -8,11 +8,11 @@ import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "java", label: "synchronized" })
 class SynchronizedPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return new SnippetString(
-      `synchronized(${replacement}) {\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return new SnippetString(
+            `synchronized(${replacement}) {\n${indent()}$0\n}`
+        );
+    }
 }

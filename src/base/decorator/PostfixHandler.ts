@@ -1,30 +1,31 @@
 import BasePostfix from "../BasePostfix";
 import BasePostfixHandler from "../BasePostfixHandler";
-import { Constructor, iocContainer } from "../ioc/IocContainer";
+import { CONTEXT } from "../context/support/PostfixCompletionContext";
+// import { COMPONENT_MANAGER, Constructor } from "../context/PostfixCompletionContext";
+type Constructor<T = any> = new (...args: any[]) => T;
 
 /**
- *  PostfixHandlerPosition 表示PostfixHandler作用的位置,
+ *  PostfixPoint 表示PostfixHandler作用的位置,
  * { language:java, label:if } 表示在java文件下使用`if`触发补全
  */
-interface PostfixHandlerPosition {
-  language: string;
-  label: string;
+interface PostfixPoint {
+    language: string;
+    label: string;
 }
 
 /**
  * PostfixHandler 后缀处理器注解 这个类是一个装饰器,用于装饰 BasePostfixHandler,
- *一旦某个 BasePostfixHandler 被装饰,那么将会被自动注入 IOC 容器, IOC 容器将接管这个被装饰的类
+ * 一旦某个 BasePostfixHandler 被装饰,那么将会被自动注入 componentManager , componentManager 将接管这个被装饰的类
  * @param positions PostfixHandler 作用的位置
  */
-export function PostfixHandler(...positions: PostfixHandlerPosition[]) {
-  return (postfixHandlerCtor: Constructor) => {
-    if (!(postfixHandlerCtor.prototype instanceof BasePostfixHandler)) {
-      return;
-    }
-    let postfixHandler = new postfixHandlerCtor();
-    // TODO 目前只实现了 postfixHandler 的复用,可以优化 postfix 的复用
-    for (const pos of positions) {
-      iocContainer.postfixProvidersOf(pos.language).push(new BasePostfix(postfixHandler, pos.label));
-    }
-  };
+export function PostfixHandler(...positions: PostfixPoint[]) {
+    return (postfixHandlerCtor: Constructor) => {
+        if (!(postfixHandlerCtor.prototype instanceof BasePostfixHandler)) {
+            return;
+        }
+        let postfixHandler = new postfixHandlerCtor();
+        for (const position of positions) {
+            CONTEXT.registerPostfix(position.language, new BasePostfix(postfixHandler, position.label));
+        }
+    };
 }

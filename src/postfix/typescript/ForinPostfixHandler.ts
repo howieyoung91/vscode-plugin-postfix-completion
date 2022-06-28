@@ -6,20 +6,20 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "javascript", label: "forin" },
-  { language: "typescript", label: "forin" },
-  { language: "vue", label: "forin" },
-  { language: "html", label: "forin" },
-  { language: "javascriptreact", label: "forin" },
-  { language: "typescriptreact", label: "forin" }
+    { language: "javascript", label: "forin" },
+    { language: "typescript", label: "forin" },
+    { language: "vue", label: "forin" },
+    { language: "html", label: "forin" },
+    { language: "javascriptreact", label: "forin" },
+    { language: "typescriptreact", label: "forin" }
 )
 class ForinPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({ start: " " })
-  @Return.Replace()
-  handleLineText(replacement: string, data) {
-    data.startIndex++;
-    return new SnippetString(
-      `for (const \${1:item} in ${replacement.trim()}){\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleLineText(replacement: string, data) {
+        data.startIndex++;
+        return new SnippetString(
+            `for (const \${1:item} in ${replacement.trim()}){\n${indent()}$0\n}`
+        );
+    }
 }

@@ -5,18 +5,18 @@ import { Target } from "../../base/decorator/Target";
 import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 
 @PostfixHandler(
-  { language: "javascript", label: "cast" },
-  { language: "typescript", label: "cast" },
-  { language: "vue", label: "cast" },
-  { language: "html", label: "cast" },
-  { language: "javascriptreact", label: "cast" },
-  { language: "typescriptreact", label: "cast" }
+    { language: "javascript", label: "cast" },
+    { language: "typescript", label: "cast" },
+    { language: "vue", label: "cast" },
+    { language: "html", label: "cast" },
+    { language: "javascriptreact", label: "cast" },
+    { language: "typescriptreact", label: "cast" }
 )
 class CastPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({ start: " " })
-  @Return.Replace()
-  handleLineText(replacement: string, data: any) {
-    data.startIndex++;
-    return new SnippetString(`(<\${1:type}> ${replacement.trim()})`);
-  }
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleLineText(replacement: string, data: any) {
+        data.startIndex++;
+        return new SnippetString(`(<\${1:type}> ${replacement.trim()})`);
+    }
 }

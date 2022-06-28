@@ -6,20 +6,20 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "javascript", label: "fori" },
-  { language: "typescript", label: "fori" },
-  { language: "vue", label: "fori" },
-  { language: "html", label: "fori" },
-  { language: "javascriptreact", label: "fori" },
-  { language: "typescriptreact", label: "fori" }
+    { language: "javascript", label: "fori" },
+    { language: "typescript", label: "fori" },
+    { language: "vue", label: "fori" },
+    { language: "html", label: "fori" },
+    { language: "javascriptreact", label: "fori" },
+    { language: "typescriptreact", label: "fori" }
 )
 class ForiPostfixHandler4TsAndJs extends BasePostfixHandler {
-  @Target.Slice({ start: " " })
-  @Return.Replace()
-  handleLineText(replacement: string, data) {
-    data.startIndex++;
-    return new SnippetString(
-      `for (let \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleLineText(replacement: string, data) {
+        data.startIndex++;
+        return new SnippetString(
+            `for (let \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`
+        );
+    }
 }

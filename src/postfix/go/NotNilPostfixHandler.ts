@@ -7,9 +7,9 @@ import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "go", label: "notnil" })
 class NotNilPostfixHandler4Go extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return new SnippetString(`if ${replacement} != nil {\n${indent()}$0\n}`);
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return new SnippetString(`if ${replacement} != nil {\n${indent()}$0\n}`);
+    }
 }

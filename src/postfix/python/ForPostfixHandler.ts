@@ -8,16 +8,16 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "python", label: "for" })
 class ForPostfixHandler4Py extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    let newText = "";
-    let indentChars = indent();
-    if (StringUtil.isInt(replacement)) {
-      newText = `for \${1:i} in range(${replacement}):\n${indentChars}`;
-    } else {
-      newText = `for \${1:i} in ${replacement}:\n${indentChars}`;
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        let newText = "";
+        let indentChars = indent();
+        if (StringUtil.isInt(replacement)) {
+            newText = `for \${1:i} in range(${replacement}):\n${indentChars}`;
+        } else {
+            newText = `for \${1:i} in ${replacement}:\n${indentChars}`;
+        }
+        return new SnippetString(newText);
     }
-    return new SnippetString(newText);
-  }
 }

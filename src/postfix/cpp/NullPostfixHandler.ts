@@ -7,9 +7,9 @@ import { Return } from "../../base/decorator/Return";
 
 @PostfixHandler({ language: "c", label: "null" })
 class NullPostfixHandler4C extends BasePostfixHandler {
-  @Target.Slice({ end: "." })
-  @Return.Replace()
-  handleLineText(replacement: string, data: {}) {
-    return new SnippetString(`if (${replacement} == NULL) {\n${indent()}$0\n}`);
-  }
+    @Target.Slice({ end: "." })
+    @Return.Replace()
+    handleLineText(replacement: string, data: {}) {
+        return new SnippetString(`if (${replacement} == NULL) {\n${indent()}$0\n}`);
+    }
 }

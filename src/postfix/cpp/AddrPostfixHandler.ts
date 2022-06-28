@@ -3,19 +3,16 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 
-@PostfixHandler(
-  { language: "cpp", label: "addr" },
-  { language: "c", label: "addr" }
-)
+@PostfixHandler({ language: "cpp", label: "addr" }, { language: "c", label: "addr" })
 class AddrPostfixHandler4Cpp extends BasePostfixHandler {
-  @Target.Regex.Match({
-    regex: /\s*[a-zA-Z_][a-zA-Z_0-9]*$/,
-    start: " ",
-    end: ".",
-  })
-  @Return.Replace()
-  handleLineText(replacement: string, data: {}) {
-    data["startIndex"]++;
-    return `&${replacement.trim()}`;
-  }
+    @Target.Regex.Match({
+        regex: /\s*[a-zA-Z_][a-zA-Z_0-9]*$/,
+        start: " ",
+        end: ".",
+    })
+    @Return.Replace()
+    handleLineText(replacement: string, data: {}) {
+        data["startIndex"]++;
+        return `&${replacement.trim()}`;
+    }
 }

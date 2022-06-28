@@ -7,11 +7,11 @@ import { SnippetString } from "vscode";
 
 @PostfixHandler({ language: "java", label: "instanceof" })
 class InstanceofPostfixHandler extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return new SnippetString(
-      `if (${replacement} instanceof $1) {\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return new SnippetString(
+            `if (${replacement} instanceof $1) {\n${indent()}$0\n}`
+        );
+    }
 }

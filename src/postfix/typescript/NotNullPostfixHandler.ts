@@ -6,19 +6,19 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler(
-  { language: "javascript", label: "notnull" },
-  { language: "typescript", label: "notnull" },
-  { language: "vue", label: "notnull" },
-  { language: "html", label: "notnull" },
-  { language: "javascriptreact", label: "notnull" },
-  { language: "typescriptreact", label: "notnull" }
+    { language: "javascript", label: "notnull" },
+    { language: "typescript", label: "notnull" },
+    { language: "vue", label: "notnull" },
+    { language: "html", label: "notnull" },
+    { language: "javascriptreact", label: "notnull" },
+    { language: "typescriptreact", label: "notnull" }
 )
 class NotNullPostfixHandler4TsJs extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return new SnippetString(
-      `if (${replacement} !== null) {\n${indent()}$0\n}`
-    );
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return new SnippetString(
+            `if (${replacement} !== null) {\n${indent()}$0\n}`
+        );
+    }
 }

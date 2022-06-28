@@ -7,9 +7,9 @@ import { indent } from "../../util/DocumentUtil";
 
 @PostfixHandler({ language: "go", label: "if" })
 class IfPostfixHandler4Go extends BasePostfixHandler {
-  @Target.Slice({})
-  @Return.Replace()
-  handleLineText(replacement: string) {
-    return new SnippetString(`if ${replacement} {\n${indent()}$0\n}`);
-  }
+    @Target.Slice({})
+    @Return.Replace()
+    handleLineText(replacement: string) {
+        return new SnippetString(`if ${replacement} {\n${indent()}$0\n}`);
+    }
 }

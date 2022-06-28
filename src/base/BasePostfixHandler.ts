@@ -8,26 +8,23 @@ import TargetHandleResult from "./TargetHandleResult";
  * 这几个方法中都带有 args 参数,这个参数会被 Postfix 传入,代表了当前 Postfix 中的参数
  */
 export default abstract class BasePostfixHandler {
-  /**
-   * 初始化参数
-   * @param datas 参数
-   */
-  initArgs(datas: {}) {}
+    /**
+     * 初始化参数
+     * @param data 参数
+     */
+    initArgs(data: {}) {}
 
-  /**
-   * 处理行文本
-   * @param lineText 行文本
-   * @param data
-   */
-  abstract handleLineText(
-    lineText: string,
-    data: {}
-  ): string | SnippetString | TargetHandleResult | null;
+    /**
+     * 处理行文本
+     * @param lineText 行文本
+     * @param data
+     */
+    abstract handleLineText(lineText: string, data: {}): string | SnippetString | TargetHandleResult | null;
 
-  /**
-   * 处理补全项
-   * @param item 补全项
-   * @Param args 参数
-   */
-  handleCompletionItem(item: CompletionItem, datas: {}) {}
+    /**
+     * 处理补全项
+     * @param item 补全项
+     * @Param args 参数
+     */
+    handleCompletionItem(item: CompletionItem, data: {}) {}
 }

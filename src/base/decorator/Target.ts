@@ -1,7 +1,7 @@
 export namespace Target {
   /**
    * 在行文本中获取目标字符串
-   * @param slice 默认为 {start=datas["firstNotWhiteSpaceIndex"],end=lineText.lastIndexOf(".")}, 即行文本
+   * @param slice 默认为 {start=data["firstNotWhiteSpaceIndex"],end=lineText.lastIndexOf(".")}, 即行文本
    * @returns
    */
   export function Slice(slice?: TargetSlice): MethodDecorator {
@@ -12,14 +12,14 @@ export namespace Target {
     ) {
       // 接受参数为当前类 和 接受参数为当前方法名称  和  方法的描述
       const realMethod = descriptor.value;
-      descriptor.value = (lineText: string, datas: {}) => {
+      descriptor.value = (lineText: string, data: {}) => {
         if (!slice) {
           slice = {};
         }
         let startIndex: number, endIndex: number;
         startIndex = slice.start
           ? lineText.lastIndexOf(slice.start)
-          : datas["firstNotWhiteSpaceIndex"];
+          : data["firstNotWhiteSpaceIndex"];
         endIndex = slice.end
           ? lineText.lastIndexOf(slice.end)
           : lineText.lastIndexOf(".");
@@ -28,10 +28,10 @@ export namespace Target {
         if (replacement.length == 0) {
           return null;
         }
-        // 加入 datas
-        datas["startIndex"] = startIndex;
-        datas["endIndex"] = endIndex;
-        return realMethod(replacement, datas);
+        // 加入 data
+        data["startIndex"] = startIndex;
+        data["endIndex"] = endIndex;
+        return realMethod(replacement, data);
       };
     };
   }
@@ -47,9 +47,8 @@ export namespace Target {
         descriptor: TypedPropertyDescriptor<any>
       ) {
         const realMethod = descriptor.value;
-        descriptor.value = (target: string, datas: {}) => {
+        descriptor.value = (target: string, data: {}) => {
           if (ignoreTriggerCharacter) {
-            
           }
 
           const startIndex = target.search(regex);
@@ -61,9 +60,9 @@ export namespace Target {
           if (replacement.length == 0) {
             return null;
           }
-          datas["startIndex"] = startIndex;
-          datas["endIndex"] = endIndex;
-          return realMethod(replacement, datas);
+          data["startIndex"] = startIndex;
+          data["endIndex"] = endIndex;
+          return realMethod(replacement, data);
         };
       };
     }
@@ -89,7 +88,7 @@ export namespace Target {
 
         class Wrapper {
           @Target.Slice({ start: targetRegex.start, end: targetRegex.end })
-          static solve(lineText: string, datas: {}) {
+          static solve(lineText: string, data: {}) {
             // 此时lineText已经被 @Target.Slice 选取出来了
             // 但是 lineText 可能有前导和后导的空白字符, 这里不进行去除
             let matchedArray = lineText.match(targetRegex.regex);
@@ -102,7 +101,7 @@ export namespace Target {
             }
             const replacement = matchedArray[0];
             // 调用真实方法
-            return realMethod(replacement, datas);
+            return realMethod(replacement, data);
           }
         }
 

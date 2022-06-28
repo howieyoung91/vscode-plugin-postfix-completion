@@ -64,14 +64,14 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     for (const postfix of this._postfixs) {
       // 设置参数
       let postfixHandler = postfix.postfixHandler;
-      postfix.datas.addData({
+      postfix.data.addData({
         document,
         position,
         token,
         context,
       });
       // 初始化参数
-      postfixHandler.initArgs(postfix.datas.store);
+      postfixHandler.initArgs(postfix.data.store);
       let { line, lineText } = this.getLineText(document, position);
 
       let result = this.handleLineText(postfix, line, postfixHandler, lineText);
@@ -91,9 +91,9 @@ export default class BasePostfixProvider implements CompletionItemProvider {
       // 设置新的文本
       this.applyPropertValue(resultObject, postfix, position);
       // 处理补全项
-      postfixHandler.handleCompletionItem(postfix, postfix.datas.store);
+      postfixHandler.handleCompletionItem(postfix, postfix.data.store);
       // 重置参数
-      postfix.datas.clearData();
+      postfix.data.clearData();
       // 添加补全项
       completionItems.push(postfix);
       // console.log(postfix);
@@ -181,11 +181,11 @@ export default class BasePostfixProvider implements CompletionItemProvider {
     lineText: string
   ) {
     // 把 firstNotWhiteSpaceIndex 放入 datas
-    postfix.datas.addData({
+    postfix.data.addData({
       firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex,
     });
     // postfixHandler 处理行文本
-    let result = postfixHandler.handleLineText(lineText, postfix.datas.store);
+    let result = postfixHandler.handleLineText(lineText, postfix.data.store);
     return result;
   }
 

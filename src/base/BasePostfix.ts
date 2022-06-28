@@ -7,7 +7,7 @@ import Store from "./Store";
  */
   export default class BasePostfix extends CompletionItem {
   protected _postfixHandler: BasePostfixHandler;
-  protected _datas: Store = new Store();
+  protected _data: Store = new Store();
 
   constructor(postfixHandler: BasePostfixHandler, label: string) {
     super(label, CompletionItemKind.Snippet);
@@ -19,12 +19,12 @@ import Store from "./Store";
     this._postfixHandler = value;
   }
 
-  set datas(value: Store) {
-    this._datas = value;
+  set data(value: Store) {
+    this._data = value;
   }
 
-  get datas(): Store {
-    return this._datas;
+  get data(): Store {
+    return this._data;
   }
 
   get postfixHandler(): BasePostfixHandler {

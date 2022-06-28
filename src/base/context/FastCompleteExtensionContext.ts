@@ -1,9 +1,9 @@
-import {Disposable, ExtensionContext, workspace} from "vscode";
-import {iocContainer} from "../ioc/IocContainer";
-import {CONSTANT} from "../config/Constant";
+import { Disposable, ExtensionContext, workspace } from "vscode";
+import { iocContainer } from "../ioc/IocContainer";
+import { CONSTANT } from "../config/Constant";
 import * as glob from "glob";
 
-let files = glob.sync("../../postfix/**/*.js", {cwd: __dirname});
+let files = glob.sync("../../postfix/**/*.js", { cwd: __dirname });
 files.forEach((path) => {
   import(path);
 });
@@ -26,9 +26,7 @@ export default class FastCompleteExtensionContext {
     this.registerIntoVscode(context);
   }
 
-  public destroy() {
-
-  }
+  public destroy() {}
 
   private registerIntoVscode(context: ExtensionContext) {
     context.subscriptions.push(...items);
@@ -36,7 +34,9 @@ export default class FastCompleteExtensionContext {
 
   private readConfig() {
     let configuration = workspace.getConfiguration();
-    let supportLanguages: string[] = configuration.get(CONSTANT.PROPERTY.SUPPORT_LANG);
+    let supportLanguages: string[] = configuration.get(
+      CONSTANT.PROPERTY.SUPPORT_LANG
+    );
     if (supportLanguages === undefined) {
       supportLanguages = ["*"];
     }

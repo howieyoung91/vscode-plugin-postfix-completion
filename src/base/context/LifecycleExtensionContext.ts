@@ -1,7 +1,7 @@
 export interface LifecycleExtensionContext {
     start(): void;
 
-    refresh(): void;
+    // refresh(): void;
 
     destroy(): void;
 }

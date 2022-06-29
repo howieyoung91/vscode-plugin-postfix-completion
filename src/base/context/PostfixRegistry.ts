@@ -1,7 +1,5 @@
-import BasePostfix from "../BasePostfix";
+import PostfixSuggestion from "../PostfixSuggestion";
 
-export default interface PostfixDisposableRegistry {
-    // registerPostfixDisposable(postfix: Disposable): void;
-
-    registerPostfix(language: string, postfix: BasePostfix): void;
+export default interface PostfixSuggestionRegistry {
+    registerPostfixSuggestion(language: string, postfix: PostfixSuggestion): void;
 }

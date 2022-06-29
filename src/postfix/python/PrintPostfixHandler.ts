@@ -1,10 +1,10 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 
-@PostfixHandler({ language: "python", label: "print" })
-class PrintPostfixHandler4Py extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "python", label: "print" })
+class PrintPostfixHandler4Py extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {

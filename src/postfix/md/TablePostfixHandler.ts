@@ -1,11 +1,11 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "markdown", label: "table" })
-class TablePostfixHandler extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "markdown", label: "table" })
+class TablePostfixHandler extends PostfixHandler {
     @Target.Regex.Search(/[0-9]+\s+[0-9]+./)
     @Return.Replace()
     handleLineText(replacement: string) {

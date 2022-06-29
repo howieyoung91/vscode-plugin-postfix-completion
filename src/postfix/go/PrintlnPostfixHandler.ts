@@ -1,10 +1,10 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "go", label: "println" })
-class PrintlnPostfixHandler4Go extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "go", label: "println" })
+class PrintlnPostfixHandler4Go extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {

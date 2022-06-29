@@ -1,8 +1,7 @@
 import { commands } from "vscode";
 
 export default class CommandUtil {
-    private constructor() {
-    }
+    private constructor() {}
 
     static execute(command: string) {
         commands.executeCommand(command);

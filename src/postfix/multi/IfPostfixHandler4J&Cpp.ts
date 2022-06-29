@@ -1,11 +1,11 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler(
+@EnablePostfixSuggestion(
     { language: "java", label: "if" },
     { language: "c", label: "if" },
     { language: "cpp", label: "if" },
@@ -15,7 +15,7 @@ import { indent } from "../../util/DocumentUtil";
     { language: "vue", label: "if" },
     { language: "html", label: "if" }
 )
-class IfPostfixHandler extends BasePostfixHandler {
+class IfPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {

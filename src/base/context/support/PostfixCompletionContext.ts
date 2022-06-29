@@ -1,28 +1,22 @@
 import { ExtensionContext } from "vscode";
 import { ComponentManager } from "../ComponentManager";
-import PostfixDisposableRegistry from "../PostfixRegistry";
+import PostfixSuggestionRegistry from "../PostfixRegistry";
 import { AbstractConfigurablePostfixCompletionContext } from "./AbstractConfigurablePostfixCompletionContext";
 import ConfigurableLifecycleExtensionContext from "./ConfigurableLifecycleExtensionContext";
 import PostfixConfiguration from "../../config/PostfixConfiguration";
 import ConfigurationFactory from "../../config/ConfigurationFactory";
+import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
 
 /**
  * 插件的运行上下文
  */
 class PostfixCompletionContext
     extends AbstractConfigurablePostfixCompletionContext
-    implements ConfigurableLifecycleExtensionContext, PostfixDisposableRegistry
+    implements ConfigurableLifecycleExtensionContext, PostfixSuggestionRegistry
 {
     private rawContext: ExtensionContext;
     private componentManager = new ComponentManager();
-    protected configuration: PostfixConfiguration;
-
-    public getConfiguration(): PostfixConfiguration {
-        if (this.configuration == undefined) {
-            this.configuration = ConfigurationFactory.build();
-        }
-        return this.configuration;
-    }
+    private configuration: PostfixConfiguration;
 
     public wrap(rawContext: ExtensionContext) {
         this.rawContext = rawContext;
@@ -35,7 +29,7 @@ class PostfixCompletionContext
         this.refresh();
     }
 
-    public refresh() {
+    private refresh() {
         // config
         let configuration = this.getConfiguration();
         this.activateSupportedProviders(configuration.supportedLanguages);
@@ -45,11 +39,18 @@ class PostfixCompletionContext
         this.rawContext.subscriptions.push(...postfixes);
     }
 
+    public getConfiguration(): PostfixConfiguration {
+        if (this.configuration == undefined) {
+            this.configuration = ConfigurationFactory.build();
+        }
+        return this.configuration;
+    }
+
     protected getComponentManager(): ComponentManager {
         return this.componentManager;
     }
 }
 
-const CONTEXT = new PostfixCompletionContext();
+const CONTEXT: ConfigurablePostfixCompletionContext = new PostfixCompletionContext();
 
 export { CONTEXT };

@@ -1,7 +1,7 @@
 import { SnippetString } from "vscode";
 
 /**
- * 行文本处理结果
+ * 目标文本处理结果
  */
 export default interface TargetHandleResult {
     text: string | SnippetString;

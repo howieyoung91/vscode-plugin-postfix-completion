@@ -1,17 +1,15 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "cpp", label: "nullptr" })
-class NullptrPostfixHandler4Cpp extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "cpp", label: "nullptr" })
+class NullptrPostfixHandler4Cpp extends PostfixHandler {
     @Target.Slice()
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {
-        return new SnippetString(
-            `if (${replacement} == nullptr) {\n${indent()}$0\n}`
-        );
+        return new SnippetString(`if (${replacement} == nullptr) {\n${indent()}$0\n}`);
     }
 }

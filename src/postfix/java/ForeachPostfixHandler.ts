@@ -1,11 +1,11 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import TargetHandleResult from "../../base/TargetHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({ language: "java", label: "foreach" })
-class ForeachPostfixHandler extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "java", label: "foreach" })
+class ForeachPostfixHandler extends PostfixHandler {
     handleLineText(lineText: string): TargetHandleResult | null {
         let startIndex = lineText.lastIndexOf(" ") + 1;
         let endIndex = lineText.lastIndexOf(".");
@@ -23,10 +23,7 @@ class ForeachPostfixHandler extends BasePostfixHandler {
         }
         return {
             text: new SnippetString(newText),
-            deleteText: {
-                startIndex,
-                endIndex: endIndex + 1,
-            },
+            deleteText: { startIndex, endIndex: endIndex + 1 },
         };
     }
 }

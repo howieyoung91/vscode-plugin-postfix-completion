@@ -1,11 +1,11 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "markdown", label: "codeblock" })
-class CodeBlockPostfixHandler extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "markdown", label: "codeblock" })
+class CodeBlockPostfixHandler extends PostfixHandler {
     private static readonly LANGS = [
         "c",
         "abnf",
@@ -193,7 +193,7 @@ class CodeBlockPostfixHandler extends BasePostfixHandler {
     @Target.Slice({ start: " " })
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {
-        // 如果 datas["startIndex"] 原本 == -1
+        // 如果 data["startIndex"] 原本 == -1
         if (data["startIndex"] === -1) {
             data["startIndex"] = data["firstNotWhiteSpaceIndex"];
         } else {

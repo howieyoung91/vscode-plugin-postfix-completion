@@ -1,22 +1,19 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import StringUtil from "../../util/StringUtil";
 import { indent } from "../../util/DocumentUtil";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "python", label: "matrix" })
-class MatrixPostfixHandler4Py extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "python", label: "matrix" })
+class MatrixPostfixHandler4Py extends PostfixHandler {
     @Target.Regex.Search(/[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)+\s*$/)
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {
         // 分割空格,找到数据
         let nums = replacement.split(/\s+/);
         // 如果行和列不是整数
-        if (
-            !StringUtil.isInt(nums[nums.length - 1]) ||
-            !StringUtil.isInt(nums[nums.length - 2])
-        ) {
+        if (!StringUtil.isInt(nums[nums.length - 1]) || !StringUtil.isInt(nums[nums.length - 2])) {
             return null;
         }
         // 获取矩阵行和列
@@ -25,12 +22,7 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
         // 获取提供的数据的个数
         let realLength = nums.length - 2;
         // 如果数据长度小于2 或者maxCol maxRow任意一个小于8(最大只能8*8) 或者提供的数的个数与矩阵大小不匹配,则不予补全
-        if (
-            nums.length < 2 ||
-            maxCol > 8 ||
-            maxRow > 8 ||
-            maxRow * maxCol !== nums.length - 2
-        ) {
+        if (nums.length < 2 || maxCol > 8 || maxRow > 8 || maxRow * maxCol !== nums.length - 2) {
             return null;
         }
         // 生成矩阵的行和列
@@ -50,7 +42,6 @@ class MatrixPostfixHandler4Py extends BasePostfixHandler {
             temp += `],\n`;
             rowAndCol += temp;
         }
-        const newText = `[\n${rowAndCol}]`;
-        return newText;
+        return `[\n${rowAndCol}]`;
     }
 }

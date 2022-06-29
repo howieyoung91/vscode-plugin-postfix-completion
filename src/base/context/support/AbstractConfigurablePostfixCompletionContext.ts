@@ -1,26 +1,32 @@
 import { Disposable, ExtensionContext, languages } from "vscode";
-import BasePostfix from "../../BasePostfix";
-import BasePostfixProvider from "../../BasePostfixProvider";
+import PostfixSuggestion from "../../PostfixSuggestion";
+import DefaultPostfixSuggestionProvider from "../../DefaultPostfixSuggestionProvider";
 import { ComponentManager } from "../ComponentManager";
-import PostfixDisposableRegistry from "../PostfixRegistry";
-import ConfigurableLifecycleExtensionContext from "./ConfigurableLifecycleExtensionContext";
 import PostfixCompletionConfiguration from "../../config/PostfixConfiguration";
+import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
 
-export abstract class AbstractConfigurablePostfixCompletionContext
-    implements ConfigurableLifecycleExtensionContext, PostfixDisposableRegistry {
+export abstract class AbstractConfigurablePostfixCompletionContext implements ConfigurablePostfixCompletionContext {
     private static readonly PROVIDERS_KEY = "providers";
     private static readonly POSTFIX_KEY = "postfix";
 
-    public registerPostfix(language: string, postfix: BasePostfix): void {
+    public registerPostfixSuggestion(language: string, postfix: PostfixSuggestion): void {
         let providers = this.getComponentManager().getComponentNotNull(
             AbstractConfigurablePostfixCompletionContext.PROVIDERS_KEY,
             {}
         );
         if (!providers[language]) {
-            providers[language] = new BasePostfixProvider(language);
+            providers[language] = new DefaultPostfixSuggestionProvider(language);
         }
-        (providers[language] as BasePostfixProvider).push(postfix);
+        (providers[language] as DefaultPostfixSuggestionProvider).push(postfix);
     }
+
+    public abstract wrap(rawContext: ExtensionContext): void;
+
+    public abstract getConfiguration(): PostfixCompletionConfiguration;
+
+    destroy() {}
+
+    start() {}
 
     /**
      * 激活后缀补全提供器
@@ -34,10 +40,10 @@ export abstract class AbstractConfigurablePostfixCompletionContext
     }
 
     protected doActivateSupportedProviders(supportedLanguages?: string[]) {
-        let providers: BasePostfixProvider[] = this.getComponentManager().getComponentNotNull("providers", {});
+        let providers: DefaultPostfixSuggestionProvider[] = this.getComponentManager().getComponentNotNull("providers", {});
         if (supportedLanguages) {
             for (const language of supportedLanguages) {
-                let provider: BasePostfixProvider = providers[language];
+                let provider: DefaultPostfixSuggestionProvider = providers[language];
                 if (provider) {
                     this.doActivate(provider);
                 }
@@ -47,12 +53,12 @@ export abstract class AbstractConfigurablePostfixCompletionContext
 
         // 默认全部启用
         for (const language in providers) {
-            let provider: BasePostfixProvider = providers[language];
+            let provider: DefaultPostfixSuggestionProvider = providers[language];
             this.doActivate(provider);
         }
     }
 
-    protected doActivate(provider: BasePostfixProvider) {
+    protected doActivate(provider: DefaultPostfixSuggestionProvider) {
         let postfixDisposable = languages.registerCompletionItemProvider(
             provider.language,
             provider,
@@ -68,19 +74,5 @@ export abstract class AbstractConfigurablePostfixCompletionContext
         ) as Disposable[];
     }
 
-    public abstract wrap(rawContext: ExtensionContext): void;
-
     protected abstract getComponentManager(): ComponentManager;
-
-    public abstract getConfiguration(): PostfixCompletionConfiguration ;
-
-    destroy() {
-    }
-
-    start() {
-    }
-
-    refresh() {
-    }
-
 }

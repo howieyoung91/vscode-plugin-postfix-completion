@@ -11,8 +11,7 @@ export namespace Source {
         return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {
             const realMethod = descriptor.value;
             descriptor.value = (lineText: string, data: {}) => {
-                let source = lineText;
-                source = data["document"].getText();
+                let source = data["document"].getText();
                 return realMethod(source, data);
             };
         };
@@ -31,8 +30,7 @@ export namespace Source {
                     source = data["document"].lineAt(lineNumber).text;
                     return realMethod(source, data);
                 } catch (e) {
-                    // 防止 lineNumber 溢出
-                    return null;
+                    return null; // 防止 lineNumber 溢出
                 }
             };
         };
@@ -40,20 +38,21 @@ export namespace Source {
 
     /**
      * 获取到某个区间之内的文本
-     * @param startLineNumber 起始行
-     * @param endLineNumber 结束行 -1 表示到文件结尾
+     * @param args
      */
-    export function DocumentBetween(startLineNumber: number, endLineNumber: number, limit?: number): MethodDecorator {
+    export function DocumentBetween(args: { startLineNumber: number; endLineNumber: number; limit?: number }): MethodDecorator {
         return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {
+            let { startLineNumber, endLineNumber, limit } = { ...args };
+            if (startLineNumber < 0) {
+                startLineNumber = 0;
+            }
+
             const realMethod = descriptor.value;
             descriptor.value = (lineText: string, data: {}) => {
                 let document = data["document"];
                 let realStartLineNumber = startLineNumber;
                 let realEndLineNumber = endLineNumber;
 
-                if (realStartLineNumber < 0) {
-                    realStartLineNumber = 0;
-                }
                 if (realEndLineNumber < 0) {
                     realEndLineNumber = document.lineCount;
                 }

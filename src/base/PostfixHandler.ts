@@ -7,7 +7,7 @@ import TargetHandleResult from "./TargetHandleResult";
  * initArgs()->handleLineText()->handleCompletionItem()
  * 这几个方法中都带有 args 参数,这个参数会被 Postfix 传入,代表了当前 Postfix 中的参数
  */
-export default abstract class BasePostfixHandler {
+export default abstract class PostfixHandler {
     /**
      * 初始化参数
      * @param data 参数
@@ -24,7 +24,7 @@ export default abstract class BasePostfixHandler {
     /**
      * 处理补全项
      * @param item 补全项
-     * @Param args 参数
+     * @Param data 参数
      */
     handleCompletionItem(item: CompletionItem, data: {}) {}
 }

@@ -1,14 +1,12 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 
-@PostfixHandler({ language: "cpp", label: "template" })
-class TemplatePostfixHandler4Cpp extends BasePostfixHandler {
-    @Target.Regex.Match({
-        regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/,
-    })
+@EnablePostfixSuggestion({ language: "cpp", label: "template" })
+class TemplatePostfixHandler4Cpp extends PostfixHandler {
+    @Target.Regex.Match({ regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/ })
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {
         replacement = replacement.trimEnd();

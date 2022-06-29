@@ -1,17 +1,15 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({ language: "go", label: "for" })
-class ForPostfixHandler4Go extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "go", label: "for" })
+class ForPostfixHandler4Go extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {
-        return new SnippetString(
-            `for \${1:i}, \${2:elem} := range ${replacement} {\n${indent()}\$0\n}`
-        );
+        return new SnippetString(`for \${1:i}, \${2:elem} := range ${replacement} {\n${indent()}\$0\n}`);
     }
 }

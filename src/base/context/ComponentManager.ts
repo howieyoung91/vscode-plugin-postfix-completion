@@ -9,7 +9,7 @@ export class ComponentManager {
         return this.singletons[key];
     }
 
-    public getComponentNotNull(key: string, value) {
+    public getComponentNotNull(key: string, value: any) {
         // 判断是否存在 language 对应的 PostfixProvider
         if (!this.singletons[key]) {
             this.singletons[key] = value;

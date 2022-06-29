@@ -1,11 +1,11 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "markdown", label: "container" })
-class ContainerPostfixHandler extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "markdown", label: "container" })
+class ContainerPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {

@@ -1,13 +1,13 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
 import StringUtil from "../../util/StringUtil";
 import { indent } from "../../util/DocumentUtil";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
+import PostfixHandler from "../../base/PostfixHandler";
 
-@PostfixHandler({ language: "python", label: "for" })
-class ForPostfixHandler4Py extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "python", label: "for" })
+class ForPostfixHandler4Py extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {

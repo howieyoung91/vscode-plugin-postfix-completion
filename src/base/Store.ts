@@ -5,6 +5,10 @@
 export default class Store {
     protected _store: any = {};
 
+    get store(): any {
+        return this._store;
+    }
+
     public add(data: {}): Store {
         this._store = Object.assign(data, this._store);
         return this;
@@ -16,9 +20,5 @@ export default class Store {
 
     public clear() {
         this._store = {};
-    }
-
-    get store(): any {
-        return this._store;
     }
 }

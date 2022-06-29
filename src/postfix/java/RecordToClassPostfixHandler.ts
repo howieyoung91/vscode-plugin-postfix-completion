@@ -1,40 +1,33 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
 import { SnippetString } from "vscode";
 import { indent } from "../../util/DocumentUtil";
 import StringUtil from "../../util/StringUtil";
 
-@PostfixHandler({ language: "java", label: "recordToClass" })
-class RecordToClassPostfixHandler extends BasePostfixHandler {
-    @Target.Regex.Match({
-        regex: /record\s+\w+\s*\(.*\)/,
-    })
+@EnablePostfixSuggestion({ language: "java", label: "recordToClass" })
+class RecordToClassPostfixHandler extends PostfixHandler {
+    @Target.Regex.Match({ regex: /record\s+\w+\s*\(.*\)/ })
     @Return.Replace()
     handleLineText(replacement: string) {
-        let className = Parser.clazzName(replacement);
+        let className = Parser.className(replacement);
         let propertiesString = Parser.propertiesString(replacement);
         let propertiesArray = Parser.propertiesArray(propertiesString);
         let field = Parser.field(propertiesArray);
         let propertyObjectsArray = Parser.propertyObjectsArray(propertiesArray);
         let ctor = Parser.ctor(className, propertiesString, propertyObjectsArray);
         let methods = Parser.methods(className, propertyObjectsArray);
-        return new SnippetString(
-            `class ${className} {\n${field}\n${ctor}\n${methods}\n}`
-        );
+        return new SnippetString(`class ${className} {\n${field}\n${ctor}\n${methods}\n}`);
     }
 }
 
 class Parser {
     static propertiesString(replacement: string) {
-        return replacement.substring(
-            replacement.indexOf("(") + 1,
-            replacement.lastIndexOf(")")
-        );
+        return replacement.substring(replacement.indexOf("(") + 1, replacement.lastIndexOf(")"));
     }
 
-    static clazzName(replacement: string): string {
+    static className(replacement: string): string {
         let startIndex = replacement.search(/ \w+\s*\(.*\)/) + 1;
         let endIndex = -1;
         for (let i = startIndex; ; i++) {
@@ -47,7 +40,7 @@ class Parser {
     }
 
     static propertiesArray(propertiesString: string): string[] {
-        return propertiesString.split(",").map((value) => {
+        return propertiesString.split(",").map(value => {
             return value.trim().trimEnd();
         });
     }
@@ -61,7 +54,7 @@ class Parser {
     }
 
     static propertyObjectsArray(propertiesArray) {
-        return propertiesArray.map((value) => {
+        return propertiesArray.map(value => {
             let whitespaceIndex = value.lastIndexOf(" ");
             return {
                 type: value.substring(0, whitespaceIndex),
@@ -70,16 +63,12 @@ class Parser {
         });
     }
 
-    static ctor(
-        className: string,
-        properties: string,
-        propertiesObjectsArray
-    ): string {
-        let ctor = `${indent()}${className}(${properties}) {\n`;
+    static ctor(className: string, properties: string, propertiesObjectsArray): string {
+        let ctor = `${indent()}public ${className}(${properties}) {\n`;
         for (let obj of propertiesObjectsArray) {
             ctor += `${indent().repeat(2)}this.${obj.name} = ${obj.name};\n`;
         }
-        ctor += `${indent()}}`;
+        ctor += `${indent()}}\n`;
         return ctor;
     }
 
@@ -87,14 +76,12 @@ class Parser {
         let methods = ``;
         // getter/setter
         for (let obj of propertiesObjectsArray) {
-            methods += `${indent()}public ${obj.type} get${StringUtil.UpperFirstChar(
+            methods += `${indent()}public ${obj.type} get${StringUtil.UpperFirstChar(obj.name)}() {\n${indent().repeat(2)}return this.${
                 obj.name
-            )}() {\n${indent().repeat(2)}return this.${obj.name};\n${indent()}}\n`;
-            methods += `${indent()}public void set${StringUtil.UpperFirstChar(
-                obj.name
-            )}(${obj.type} ${obj.name}) {\n${indent().repeat(2)}this.${obj.name} = ${
-                obj.name
-            };\n${indent()}}\n`;
+            };\n${indent()}}\n\n`;
+            methods += `${indent()}public void set${StringUtil.UpperFirstChar(obj.name)}(${obj.type} ${obj.name}) {\n${indent().repeat(
+                2
+            )}this.${obj.name} = ${obj.name};\n${indent()}}\n\n`;
         }
         // equals 函数
         let eq = ``;
@@ -109,34 +96,26 @@ class Parser {
         for (let i = 0; i < propertiesObjectsArray.length - 1; i++) {
             eq += `Objects.equals(this.${propertiesObjectsArray[i].name},that.${propertiesObjectsArray[i].name}) && `;
         }
-        eq += `Objects.equals(this.${
-            propertiesObjectsArray[propertiesObjectsArray.length - 1].name
-        },that.${
+        eq += `Objects.equals(this.${propertiesObjectsArray[propertiesObjectsArray.length - 1].name},that.${
             propertiesObjectsArray[propertiesObjectsArray.length - 1].name
         });\n${indent()}}\n`;
         methods += eq;
-
+        methods += "\n";
         // hashcode
-        let hashcode = `${indent()}@Override\n${indent()}public int hashCode() {\n${indent().repeat(
-            2
-        )}return Objects.hash(`;
+        let hashcode = `${indent()}@Override\n${indent()}public int hashCode() {\n${indent().repeat(2)}return Objects.hash(`;
         for (let i = 0; i < propertiesObjectsArray.length - 1; i++) {
             hashcode += `${propertiesObjectsArray[i].name}, `;
         }
         hashcode += propertiesObjectsArray[propertiesObjectsArray.length - 1].name;
-        hashcode += `);\n${indent()}}\n`;
+        hashcode += `);\n${indent()}}\n\n`;
         methods += hashcode;
 
         // toString
-        let toString = `${indent()}@Override\n${indent()}public String toString() {\n${indent().repeat(
-            2
-        )}return "${className}["+`;
+        let toString = `${indent()}@Override\n${indent()}public String toString() {\n${indent().repeat(2)}return "${className}["+`;
         for (let i = 0; i < propertiesObjectsArray.length - 1; i++) {
             toString += `"${propertiesObjectsArray[i].name}=" + ${propertiesObjectsArray[i].name} + "," +`;
         }
-        toString += `"${
-            propertiesObjectsArray[propertiesObjectsArray.length - 1].name
-        }=" + ${
+        toString += `"${propertiesObjectsArray[propertiesObjectsArray.length - 1].name}=" + ${
             propertiesObjectsArray[propertiesObjectsArray.length - 1].name
         } + ']';`;
         toString += `\n${indent()}}\n`;

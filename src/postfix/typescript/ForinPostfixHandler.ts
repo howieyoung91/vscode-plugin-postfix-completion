@@ -1,11 +1,11 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler(
+@EnablePostfixSuggestion(
     { language: "javascript", label: "forin" },
     { language: "typescript", label: "forin" },
     { language: "vue", label: "forin" },
@@ -13,13 +13,11 @@ import { indent } from "../../util/DocumentUtil";
     { language: "javascriptreact", label: "forin" },
     { language: "typescriptreact", label: "forin" }
 )
-class ForinPostfixHandler extends BasePostfixHandler {
+class ForinPostfixHandler extends PostfixHandler {
     @Target.Slice({ start: " " })
     @Return.Replace()
     handleLineText(replacement: string, data) {
         data.startIndex++;
-        return new SnippetString(
-            `for (const \${1:item} in ${replacement.trim()}){\n${indent()}$0\n}`
-        );
+        return new SnippetString(`for (const \${1:item} in ${replacement.trim()}){\n${indent()}$0\n}`);
     }
 }

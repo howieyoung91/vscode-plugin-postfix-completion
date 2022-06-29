@@ -1,15 +1,11 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 
-@PostfixHandler({ language: "cpp", label: "addr" }, { language: "c", label: "addr" })
-class AddrPostfixHandler4Cpp extends BasePostfixHandler {
-    @Target.Regex.Match({
-        regex: /\s*[a-zA-Z_][a-zA-Z_0-9]*$/,
-        start: " ",
-        end: ".",
-    })
+@EnablePostfixSuggestion({ language: "cpp", label: "addr" }, { language: "c", label: "addr" })
+class AddrPostfixHandler4Cpp extends PostfixHandler {
+    @Target.Regex.Match({ regex: /\s*[a-zA-Z_][a-zA-Z_0-9]*$/, start: " ", end: "." })
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {
         data["startIndex"]++;

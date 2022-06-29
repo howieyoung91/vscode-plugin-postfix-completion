@@ -1,17 +1,15 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
 import { indent } from "../../util/DocumentUtil";
 import { SnippetString } from "vscode";
 
-@PostfixHandler({ language: "java", label: "instanceof" })
-class InstanceofPostfixHandler extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "java", label: "instanceof" })
+class InstanceofPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {
-        return new SnippetString(
-            `if (${replacement} instanceof $1) {\n${indent()}$0\n}`
-        );
+        return new SnippetString(`if (${replacement} instanceof $1) {\n${indent()}$0\n}`);
     }
 }

@@ -1,18 +1,15 @@
-import { timeStamp } from "console";
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({ language: "java", label: "synchronized" })
-class SynchronizedPostfixHandler extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "java", label: "synchronized" })
+class SynchronizedPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {
-        return new SnippetString(
-            `synchronized(${replacement}) {\n${indent()}$0\n}`
-        );
+        return new SnippetString(`synchronized(${replacement}) {\n${indent()}$0\n}`);
     }
 }

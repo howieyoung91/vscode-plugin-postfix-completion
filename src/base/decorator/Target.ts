@@ -53,7 +53,6 @@ export namespace Target {
         }
 
         /**
-         *
          * @param targetRegex
          * @returns
          */

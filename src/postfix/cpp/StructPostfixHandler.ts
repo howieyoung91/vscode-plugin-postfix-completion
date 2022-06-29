@@ -1,12 +1,12 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 import { Return } from "../../base/decorator/Return";
 
-@PostfixHandler({ language: "cpp", label: "struct" }, { language: "c", label: "struct" })
-class StructPostfixHandler4Cpp extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "cpp", label: "struct" }, { language: "c", label: "struct" })
+class StructPostfixHandler4Cpp extends PostfixHandler {
     @Target.Slice({ start: " " })
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {

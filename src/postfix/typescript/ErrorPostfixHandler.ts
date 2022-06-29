@@ -1,9 +1,9 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 
-@PostfixHandler(
+@EnablePostfixSuggestion(
     { language: "javascript", label: "err" },
     { language: "typescript", label: "err" },
     { language: "vue", label: "err" },
@@ -11,7 +11,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
     { language: "javascriptreact", label: "err" },
     { language: "typescriptreact", label: "err" }
 )
-class ErrorPostfixHandler extends BasePostfixHandler {
+class ErrorPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string) {

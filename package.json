@@ -25,12 +25,12 @@
   "contributes": {
     "type": "object",
     "properties": {
-      "postfixcompletion.support.lang": {
+      "postfixcompletion.support.languages": {
         "type": "array",
         "default": [
           "*"
         ],
-        "description": "postfix 支持的语言"
+        "description": "postfix completion 支持的语言"
       }
     }
   },

@@ -1,12 +1,10 @@
 import { SnippetString } from "vscode";
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import TargetHandleResult from "../../base/TargetHandleResult";
 
-// @PostfixHandler({ language: "javascript", label: "let" })
-class LetPostfix4TsAndJs extends BasePostfixHandler {
-    handleLineText(
-        lineText: string
-    ): string | SnippetString | TargetHandleResult | null {
+// @DefinePostfixHandler({ language: "javascript", label: "let" })
+class LetPostfix4TsAndJs extends PostfixHandler {
+    handleLineText(lineText: string): string | SnippetString | TargetHandleResult | null {
         /*
           ① new  String().let -> let varName = new String();
           ② \s+ sb.    doSth(sb.doSth(arg1, arg2), arg3).let -> let varName = sb.doSth( sb.doSth(arg1, arg2), arg3);
@@ -18,7 +16,7 @@ class LetPostfix4TsAndJs extends BasePostfixHandler {
         // 找到第一个new
         let newIndex = lineText.indexOf("new");
         let replacement = lineText.substring(newIndex, endIndex);
-        for (; ;) {
+        for (;;) {
             if (!replacement.match(/^new\s+[a-zA-Z0-9_.]+\(.*\)\.[let]{0,3}$/)) {
                 newIndex = lineText.indexOf("new", newIndex + 3);
                 // 如果找不到

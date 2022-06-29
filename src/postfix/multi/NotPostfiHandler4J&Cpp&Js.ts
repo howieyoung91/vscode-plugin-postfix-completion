@@ -1,9 +1,9 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 
-@PostfixHandler(
+@EnablePostfixSuggestion(
     { language: "java", label: "not" },
     { language: "c", label: "not" },
     { language: "cpp", label: "not" },
@@ -13,7 +13,7 @@ import { PostfixHandler } from "../../base/decorator/PostfixHandler";
     { language: "vue", label: "not" },
     { language: "html", label: "not" }
 )
-class NotPostfixHandler extends BasePostfixHandler {
+class NotPostfixHandler extends PostfixHandler {
     @Target.Slice({ start: " " })
     @Return.Replace()
     handleLineText(replacement: string, data: any) {

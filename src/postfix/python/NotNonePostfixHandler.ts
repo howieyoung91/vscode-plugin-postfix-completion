@@ -1,11 +1,11 @@
-import BasePostfixHandler from "../../base/BasePostfixHandler";
+import PostfixHandler from "../../base/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import { PostfixHandler } from "../../base/decorator/PostfixHandler";
+import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../util/DocumentUtil";
 
-@PostfixHandler({ language: "python", label: "notnone" })
-class NotNonePostfixHandler4Py extends BasePostfixHandler {
+@EnablePostfixSuggestion({ language: "python", label: "notnone" })
+class NotNonePostfixHandler4Py extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
     handleLineText(replacement: string, data: {}) {

@@ -1,9 +1,9 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import TargetHandleResult from "../../base/TargetHandleResult";
+import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 import StringUtil from "../../util/StringUtil";
 
 @EnablePostfixSuggestion({ language: "java", label: "var" })
@@ -34,7 +34,7 @@ class VarPostfixHandler4J extends PostfixHandler {
 
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string): null | TargetHandleResult {
+    handleTarget(replacement: string): null | TargetHandleResult {
         // 判断是否是 new ...(...)
         let newText = null;
         if (replacement.match(/^new (.+?)\(.*\)$/)) {

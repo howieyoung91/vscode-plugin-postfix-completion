@@ -1,4 +1,4 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import StringUtil from "../../util/StringUtil";
 import { indent } from "../../util/DocumentUtil";
@@ -9,7 +9,7 @@ import { Return } from "../../base/decorator/Return";
 class MatrixPostfixHandler4Py extends PostfixHandler {
     @Target.Regex.Search(/[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)+\s*$/)
     @Return.Replace()
-    handleLineText(replacement: string, data: {}) {
+    handleTarget(replacement: string, data: {}) {
         // 分割空格,找到数据
         let nums = replacement.split(/\s+/);
         // 如果行和列不是整数

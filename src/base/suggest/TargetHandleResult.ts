@@ -9,7 +9,7 @@ export default interface TargetHandleResult {
     detail?: string;
     data?: {};
     deleteText?: {
-        startIndex: number;
-        endIndex: number;
+        start: number;
+        end: number;
     };
 }

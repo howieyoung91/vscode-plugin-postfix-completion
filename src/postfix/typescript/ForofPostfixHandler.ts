@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
@@ -16,7 +16,7 @@ import { indent } from "../../util/DocumentUtil";
 class ForofPostfixHandler extends PostfixHandler {
     @Target.Slice({ start: " " })
     @Return.Replace()
-    handleLineText(replacement: string, data: any) {
+    handleTarget(replacement: string, data: any) {
         data.startIndex++;
         return new SnippetString(`for (const \${1:item} of ${replacement.trim()}){\n${indent()}$0\n}`);
     }

@@ -1,4 +1,4 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
@@ -14,7 +14,7 @@ import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSugge
 class ErrorPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         return `console.error(${replacement});`;
     }
 }

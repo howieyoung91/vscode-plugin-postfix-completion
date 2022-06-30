@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
@@ -8,7 +8,7 @@ import { Return } from "../../base/decorator/Return";
 class H2PostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         return new SnippetString(`## ${replacement}`);
     }
 }

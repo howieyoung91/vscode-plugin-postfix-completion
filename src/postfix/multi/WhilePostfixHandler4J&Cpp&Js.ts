@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
@@ -18,7 +18,7 @@ import { indent } from "../../util/DocumentUtil";
 class WhilePostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         return new SnippetString(`while (${replacement}) {\n${indent()}$0\n}`);
     }
 }

@@ -1,12 +1,12 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 
 @EnablePostfixSuggestion({ language: "csharp", label: "cw" })
 class CwPostfixHandler extends PostfixHandler {
     @Target.Slice({})
-    handleLineText(replacement: string, data: {}) {
+    handleTarget(replacement: string, data: {}) {
         let res = { text: null, deleteText: null };
         // 判断是否为空
         if (replacement.length === 0) {

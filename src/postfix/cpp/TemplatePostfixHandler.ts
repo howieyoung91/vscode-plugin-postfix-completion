@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
@@ -8,7 +8,7 @@ import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSugge
 class TemplatePostfixHandler4Cpp extends PostfixHandler {
     @Target.Regex.Match({ regex: /^[a-zA-Z_]+[\s+a-zA-Z_0-9]*\s*$/ })
     @Return.Replace()
-    handleLineText(replacement: string, data: {}) {
+    handleTarget(replacement: string, data: {}) {
         replacement = replacement.trimEnd();
         const types = replacement.split(/\s+/);
         let typeString = ``;

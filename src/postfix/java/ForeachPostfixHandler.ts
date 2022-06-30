@@ -1,12 +1,12 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import TargetHandleResult from "../../base/TargetHandleResult";
+import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 import { indent } from "../../util/DocumentUtil";
 
 @EnablePostfixSuggestion({ language: "java", label: "foreach" })
 class ForeachPostfixHandler extends PostfixHandler {
-    handleLineText(lineText: string): TargetHandleResult | null {
+    handleTarget(lineText: string): TargetHandleResult | null {
         let startIndex = lineText.lastIndexOf(" ") + 1;
         let endIndex = lineText.lastIndexOf(".");
         // 获取数字
@@ -23,7 +23,7 @@ class ForeachPostfixHandler extends PostfixHandler {
         }
         return {
             text: new SnippetString(newText),
-            deleteText: { startIndex, endIndex: endIndex + 1 },
+            deleteText: { start: startIndex, end: endIndex + 1 },
         };
     }
 }

@@ -1,23 +1,25 @@
 import { Disposable, ExtensionContext, languages } from "vscode";
-import PostfixSuggestion from "../../PostfixSuggestion";
-import DefaultPostfixSuggestionProvider from "../../DefaultPostfixSuggestionProvider";
+import PostfixSuggestion from "../../suggest/PostfixSuggestion";
+import DefaultPostfixSuggestionProvider from "../../suggest/support/DefaultPostfixSuggestionProvider";
 import { ComponentManager } from "../ComponentManager";
 import PostfixCompletionConfiguration from "../../config/PostfixConfiguration";
 import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
+import { PostfixSuggestionSupplier } from "../../suggest/SupplyPostfixSuggestions";
+
+const KEY = {
+    PROVIDERS: "postfixSuggestionSuppliers",
+    SUGGESTIONS: "suggestions",
+};
 
 export abstract class AbstractConfigurablePostfixCompletionContext implements ConfigurablePostfixCompletionContext {
-    private static readonly PROVIDERS_KEY = "providers";
-    private static readonly POSTFIX_KEY = "postfix";
-
-    public registerPostfixSuggestion(language: string, postfix: PostfixSuggestion): void {
-        let providers = this.getComponentManager().getComponentNotNull(
-            AbstractConfigurablePostfixCompletionContext.PROVIDERS_KEY,
-            {}
-        );
-        if (!providers[language]) {
-            providers[language] = new DefaultPostfixSuggestionProvider(language);
+    public registerPostfixSuggestion(language: string, suggestion: PostfixSuggestion): void {
+        const suppliers = this.getComponentManager().getComponentNotNull(KEY.PROVIDERS, {});
+        let supplier: PostfixSuggestionSupplier = suppliers[language];
+        if (!supplier) {
+            supplier = new DefaultPostfixSuggestionProvider(language);
+            suppliers[language] = supplier;
         }
-        (providers[language] as DefaultPostfixSuggestionProvider).push(postfix);
+        supplier.supplyPostfixSuggestions(suggestion);
     }
 
     public abstract wrap(rawContext: ExtensionContext): void;
@@ -40,8 +42,8 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
     }
 
     protected doActivateSupportedProviders(supportedLanguages?: string[]) {
-        let providers: DefaultPostfixSuggestionProvider[] = this.getComponentManager().getComponentNotNull("providers", {});
-        if (supportedLanguages) {
+        let providers: DefaultPostfixSuggestionProvider[] = this.getComponentManager().getComponentNotNull(KEY.PROVIDERS, {});
+        if (supportedLanguages != null) {
             for (const language of supportedLanguages) {
                 let provider: DefaultPostfixSuggestionProvider = providers[language];
                 if (provider) {
@@ -59,19 +61,12 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
     }
 
     protected doActivate(provider: DefaultPostfixSuggestionProvider) {
-        let postfixDisposable = languages.registerCompletionItemProvider(
-            provider.language,
-            provider,
-            ...provider.triggerCharacters
-        );
-        this.getPostfixDisposables().push(postfixDisposable);
+        let disposable = languages.registerCompletionItemProvider(provider.language, provider, ...provider.triggerCharacters);
+        this.getPostfixSuggestionDisposables().push(disposable);
     }
 
-    protected getPostfixDisposables() {
-        return this.getComponentManager().getComponentNotNull(
-            AbstractConfigurablePostfixCompletionContext.POSTFIX_KEY,
-            []
-        ) as Disposable[];
+    protected getPostfixSuggestionDisposables() {
+        return this.getComponentManager().getComponentNotNull(KEY.SUGGESTIONS, []) as Disposable[];
     }
 
     protected abstract getComponentManager(): ComponentManager;

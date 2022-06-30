@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
@@ -192,7 +192,7 @@ class CodeBlockPostfixHandler extends PostfixHandler {
 
     @Target.Slice({ start: " " })
     @Return.Replace()
-    handleLineText(replacement: string, data: {}) {
+    handleTarget(replacement: string, data: {}) {
         // 如果 data["startIndex"] 原本 == -1
         if (data["startIndex"] === -1) {
             data["startIndex"] = data["firstNotWhiteSpaceIndex"];

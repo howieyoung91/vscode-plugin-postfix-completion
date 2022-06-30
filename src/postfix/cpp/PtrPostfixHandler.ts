@@ -1,4 +1,4 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
@@ -7,7 +7,7 @@ import { Target } from "../../base/decorator/Target";
 class PtrPostfixHandler4Cpp extends PostfixHandler {
     @Target.Regex.Match({ regex: /\s*[a-zA-Z_][a-zA-Z_0-9]*$/, start: " ", end: "." })
     @Return.Replace()
-    handleLineText(replacement: string, data: {}) {
+    handleTarget(replacement: string, data: {}) {
         data["startIndex"]++;
         return `*${replacement.trim()}`;
     }

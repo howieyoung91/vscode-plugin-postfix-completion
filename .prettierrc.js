@@ -1,6 +1,6 @@
 module.exports = {
-    // 一行最多 120 字符
-    printWidth: 130,
+    // 一行最多 140 字符
+    printWidth: 140,
     // 关闭 tab 缩进
     useTabs: false,
     // 使用 2个tab 缩进

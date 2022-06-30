@@ -1,8 +1,10 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Source } from "../../base/decorator/Source";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
+import PostfixSuggestionRequest from "../../base/suggest/PostfixSuggestionRequest";
+import PostfixSuggestion from "../../base/suggest/PostfixSuggestion";
 
 @EnablePostfixSuggestion({ language: "c", label: "test" })
 export default class TestPostfixHandler extends PostfixHandler {
@@ -15,7 +17,7 @@ export default class TestPostfixHandler extends PostfixHandler {
     // @Source.LineTextAt(0)
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(lineText: string, data: {}): string {
+    handleTarget(lineText: string, data: {}): string {
         return lineText;
     }
 }

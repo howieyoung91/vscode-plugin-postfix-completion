@@ -1,4 +1,4 @@
-import { CompletionItem, SnippetString } from "vscode";
+import { SnippetString } from "vscode";
 import TargetHandleResult from "./TargetHandleResult";
 
 /**
@@ -15,16 +15,18 @@ export default abstract class PostfixHandler {
     initArgs(data: {}) {}
 
     /**
-     * 处理行文本
-     * @param lineText 行文本
+     * 处理目标文本
+     * @param target 行文本
      * @param data
      */
-    abstract handleLineText(lineText: string, data: {}): string | SnippetString | TargetHandleResult | null;
+    abstract handleTarget(target: string, data: {}): string | SnippetString | TargetHandleResult | null;
 
     /**
      * 处理补全项
      * @param item 补全项
-     * @Param data 参数
+     * @param data 参数
      */
-    handleCompletionItem(item: CompletionItem, data: {}) {}
+    // handleCompletionItem(item: CompletionItem, data: {}) {}
+
+    // handlePostfixSuggestionFinally(suggestion: PostfixSuggestion, request: PostfixSuggestionRequest) {}
 }

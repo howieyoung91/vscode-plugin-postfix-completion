@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import TargetHandleResult from "../TargetHandleResult";
+import TargetHandleResult from "../suggest/TargetHandleResult";
 
 interface ReturnInterval {
     startIndex?: number;

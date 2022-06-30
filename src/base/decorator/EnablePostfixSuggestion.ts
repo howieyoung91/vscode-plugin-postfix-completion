@@ -1,5 +1,5 @@
-import PostfixSuggestion from "../PostfixSuggestion";
-import PostfixHandler from "../PostfixHandler";
+import PostfixSuggestion from "../suggest/PostfixSuggestion";
+import PostfixHandler from "../suggest/PostfixHandler";
 import { CONTEXT } from "../context/support/PostfixCompletionContext";
 
 type Constructor<T = any> = new (...args: any[]) => T;

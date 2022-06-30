@@ -1,10 +1,10 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
-import TargetHandleResult from "../../base/TargetHandleResult";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
+import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 
 // @DefinePostfixHandler({ language: "javascript", label: "let" })
 class LetPostfix4TsAndJs extends PostfixHandler {
-    handleLineText(lineText: string): string | SnippetString | TargetHandleResult | null {
+    handleTarget(lineText: string): string | SnippetString | TargetHandleResult | null {
         /*
           ① new  String().let -> let varName = new String();
           ② \s+ sb.    doSth(sb.doSth(arg1, arg2), arg3).let -> let varName = sb.doSth( sb.doSth(arg1, arg2), arg3);
@@ -42,8 +42,8 @@ class LetPostfix4TsAndJs extends PostfixHandler {
         return {
             text: `let varName = ${replacement};`,
             deleteText: {
-                startIndex: whiteSpaceIndex,
-                endIndex: endIndex + 1,
+                start: whiteSpaceIndex,
+                end: endIndex + 1,
             },
         };
     }

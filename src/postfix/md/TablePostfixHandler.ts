@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Target } from "../../base/decorator/Target";
 import { Return } from "../../base/decorator/Return";
@@ -8,7 +8,7 @@ import { Return } from "../../base/decorator/Return";
 class TablePostfixHandler extends PostfixHandler {
     @Target.Regex.Search(/[0-9]+\s+[0-9]+./)
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         // 分割空格,找到数据
         let nums = replacement.split(/\s+/);
         // 如果行和列不是整数

@@ -1,4 +1,4 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
@@ -10,7 +10,7 @@ import StringUtil from "../../util/StringUtil";
 class RecordToClassPostfixHandler extends PostfixHandler {
     @Target.Regex.Match({ regex: /record\s+\w+\s*\(.*\)/ })
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         let className = Parser.className(replacement);
         let propertiesString = Parser.propertiesString(replacement);
         let propertiesArray = Parser.propertiesArray(propertiesString);

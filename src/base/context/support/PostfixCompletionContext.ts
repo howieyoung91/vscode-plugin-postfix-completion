@@ -35,8 +35,8 @@ class PostfixCompletionContext
         this.activateSupportedProviders(configuration.supportedLanguages);
 
         // register disposable
-        const postfixes = this.getPostfixDisposables();
-        this.rawContext.subscriptions.push(...postfixes);
+        const disposables = this.getPostfixSuggestionDisposables();
+        this.rawContext.subscriptions.push(...disposables);
     }
 
     public getConfiguration(): PostfixConfiguration {

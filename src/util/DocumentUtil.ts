@@ -1,6 +1,7 @@
 import * as vsc from "vscode";
+import { Position, TextDocument, TextLine } from "vscode";
 
-class DocumentUtil {
+export default class DocumentUtil {
     /**
      * 获取当前的缩进
      */
@@ -11,6 +12,16 @@ class DocumentUtil {
             return "\t";
         }
     };
+
+    public static getLineText(document: TextDocument, position: Position) {
+        const line: TextLine = document.lineAt(position);
+        let lineText: string = line.text.substring(0, position.character);
+        return { line, lineText };
+    }
+
+    public static getTextLine(document: TextDocument, position: Position) {
+        return document.lineAt(position);
+    }
 }
 
 const indent = DocumentUtil.indentCharacters;

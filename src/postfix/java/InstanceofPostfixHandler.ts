@@ -1,4 +1,4 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
@@ -9,7 +9,7 @@ import { SnippetString } from "vscode";
 class InstanceofPostfixHandler extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} instanceof $1) {\n${indent()}$0\n}`);
     }
 }

@@ -1,13 +1,13 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import TargetHandleResult from "../../base/TargetHandleResult";
+import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 
 @EnablePostfixSuggestion({ language: "java", label: "sout" })
 class SoutPostfixHandler4J extends PostfixHandler {
     @Target.Slice({})
-    handleLineText(replacement: string, data: {}): TargetHandleResult {
+    handleTarget(replacement: string, data: {}): TargetHandleResult {
         let res = { text: null, deleteText: null };
         // 判断是否为空
         if (replacement.length === 0) {

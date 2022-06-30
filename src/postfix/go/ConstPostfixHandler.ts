@@ -1,5 +1,5 @@
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
@@ -8,7 +8,7 @@ import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSugge
 class ConstPostfixHandler4Go extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string, data: {}) {
+    handleTarget(replacement: string, data: {}) {
         return new SnippetString(`const \${1:varName} \${2:type} = ${replacement}`);
     }
 }

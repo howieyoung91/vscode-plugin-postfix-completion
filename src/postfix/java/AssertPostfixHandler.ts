@@ -1,4 +1,4 @@
-import PostfixHandler from "../../base/PostfixHandler";
+import PostfixHandler from "../../base/suggest/PostfixHandler";
 import { Target } from "../../base/decorator/Target";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../base/decorator/Return";
@@ -7,7 +7,7 @@ import { Return } from "../../base/decorator/Return";
 class AssertPostfixHandler4J extends PostfixHandler {
     @Target.Slice({})
     @Return.Replace()
-    handleLineText(replacement: string) {
+    handleTarget(replacement: string) {
         return `assert ${replacement};`;
     }
 }

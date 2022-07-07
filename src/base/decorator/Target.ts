@@ -1,3 +1,8 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
 export namespace Target {
     /**
      * 在行文本中获取目标字符串

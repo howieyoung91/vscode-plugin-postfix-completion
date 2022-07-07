@@ -1,12 +1,14 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
 import PostfixHandler from "../../base/suggest/PostfixHandler";
-import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
 import { Source } from "../../base/decorator/Source";
 import { Return } from "../../base/decorator/Return";
 import { Target } from "../../base/decorator/Target";
-import PostfixSuggestionRequest from "../../base/suggest/PostfixSuggestionRequest";
-import PostfixSuggestion from "../../base/suggest/PostfixSuggestion";
 
-@EnablePostfixSuggestion({ language: "c", label: "test" })
+// @EnablePostfixSuggestion({ language: "c", label: "test" })
 export default class TestPostfixHandler extends PostfixHandler {
     // @Source.DocumentBetween({
     //     startLineNumber: 0,

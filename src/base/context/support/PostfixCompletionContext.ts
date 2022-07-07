@@ -1,3 +1,8 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
 import { ExtensionContext } from "vscode";
 import { ComponentManager } from "../ComponentManager";
 import PostfixSuggestionRegistry from "../PostfixRegistry";
@@ -24,7 +29,7 @@ class PostfixCompletionContext
 
     public start() {
         if (this.rawContext == null) {
-            throw Error(`fail to init. reason: the rawContext is null!`);
+            throw new Error(`fail to init. reason: the rawContext is null!`);
         }
         this.refresh();
     }

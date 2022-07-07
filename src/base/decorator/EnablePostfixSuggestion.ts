@@ -1,3 +1,8 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
 import PostfixSuggestion from "../suggest/PostfixSuggestion";
 import PostfixHandler from "../suggest/PostfixHandler";
 import { CONTEXT } from "../context/support/PostfixCompletionContext";

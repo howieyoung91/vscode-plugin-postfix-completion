@@ -1,3 +1,8 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
 import { Disposable, ExtensionContext, languages } from "vscode";
 import PostfixSuggestion from "../../suggest/PostfixSuggestion";
 import DefaultPostfixSuggestionProvider from "../../suggest/support/DefaultPostfixSuggestionProvider";
@@ -39,6 +44,9 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
         } else {
             this.doActivateSupportedProviders(languages);
         }
+
+        // 注册到 vscode
+        this.registerPostfixIntoVscode();
     }
 
     protected doActivateSupportedProviders(supportedLanguages?: string[]) {
@@ -61,6 +69,7 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
     }
 
     protected doActivate(provider: DefaultPostfixSuggestionProvider) {
+        console.log(provider);
         let disposable = languages.registerCompletionItemProvider(provider.language, provider, ...provider.triggerCharacters);
         this.getPostfixSuggestionDisposables().push(disposable);
     }
@@ -69,5 +78,12 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
         return this.getComponentManager().getComponentNotNull(KEY.SUGGESTIONS, []) as Disposable[];
     }
 
+    private registerPostfixIntoVscode() {
+        const disposables = this.getPostfixSuggestionDisposables();
+        this.getVscodeExtensionContext().subscriptions.push(...disposables);
+    }
+
     protected abstract getComponentManager(): ComponentManager;
+
+    protected abstract getVscodeExtensionContext(): ExtensionContext;
 }

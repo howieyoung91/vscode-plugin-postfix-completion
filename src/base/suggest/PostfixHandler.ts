@@ -1,5 +1,13 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
 import { SnippetString } from "vscode";
 import TargetHandleResult from "./TargetHandleResult";
+import PostfixSuggestionRequest from "./PostfixSuggestionRequest";
+
+export type HandleResult = string | SnippetString | TargetHandleResult;
 
 /**
  * 后缀处理类
@@ -8,18 +16,23 @@ import TargetHandleResult from "./TargetHandleResult";
  * 这几个方法中都带有 args 参数,这个参数会被 Postfix 传入,代表了当前 Postfix 中的参数
  */
 export default abstract class PostfixHandler {
-    /**
-     * 初始化参数
-     * @param data 参数
-     */
-    initArgs(data: {}) {}
+    handle(request: PostfixSuggestionRequest): HandleResult {
+        return null;
+    }
+
+    // /**
+    //  * 初始化参数
+    //  * @param data 参数
+    //  */
+    // initArgs(data: {}) {}
 
     /**
      * 处理目标文本
      * @param target 行文本
      * @param data
+     * @deprecated
      */
-    abstract handleTarget(target: string, data: {}): string | SnippetString | TargetHandleResult | null;
+    abstract handleTarget(target: string, data: {}): HandleResult;
 
     /**
      * 处理补全项

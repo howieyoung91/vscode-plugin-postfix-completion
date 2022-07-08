@@ -44,6 +44,9 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
         } else {
             this.doActivateSupportedProviders(languages);
         }
+
+        // 注册到 vscode
+        this.registerPostfixIntoVscode();
     }
 
     protected doActivateSupportedProviders(supportedLanguages?: string[]) {
@@ -66,6 +69,7 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
     }
 
     protected doActivate(provider: DefaultPostfixSuggestionProvider) {
+        console.log(provider);
         let disposable = languages.registerCompletionItemProvider(provider.language, provider, ...provider.triggerCharacters);
         this.getPostfixSuggestionDisposables().push(disposable);
     }
@@ -74,5 +78,12 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
         return this.getComponentManager().getComponentNotNull(KEY.SUGGESTIONS, []) as Disposable[];
     }
 
+    private registerPostfixIntoVscode() {
+        const disposables = this.getPostfixSuggestionDisposables();
+        this.getVscodeExtensionContext().subscriptions.push(...disposables);
+    }
+
     protected abstract getComponentManager(): ComponentManager;
+
+    protected abstract getVscodeExtensionContext(): ExtensionContext;
 }

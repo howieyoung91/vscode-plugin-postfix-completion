@@ -6,9 +6,17 @@
 import { CancellationToken, CompletionContext, Position, SnippetString, TextDocument } from "vscode";
 import TextEditUtil from "../../../util/TextEditUtil";
 import PostfixSuggestion from "../PostfixSuggestion";
-import TargetHandleResult from "../TargetHandleResult";
 import DocumentUtil from "../../../util/DocumentUtil";
 import LanguageSupportPostfixSuggestionProvider from "./LanguageSupportPostfixSuggestionProvider";
+import { HandleResult } from "../PostfixHandler";
+
+type ResolvedHandleResult = {
+    text: string | SnippetString;
+    detail: string;
+    deleteText: { start: any; end: any };
+    documentation: string;
+    addition: object;
+};
 
 /**
  * 后缀补全提供器
@@ -22,11 +30,9 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
         for (const suggestion of this.suggestions) {
             // 设置参数
             suggestion.request.setAttributes({ document, position, token, context });
-
+            let result: ResolvedHandleResult = null;
             // 初始化参数
-            suggestion.handler.initArgs(suggestion.request.attributes);
-
-            const result = this.dispatch(suggestion, document, position);
+            result = this.dispatch(suggestion, document, position);
             if (result === null) {
                 continue;
             }
@@ -53,7 +59,10 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
         const line = DocumentUtil.getTextLine(document, position);
         suggestion.request.setAttributes({ firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex });
         const lineText = line.text.substring(0, position.character);
-        const result = suggestion.handler.handleTarget(lineText, suggestion.request.attributes);
+        let result = suggestion.handler.handle(suggestion.request);
+        if (result == null) {
+            result = suggestion.handler.handleTarget(lineText, suggestion.request.attributes);
+        }
         return this.resolveResult(result);
     }
 
@@ -96,7 +105,7 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
         }
     }
 
-    private resolveResult(result: string | SnippetString | TargetHandleResult) {
+    private resolveResult(result: HandleResult): ResolvedHandleResult {
         if (result == null) {
             return null;
         }

@@ -6,11 +6,13 @@
 import { Range } from "vscode";
 
 /**
- * 修改源文本
+ * Source 命名空间下的装饰器主要作用是修改目标文本
+ * @author: Howie Young
+ * @since 2.0
  */
 export namespace Source {
     /**
-     * 获取到全部文本
+     * 获取当前编辑器的全部文本
      */
     export function Document(): MethodDecorator {
         return function (target: any, methodName: any, descriptor: TypedPropertyDescriptor<any>) {

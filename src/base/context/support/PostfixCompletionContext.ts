@@ -4,12 +4,12 @@
  */
 
 import { ExtensionContext } from "vscode";
+import ConfigurationFactory from "../../config/ConfigurationFactory";
+import PostfixConfiguration from "../../config/PostfixConfiguration";
 import { ComponentManager } from "../ComponentManager";
 import PostfixSuggestionRegistry from "../PostfixRegistry";
 import { AbstractConfigurablePostfixCompletionContext } from "./AbstractConfigurablePostfixCompletionContext";
 import ConfigurableLifecycleExtensionContext from "./ConfigurableLifecycleExtensionContext";
-import PostfixConfiguration from "../../config/PostfixConfiguration";
-import ConfigurationFactory from "../../config/ConfigurationFactory";
 import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
 
 /**
@@ -37,11 +37,9 @@ class PostfixCompletionContext
     private refresh() {
         // config
         let configuration = this.getConfiguration();
-        this.activateSupportedProviders(configuration.supportedLanguages);
 
-        // register disposable
-        const disposables = this.getPostfixSuggestionDisposables();
-        this.rawContext.subscriptions.push(...disposables);
+        // activate providers
+        this.activateSupportedProviders(configuration.supportedLanguages);
     }
 
     public getConfiguration(): PostfixConfiguration {
@@ -53,6 +51,10 @@ class PostfixCompletionContext
 
     protected getComponentManager(): ComponentManager {
         return this.componentManager;
+    }
+
+    protected getVscodeExtensionContext(): ExtensionContext {
+        return this.rawContext;
     }
 }
 

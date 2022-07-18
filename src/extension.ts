@@ -8,7 +8,7 @@ import { ExtensionContext } from "vscode";
 import PostfixCompletionBootstrap from "./PostfixCompletionBootstrap";
 
 // 读入所有 postfix
-glob.sync("./postfix/**/*.js", { cwd: __dirname }).forEach(path => import(path));
+glob.sync("./components/**/*.js", { cwd: __dirname }).forEach(path => import(path));
 
 // 在这里启动插件
 export function activate(context: ExtensionContext) {

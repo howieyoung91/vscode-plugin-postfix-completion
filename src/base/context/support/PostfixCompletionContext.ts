@@ -34,14 +34,6 @@ class PostfixCompletionContext
         this.refresh();
     }
 
-    private refresh() {
-        // config
-        let configuration = this.getConfiguration();
-
-        // activate providers
-        this.activateSupportedProviders(configuration.supportedLanguages);
-    }
-
     public getConfiguration(): PostfixConfiguration {
         if (this.configuration == undefined) {
             this.configuration = ConfigurationFactory.build();
@@ -55,6 +47,14 @@ class PostfixCompletionContext
 
     protected getVscodeExtensionContext(): ExtensionContext {
         return this.rawContext;
+    }
+
+    private refresh() {
+        // config
+        let configuration = this.getConfiguration();
+
+        // activate providers
+        this.activateSupportedProviders(configuration.supportedLanguages);
     }
 }
 

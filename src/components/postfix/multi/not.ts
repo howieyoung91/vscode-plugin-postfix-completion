@@ -1,0 +1,28 @@
+/*
+ * Copyright ©2021-2022 Howie Young, All rights reserved.
+ * Copyright ©2021-2022 杨浩宇，保留所有权利。
+ */
+
+import PostfixHandler from "../../../base/suggest/PostfixHandler";
+import { Return } from "../../../base/decorator/Return";
+import { Target } from "../../../base/decorator/Target";
+import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
+
+@EnablePostfixSuggestion(
+    { language: "java", label: "not" },
+    { language: "c", label: "not" },
+    { language: "cpp", label: "not" },
+    { language: "csharp", label: "not" },
+    { language: "javascript", label: "not" },
+    { language: "typescript", label: "not" },
+    { language: "vue", label: "not" },
+    { language: "html", label: "not" }
+)
+class Not extends PostfixHandler {
+    @Target.Slice({ start: " " })
+    @Return.Replace()
+    handleTarget(replacement: string, data: any) {
+        data.startIndex++;
+        return `!${replacement.trim()}`;
+    }
+}

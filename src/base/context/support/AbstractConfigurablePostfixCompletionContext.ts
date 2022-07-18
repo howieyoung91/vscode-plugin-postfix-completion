@@ -78,12 +78,12 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
         return this.getComponentManager().getComponentNotNull(KEY.SUGGESTIONS, []) as Disposable[];
     }
 
+    protected abstract getComponentManager(): ComponentManager;
+
+    protected abstract getVscodeExtensionContext(): ExtensionContext;
+
     private registerPostfixIntoVscode() {
         const disposables = this.getPostfixSuggestionDisposables();
         this.getVscodeExtensionContext().subscriptions.push(...disposables);
     }
-
-    protected abstract getComponentManager(): ComponentManager;
-
-    protected abstract getVscodeExtensionContext(): ExtensionContext;
 }

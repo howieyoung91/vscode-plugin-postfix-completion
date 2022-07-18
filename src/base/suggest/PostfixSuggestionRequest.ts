@@ -13,9 +13,9 @@ export default class PostfixSuggestionRequest {
     public static readonly POSITION_KEY = "position";
     public static readonly TOKEN_KEY = "token";
     public static readonly CONTEXT_KEY = "context";
+    protected _userData: any = {};
 
     protected _attributes: any = {};
-    protected _userData: any = {};
 
     get attributes(): any {
         return this._attributes;

@@ -3,19 +3,26 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import { glob } from "glob";
 import { ExtensionContext } from "vscode";
-import PostfixCompletionBootstrap from "./PostfixCompletionBootstrap";
+import { Plugin } from "./PostfixCompletionBootstrap";
 
-// 读入所有 postfix
-glob.sync("./components/**/*.js", { cwd: __dirname }).forEach(path => import(path));
+const COMPONENTS_PATH = "./components/**/*.js";
 
-// 在这里启动插件
-export function activate(context: ExtensionContext) {
-    PostfixCompletionBootstrap.start(context);
+// -------------------------------------------------------------
+//                          准备插件
+// -------------------------------------------------------------
+Plugin.prepare(COMPONENTS_PATH);
+
+// -------------------------------------------------------------
+//                          启动插件
+// -------------------------------------------------------------
+export function activate(vscodeContext: ExtensionContext) {
+    Plugin.startWith(vscodeContext);
 }
 
-// 在这里销毁插件
+// -------------------------------------------------------------
+//                          销毁插件
+// -------------------------------------------------------------
 export function deactivate() {
-    PostfixCompletionBootstrap.end();
+    Plugin.end();
 }

@@ -11,7 +11,9 @@ export default abstract class LanguageSupportPostfixSuggestionProvider
     extends PostfixSuggestionProvider
     implements PostfixSuggestionSupplier
 {
-    protected suggestions: PostfixSuggestion[] = [];
+    protected _language: string | null = null;
+    protected _triggerCharacters: string[];
+    protected _suggestions: PostfixSuggestion[] = [];
 
     constructor(language: string) {
         super();
@@ -19,22 +21,20 @@ export default abstract class LanguageSupportPostfixSuggestionProvider
         this._triggerCharacters = [`.`];
     }
 
-    protected _language: string | null = null;
-
-    // TODO: 实现 session
+    public supplyPostfixSuggestions(suggestion: PostfixSuggestion, ...suggestions: PostfixSuggestion[]) {
+        this._suggestions.push(suggestion, ...suggestions);
+        return this;
+    }
 
     get language(): string | null {
         return this._language;
     }
 
-    protected _triggerCharacters: string[];
-
     get triggerCharacters(): string[] {
         return this._triggerCharacters;
     }
 
-    public supplyPostfixSuggestions(suggestion: PostfixSuggestion, ...suggestions: PostfixSuggestion[]) {
-        this.suggestions.push(suggestion, ...suggestions);
-        return this;
+    get suggestions(): PostfixSuggestion[] {
+        return this._suggestions;
     }
 }

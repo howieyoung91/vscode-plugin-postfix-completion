@@ -7,29 +7,30 @@ import { Disposable, ExtensionContext, languages } from "vscode";
 import PostfixSuggestion from "../../suggest/PostfixSuggestion";
 import DefaultPostfixSuggestionProvider from "../../suggest/support/DefaultPostfixSuggestionProvider";
 import { ComponentManager } from "../ComponentManager";
-import PostfixCompletionConfiguration from "../../config/PostfixConfiguration";
+import { Configuration } from "../../config/PostfixConfiguration";
 import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
 import { PostfixSuggestionSupplier } from "../../suggest/SupplyPostfixSuggestions";
+import LanguageSupportedPostfixSuggestionProvider from "../../suggest/support/LanguageSupportPostfixSuggestionProvider";
 
-const KEY = {
+const Keys = {
     PROVIDERS: "postfixSuggestionSuppliers",
     SUGGESTIONS: "suggestions",
 };
 
 export abstract class AbstractConfigurablePostfixCompletionContext implements ConfigurablePostfixCompletionContext {
-    public registerPostfixSuggestion(language: string, suggestion: PostfixSuggestion): void {
-        const suppliers = this.getComponentManager().getComponentNotNull(KEY.PROVIDERS, {});
-        let supplier: PostfixSuggestionSupplier = suppliers[language];
-        if (!supplier) {
-            supplier = new DefaultPostfixSuggestionProvider(language);
-            suppliers[language] = supplier;
+    public registerPostfixSuggestion(language: string, suggestion: PostfixSuggestion) {
+        const providers = this.getComponentManager().getComponentOrDefault(Keys.PROVIDERS, {});
+        let provider: PostfixSuggestionSupplier = providers[language];
+        if (!provider) {
+            provider = new DefaultPostfixSuggestionProvider(language);
+            providers[language] = provider;
         }
-        supplier.supplyPostfixSuggestions(suggestion);
+        provider.supplyPostfixSuggestions(suggestion);
     }
 
-    public abstract wrap(rawContext: ExtensionContext): void;
+    public abstract wrap(vscodeContext: ExtensionContext): void;
 
-    public abstract getConfiguration(): PostfixCompletionConfiguration;
+    public abstract getConfiguration(): Configuration;
 
     destroy() {}
 
@@ -50,40 +51,38 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
     }
 
     protected doActivateSupportedProviders(supportedLanguages?: string[]) {
-        let providers: DefaultPostfixSuggestionProvider[] = this.getComponentManager().getComponentNotNull(KEY.PROVIDERS, {});
-        if (supportedLanguages != null) {
+        const providers = this.getComponentManager().getComponentOrDefault(Keys.PROVIDERS, {});
+        if (supportedLanguages) {
             for (const language of supportedLanguages) {
-                let provider: DefaultPostfixSuggestionProvider = providers[language];
+                const provider = providers[language];
                 if (provider) {
                     this.doActivate(provider);
                 }
             }
-            return;
-        }
-
-        // 默认全部启用
-        for (const language in providers) {
-            let provider: DefaultPostfixSuggestionProvider = providers[language];
-            this.doActivate(provider);
+        } else {
+            for (const language in providers) {
+                const provider: DefaultPostfixSuggestionProvider = providers[language];
+                this.doActivate(provider);
+            }
         }
     }
 
-    protected doActivate(provider: DefaultPostfixSuggestionProvider) {
+    protected doActivate(provider: LanguageSupportedPostfixSuggestionProvider) {
         console.log(provider);
         let disposable = languages.registerCompletionItemProvider(provider.language, provider, ...provider.triggerCharacters);
         this.getPostfixSuggestionDisposables().push(disposable);
     }
 
     protected getPostfixSuggestionDisposables() {
-        return this.getComponentManager().getComponentNotNull(KEY.SUGGESTIONS, []) as Disposable[];
+        return this.getComponentManager().getComponentOrDefault(Keys.SUGGESTIONS, []) as Disposable[];
+    }
+
+    private registerPostfixIntoVscode() {
+        const disposables = this.getPostfixSuggestionDisposables();
+        this.getVscodeContext().subscriptions.push(...disposables);
     }
 
     protected abstract getComponentManager(): ComponentManager;
 
-    protected abstract getVscodeExtensionContext(): ExtensionContext;
-
-    private registerPostfixIntoVscode() {
-        const disposables = this.getPostfixSuggestionDisposables();
-        this.getVscodeExtensionContext().subscriptions.push(...disposables);
-    }
+    protected abstract getVscodeContext(): ExtensionContext;
 }

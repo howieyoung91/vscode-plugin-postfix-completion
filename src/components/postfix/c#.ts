@@ -4,15 +4,15 @@
  */
 
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../base/suggest/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import { Target } from "../../base/decorator/Target";
+import { Keys, Filter } from "../../base/decorator/Filter";
 import { indent } from "../../util/DocumentUtil";
 import { Return } from "../../base/decorator/Return";
 
 @EnablePostfixSuggestion({ language: "csharp", label: "cw" })
 class CW extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     handleTarget(replacement: string, data: {}) {
         let res = { text: null, deleteText: null };
         // 判断是否为空
@@ -20,7 +20,7 @@ class CW extends PostfixHandler {
             res.text = new SnippetString(`Console.WriteLine($1);`);
         } else {
             res.text = new SnippetString(`Console.WriteLine(${replacement});`);
-            res.deleteText = { startIndex: data["startIndex"], endIndex: data["endIndex"] + 1 };
+            res.deleteText = { startIndex: data[Keys.START], endIndex: data[Keys.END] + 1 };
         }
         return res;
     }
@@ -28,7 +28,7 @@ class CW extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "csharp", label: "namespace" })
 class Namespace extends PostfixHandler {
-    @Target.Slice()
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`namespace ${replacement} {\n${indent()}$0\n}`);

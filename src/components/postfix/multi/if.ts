@@ -4,9 +4,9 @@
  */
 
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
-import { Target } from "../../../base/decorator/Target";
+import { Filter } from "../../../base/decorator/Filter";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../../util/DocumentUtil";
 
@@ -21,7 +21,7 @@ import { indent } from "../../../util/DocumentUtil";
     { language: "html", label: "if" }
 )
 class If extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement}) {\n${indent()}$0\n}`);
@@ -39,7 +39,7 @@ class If extends PostfixHandler {
     { language: "html", label: "ifelse" }
 )
 class IfElse extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement}) {\n${indent()}$0\n} else {\n${indent()}\n}`);

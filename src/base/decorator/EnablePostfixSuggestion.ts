@@ -4,8 +4,8 @@
  */
 
 import PostfixSuggestion from "../suggest/PostfixSuggestion";
-import PostfixHandler from "../suggest/PostfixHandler";
-import { CONTEXT } from "../context/support/PostfixCompletionContext";
+import { PostfixHandler } from "../suggest/PostfixHandler";
+import { PluginContext } from "../context/support/PostfixCompletionContext";
 
 type Constructor<T = any> = new (...args: any[]) => T;
 
@@ -13,7 +13,7 @@ type Constructor<T = any> = new (...args: any[]) => T;
  *  PostfixSuggestionPoint 表示 PostfixHandler 作用的位置,
  * { language:java, label:if } 表示在java文件下使用`if`触发补全
  */
-interface PostfixSuggestionPoint {
+export interface PostfixSuggestionPoint {
     label: string;
     language: string;
 }
@@ -30,7 +30,7 @@ export function EnablePostfixSuggestion(...points: PostfixSuggestionPoint[]) {
         }
         let handler = new postfixHandlerCtor();
         for (const position of points) {
-            CONTEXT.registerPostfixSuggestion(position.language, PostfixSuggestion.of(position.label, handler));
+            PluginContext.registerPostfixSuggestion(position.language, PostfixSuggestion.of(position.label, handler));
         }
     };
 }

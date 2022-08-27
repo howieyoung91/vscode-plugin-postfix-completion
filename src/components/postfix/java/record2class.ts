@@ -3,8 +3,8 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import PostfixHandler from "../../../base/suggest/PostfixHandler";
-import { Target } from "../../../base/decorator/Target";
+import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
+import { Filter } from "../../../base/decorator/Filter";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../../base/decorator/Return";
 import { SnippetString } from "vscode";
@@ -13,7 +13,8 @@ import StringUtil from "../../../util/StringUtil";
 
 @EnablePostfixSuggestion({ language: "java", label: "recordToClass" })
 class Record2class extends PostfixHandler {
-    @Target.Regex.Match({ regex: /record\s+\w+\s*\(.*\)/ })
+    @Filter.Slice()
+    @Filter.Validation.Contains(/record\s+\w+\s*\(.*\)/)
     @Return.Replace()
     handleTarget(replacement: string) {
         let className = Parser.className(replacement);

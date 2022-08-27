@@ -6,15 +6,15 @@
 import { SnippetString } from "vscode";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 import { Return } from "../../../base/decorator/Return";
-import { Target } from "../../../base/decorator/Target";
-import PostfixHandler, { HandleResult } from "../../../base/suggest/PostfixHandler";
+import { Filter } from "../../../base/decorator/Filter";
+import { HandleResult, PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { indent } from "../../../util/DocumentUtil";
 
 @EnablePostfixSuggestion({ language: "java", label: "try" })
 class Try extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string): HandleResult {
-        return new SnippetString(`try {${indent()}${replacement}\$0} catch(\${1:RuntimeException e}) {}`);
+        return new SnippetString(`try {\n${indent()}${replacement}\$0\n} catch(\${1:RuntimeException e}) {\n}`);
     }
 }

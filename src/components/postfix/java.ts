@@ -4,8 +4,8 @@
  */
 
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import PostfixHandler from "../../base/suggest/PostfixHandler";
-import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { Keys, Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 import { indent } from "../../util/DocumentUtil";
@@ -13,7 +13,7 @@ import { SnippetString } from "vscode";
 
 @EnablePostfixSuggestion({ language: "java", label: "assert" })
 class Assert extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `assert ${replacement};`;
@@ -22,7 +22,7 @@ class Assert extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "foreach" })
 class Foreach extends PostfixHandler {
-    handleTarget(lineText: string): TargetHandleResult | null {
+    handleTarget(lineText: string): TargetHandleResult {
         let startIndex = lineText.lastIndexOf(" ") + 1;
         let endIndex = lineText.lastIndexOf(".");
         // 获取数字
@@ -46,7 +46,7 @@ class Foreach extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "instanceof" })
 class Instanceof extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} instanceof $1) {\n${indent()}$0\n}`);
@@ -55,7 +55,7 @@ class Instanceof extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "notnull" })
 class NotNull extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} != null) {\n${indent()}$0\n}`);
@@ -64,7 +64,7 @@ class NotNull extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "null" })
 class Null extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} == null) {\n${indent()}$0\n}`);
@@ -73,15 +73,15 @@ class Null extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "sout" })
 class Sout extends PostfixHandler {
-    @Target.Slice({})
-    handleTarget(replacement: string, data: {}): TargetHandleResult {
+    @Filter.Slice()
+    handleTarget(replacement: string, attribute: {}): TargetHandleResult {
         let res = { text: null, deleteText: null };
         // 判断是否为空
         if (replacement.length === 0) {
             res.text = new SnippetString(`System.out.println($1);`);
         } else {
             res.text = new SnippetString(`System.out.println(${replacement});`);
-            res.deleteText = { startIndex: data["startIndex"], endIndex: data["endIndex"] + 1 };
+            res.deleteText = { start: attribute[Keys.START], end: attribute["endIndex"] + 1 };
         }
         return res;
     }
@@ -89,7 +89,7 @@ class Sout extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "souf" })
 class Souf extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`System.out.printf("$1",${replacement});`);
@@ -98,15 +98,15 @@ class Souf extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "serr" })
 class Serr extends PostfixHandler {
-    @Target.Slice({})
-    handleTarget(replacement: string, data: {}): TargetHandleResult {
+    @Filter.Slice()
+    handleTarget(replacement: string, attribute: {}): TargetHandleResult {
         let res = { text: null, deleteText: null };
         // 判断是否为空
         if (replacement.length === 0) {
             res.text = new SnippetString(`System.err.println($1);`);
         } else {
             res.text = new SnippetString(`System.err.println(${replacement});`);
-            res.deleteText = { startIndex: data["startIndex"], endIndex: data["endIndex"] + 1 };
+            res.deleteText = { start: attribute[Keys.START], end: attribute["endIndex"] + 1 };
         }
         return res;
     }
@@ -114,9 +114,18 @@ class Serr extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "synchronized" })
 class Synchronized extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
-        return new SnippetString(`synchronized(${replacement}) {\n${indent()}$0\n}`);
+        return new SnippetString(`synchronized (${replacement}) {\n${indent()}$0\n}`);
+    }
+}
+
+@EnablePostfixSuggestion({ language: "java", label: "requirenonnull" })
+class RequireNonNull extends PostfixHandler {
+    @Filter.Slice()
+    @Return.Replace()
+    handleTarget(replacement: string) {
+        return new SnippetString(`Objects.requireNonNull(${replacement}, $0);`);
     }
 }

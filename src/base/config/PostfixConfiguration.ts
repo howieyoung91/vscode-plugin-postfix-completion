@@ -3,6 +3,9 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-export default interface PostfixCompletionConfiguration {
-    supportedLanguages: string[];
+import { JsonHandlerConfig } from "./JsonPostfixHandler";
+
+export interface Configuration {
+    supportedLanguages?: string[];
+    customSuggestions?: JsonHandlerConfig[];
 }

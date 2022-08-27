@@ -4,9 +4,9 @@
  */
 
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
-import { Target } from "../../../base/decorator/Target";
+import { Filter } from "../../../base/decorator/Filter";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 import { indent } from "../../../util/DocumentUtil";
 
@@ -17,10 +17,10 @@ import { indent } from "../../../util/DocumentUtil";
     { language: "csharp", label: "fori" }
 )
 class For extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    // @Filter.Regex.Search(/([0-9]+)|([a-zA-Z_][a-zA-Z_0-9]*)$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data: {}) {
-        data["startIndex"]++;
+    handleTarget(replacement: string) {
         return new SnippetString(`for (int \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`);
     }
 }
@@ -32,10 +32,10 @@ class For extends PostfixHandler {
     { language: "csharp", label: "forr" }
 )
 class Forr extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    // @Filter.Regex.Search(/([0-9]+)|([a-zA-Z_][a-zA-Z_0-9]*)$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data: any) {
-        data.startIndex++;
+    handleTarget(replacement: string) {
         return new SnippetString(`for (int \${1:i} = ${replacement.trim()}; \${1:i} >= 0; \${1:i}--) {\n${indent()}$0\n}`);
     }
 }

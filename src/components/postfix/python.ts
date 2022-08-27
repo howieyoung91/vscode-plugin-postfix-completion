@@ -4,8 +4,8 @@
  */
 
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import PostfixHandler from "../../base/suggest/PostfixHandler";
-import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { indent } from "../../util/DocumentUtil";
 import StringUtil from "../../util/StringUtil";
@@ -13,7 +13,7 @@ import { SnippetString } from "vscode";
 
 @EnablePostfixSuggestion({ language: "python", label: "for" })
 class For extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         let newText = "";
@@ -29,7 +29,7 @@ class For extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "python", label: "if" })
 class If extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `if ${replacement}:\n${indent()}`;
@@ -38,9 +38,10 @@ class If extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "python", label: "matrix" })
 class Matrix extends PostfixHandler {
-    @Target.Regex.Search(/[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)+\s*$/)
+    @Filter.Slice()
+    @Filter.Validation.Contains(/[0-9]+.?[0-9]*(\s+[0-9]+.?[0-9]*)+\s*$/)
     @Return.Replace()
-    handleTarget(replacement: string, data: {}) {
+    handleTarget(replacement: string) {
         // 分割空格,找到数据
         let nums = replacement.split(/\s+/);
         // 如果行和列不是整数
@@ -79,35 +80,35 @@ class Matrix extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "python", label: "none" })
 class None extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `if ${replacement} is None:\n${indent()}`;
     }
 }
 
-@EnablePostfixSuggestion({ language: "python", label: "not" })
-class Not extends PostfixHandler {
-    @Target.Slice({ start: " " })
-    @Return.Replace()
-    handleTarget(replacement: string, data: any) {
-        data.startIndex++;
-        return `not ${replacement.trim()}`;
-    }
-}
+// @EnablePostfixSuggestion({ language: "python", label: "not" })
+// class Not extends PostfixHandler {
+//     @Filter.Slice({ start: " " })
+//     @Return.Replace()
+//     handleTarget(replacement: string, data: any) {
+//         data.startIndex++;
+//         return `not ${replacement.trim()}`;
+//     }
+// }
 
 @EnablePostfixSuggestion({ language: "python", label: "notnone" })
 class NotNone extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
-    handleTarget(replacement: string, data: {}) {
+    handleTarget(replacement: string) {
         return `if ${replacement} is not None:\n${indent()}`;
     }
 }
 
 @EnablePostfixSuggestion({ language: "python", label: "print" })
 class Print extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `print(${replacement})`;
@@ -116,7 +117,7 @@ class Print extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "python", label: "var" })
 class Var extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`\${1:varName} = ${replacement}`);
@@ -125,7 +126,7 @@ class Var extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "python", label: "while" })
 class While extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`while ${replacement}:\n${indent()}`);

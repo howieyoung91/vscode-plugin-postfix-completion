@@ -4,14 +4,14 @@
  */
 
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import PostfixHandler from "../../base/suggest/PostfixHandler";
-import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { Keys, Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { SnippetString } from "vscode";
 
 @EnablePostfixSuggestion({ language: "markdown", label: "h1" })
 class H1 extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`# ${replacement}`);
@@ -20,7 +20,7 @@ class H1 extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "h2" })
 class H2 extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`## ${replacement}`);
@@ -29,7 +29,7 @@ class H2 extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "h3" })
 class H3 extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`### ${replacement}`);
@@ -38,7 +38,7 @@ class H3 extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "h4" })
 class H4 extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`#### ${replacement}`);
@@ -47,7 +47,7 @@ class H4 extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "h5" })
 class H5 extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`##### ${replacement}`);
@@ -56,7 +56,7 @@ class H5 extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "h6" })
 class H6 extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`###### ${replacement}`);
@@ -65,7 +65,8 @@ class H6 extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "img" })
 class Img extends PostfixHandler {
-    @Target.Regex.Search(
+    @Filter.Slice()
+    @Filter.Validation.Contains(
         /((https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])|([a-zA-Z]:(\/[0-9a-zA-Z\u4e00-\u9fa5]*))/
     )
     @Return.Replace()
@@ -76,7 +77,8 @@ class Img extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "link" })
 class Link extends PostfixHandler {
-    @Target.Regex.Search(/(http|https):\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/)
+    @Filter.Slice()
+    @Filter.Validation.Contains(/(http|https):\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/)
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`[\${1}](${replacement})`);
@@ -85,7 +87,8 @@ class Link extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "table" })
 class Table extends PostfixHandler {
-    @Target.Regex.Search(/[0-9]+\s+[0-9]+./)
+    @Filter.Slice()
+    @Filter.Validation.Contains(/[0-9]+\s+[0-9]+/)
     @Return.Replace()
     handleTarget(replacement: string) {
         // 分割空格,找到数据
@@ -127,7 +130,7 @@ class Table extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "markdown", label: "container" })
 class Container extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`::: ${replacement}\n$0\n:::`);
@@ -320,16 +323,9 @@ class CodeBlock extends PostfixHandler {
     ];
     private static readonly SET = new Set<String>(CodeBlock.LANGUAGES);
 
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
     @Return.Replace()
-    handleTarget(replacement: string, data: {}) {
-        // 如果 data["startIndex"] 原本 == -1
-        if (data["startIndex"] === -1) {
-            data["startIndex"] = data["firstNotWhiteSpaceIndex"];
-        } else {
-            data["startIndex"]++;
-            replacement = replacement.substring(1);
-        }
+    handleTarget(replacement: string) {
         if (CodeBlock.SET.has(replacement)) {
             return new SnippetString("```" + replacement + "\n${0}\n```");
         }

@@ -4,29 +4,29 @@
  */
 
 import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
-import PostfixHandler from "../../base/suggest/PostfixHandler";
-import { Target } from "../../base/decorator/Target";
+import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { SnippetString } from "vscode";
 import { indent } from "../../util/DocumentUtil";
 import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 
-@EnablePostfixSuggestion(
-    { language: "javascript", label: "cast" },
-    { language: "typescript", label: "cast" },
-    { language: "vue", label: "cast" },
-    { language: "html", label: "cast" },
-    { language: "javascriptreact", label: "cast" },
-    { language: "typescriptreact", label: "cast" }
-)
-class Cast extends PostfixHandler {
-    @Target.Slice({ start: " " })
-    @Return.Replace()
-    handleTarget(replacement: string, data: any) {
-        data.startIndex++;
-        return new SnippetString(`(<\${1:type}> ${replacement.trim()})`);
-    }
-}
+// @EnablePostfixSuggestion(
+//     { language: "javascript", label: "cast" },
+//     { language: "typescript", label: "cast" },
+//     { language: "vue", label: "cast" },
+//     { language: "html", label: "cast" },
+//     { language: "javascriptreact", label: "cast" },
+//     { language: "typescriptreact", label: "cast" }
+// )
+// class Cast extends PostfixHandler {
+//     @Filter.Slice({ start: " " })
+//     @Return.Replace()
+//     handleTarget(replacement: string, data: any) {
+//         data.startIndex++;
+//         return new SnippetString(`(<\${1:type}> ${replacement.trim()})`);
+//     }
+// }
 
 @EnablePostfixSuggestion(
     { language: "javascript", label: "fori" },
@@ -37,10 +37,10 @@ class Cast extends PostfixHandler {
     { language: "typescriptreact", label: "fori" }
 )
 class Fori extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    // @Filter.Regex.Search(/([0-9]+)|([a-zA-Z_][a-zA-Z_0-9]*)$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data) {
-        data.startIndex++;
+    handleTarget(replacement: string) {
         return new SnippetString(`for (let \${1:i} = 0; \${1:i} < ${replacement.trim()}; \${1:i}++) {\n${indent()}$0\n}`);
     }
 }
@@ -54,10 +54,10 @@ class Fori extends PostfixHandler {
     { language: "typescriptreact", label: "forr" }
 )
 class Forr extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    // @Filter.Regex.Search(/([0-9]+)|([a-zA-Z_][a-zA-Z_0-9]*)$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data: any) {
-        data.startIndex++;
+    handleTarget(replacement: string) {
         return new SnippetString(`for (let \${1:i} = ${replacement.trim()}; \${1:i} >= 0; \${1:i}--) {\n${indent()}$0\n}`);
     }
 }
@@ -71,11 +71,11 @@ class Forr extends PostfixHandler {
     { language: "typescriptreact", label: "forin" }
 )
 class Forin extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    // @Filter.Regex.Search(/([0-9]+)|([a-zA-Z_][a-zA-Z_0-9]*)$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data) {
-        data.startIndex++;
-        return new SnippetString(`for (const \${1:item} in ${replacement.trim()}){\n${indent()}$0\n}`);
+    handleTarget(replacement: string) {
+        return new SnippetString(`for (const \${1:item} in ${replacement.trim()}) {\n${indent()}$0\n}`);
     }
 }
 
@@ -88,11 +88,11 @@ class Forin extends PostfixHandler {
     { language: "typescriptreact", label: "forof" }
 )
 class Forof extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    // @Filter.Regex.Search(/([0-9]+)|([a-zA-Z_][a-zA-Z_0-9]*)$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data: any) {
-        data.startIndex++;
-        return new SnippetString(`for (const \${1:item} of ${replacement.trim()}){\n${indent()}$0\n}`);
+    handleTarget(replacement: string) {
+        return new SnippetString(`for (const \${1:item} of ${replacement.trim()}) {\n${indent()}$0\n}`);
     }
 }
 
@@ -105,7 +105,7 @@ class Forof extends PostfixHandler {
     { language: "typescriptreact", label: "log" }
 )
 class Log extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `console.log(${replacement});`;
@@ -121,7 +121,7 @@ class Log extends PostfixHandler {
     { language: "typescriptreact", label: "err" }
 )
 class Error extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `console.error(${replacement});`;
@@ -137,9 +137,9 @@ class Error extends PostfixHandler {
     { language: "typescriptreact", label: "warn" }
 )
 class Warn extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
-    handleTarget(replacement: string, data: {}) {
+    handleTarget(replacement: string) {
         return `console.warn(${replacement});`;
     }
 }
@@ -153,7 +153,7 @@ class Warn extends PostfixHandler {
     { language: "typescriptreact", label: "null" }
 )
 class Null extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} === null) {\n${indent()}$0\n}`);
@@ -169,7 +169,7 @@ class Null extends PostfixHandler {
     { language: "typescriptreact", label: "notnull" }
 )
 class NotNull extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} !== null) {\n${indent()}$0\n}`);
@@ -185,7 +185,7 @@ class NotNull extends PostfixHandler {
     { language: "typescriptreact", label: "undefined" }
 )
 class Undefined extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} === undefined) {\n${indent()}$0\n}`);
@@ -201,9 +201,9 @@ class Undefined extends PostfixHandler {
     { language: "typescriptreact", label: "notundefined" }
 )
 class NotUndefined extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
-    handleTarget(replacement: string, data: {}) {
+    handleTarget(replacement: string) {
         return new SnippetString(`if (${replacement} !== undefine) {\n${indent()}$0\n}`);
     }
 }

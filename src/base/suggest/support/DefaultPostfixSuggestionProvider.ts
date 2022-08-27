@@ -27,12 +27,12 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
      */
     provide(document: TextDocument, position: Position, token: CancellationToken, context: CompletionContext): PostfixSuggestion[] {
         let candidates: PostfixSuggestion[] = [];
-        for (const suggestion of this.suggestions) {
+        for (const suggestion of this._suggestions) {
             // 设置参数
-            suggestion.request.setAttributes({ document, position, token, context });
-            let result: ResolvedHandleResult = null;
+            suggestion.setAttributes({ document, position, token, context });
+
             // 初始化参数
-            result = this.dispatch(suggestion, document, position);
+            const result: ResolvedHandleResult = this.dispatch(suggestion, document, position);
             if (result === null) {
                 continue;
             }
@@ -41,7 +41,7 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
             this.applyPropertyValues(result, suggestion, position);
 
             // 重置参数
-            suggestion.request.clearAttributes();
+            suggestion.clearAttributes();
             // 添加补全建议
             candidates.push(suggestion);
         }
@@ -49,20 +49,17 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
     }
 
     /**
-     * 分发请求到 suggestion
+     * 分发请求到 SuggestionHandler
      * @param suggestion
      * @param document
      * @param position
-     * @private
      */
     private dispatch(suggestion: PostfixSuggestion, document: TextDocument, position: Position) {
         const line = DocumentUtil.getTextLine(document, position);
-        suggestion.request.setAttributes({ firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex });
+        suggestion.setAttributes({ firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex });
         const lineText = line.text.substring(0, position.character);
-        let result = suggestion.handler.handle(suggestion.request);
-        if (result == null) {
-            result = suggestion.handler.handleTarget(lineText, suggestion.request.attributes);
-        }
+        suggestion.setAttributes({ lineText: lineText });
+        let result = suggestion.invoke(lineText);
         return this.resolveResult(result);
     }
 
@@ -100,7 +97,7 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
         // 是否删除原有文本
         if (resultObject.deleteText) {
             suggestion.additionalTextEdits = [
-                TextEditUtil.ATextEditToDeleteBetween(position.line, resultObject.deleteText.startIndex, resultObject.deleteText.endIndex),
+                TextEditUtil.ATextEditToDeleteBetween(position.line, resultObject.deleteText.start, resultObject.deleteText.end),
             ];
         }
     }

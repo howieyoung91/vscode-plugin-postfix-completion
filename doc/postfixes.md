@@ -1,30 +1,30 @@
-- ### C/C++
+-   ### C/C++
 
-|         postfix |                                                                            |
-|----------------:|----------------------------------------------------------------------------|
-|         **.if** | `if (${expr}) {}`                                                          |
-|        **.not** | `!{expr}`                                                                  |
-|       **.fori** | `for (int i = 0; i < ${expr}; i++) {}`                                     |
-|       **.forr** | `for (int i = ${expr}; i >= 0; i--) {}`                                    |
-|      **.while** | `while(${expr}) {}`                                                        |
-|     **.return** | `return {expr};`                                                           |
-|    **.include** | `#include "${expr}"`                                                       |
-|     **.define** | `#define ${expr}`                                                          |
-|       **.cout** | `std::cout << ${expr} <<std::endl;`                                        |
-|        **.cin** | `std::cin >> ${expr};`                                                     |
+|         postfix |                                                                                |
+| --------------: | ------------------------------------------------------------------------------ |
+|         **.if** | `if (${expr}) {}`                                                              |
+|        **.not** | `!{expr}`                                                                      |
+|       **.fori** | `for (int i = 0; i < ${expr}; i++) {}`                                         |
+|       **.forr** | `for (int i = ${expr}; i >= 0; i--) {}`                                        |
+|      **.while** | `while(${expr}) {}`                                                            |
+|     **.return** | `return {expr};`                                                               |
+|    **.include** | `#include "${expr}"`                                                           |
+|     **.define** | `#define ${expr}`                                                              |
+|       **.cout** | `std::cout << ${expr} <<std::endl;`                                            |
+|        **.cin** | `std::cin >> ${expr};`                                                         |
 |   **.template** | `template <${expr}>` 输入: E T.template 生成:`template<typename E,typename T>` |
-|      **.class** | `class ${expr} {}`                                                         |
-|     **.struct** | `struct ${expr} {}`                                                        |
-|        **.ptr** | `*${expr} `                                                                |
-|       **.null** | `if (${expr} == NULL) {}`                                                  |
-|    **.notnull** | `if (${expr} != NULL) {}`                                                  |
-|    **.nullptr** | `if (${expr} == nullptr) {}`                                               |
-| **.notnullptr** | `if (${expr} != nullptr) {}`                                               |
+|      **.class** | `class ${expr} {}`                                                             |
+|     **.struct** | `struct ${expr} {}`                                                            |
+|        **.ptr** | `*${expr} `                                                                    |
+|       **.null** | `if (${expr} == NULL) {}`                                                      |
+|    **.notnull** | `if (${expr} != NULL) {}`                                                      |
+|    **.nullptr** | `if (${expr} == nullptr) {}`                                                   |
+| **.notnullptr** | `if (${expr} != nullptr) {}`                                                   |
 
-- ## Java
+-   ## Java
 
-|           后缀 | 补全结果                                    |
-|-------------:|-----------------------------------------|
+|         后缀 | 补全结果                                |
+| -----------: | --------------------------------------- |
 |     **.var** | `class varName = ${expr};`              |
 |      **.if** | `if (${expr}) {}`                       |
 |     **.not** | `!{expr}`                               |
@@ -40,10 +40,10 @@
 |  **.assert** | `assert ${expr};`                       |
 |  **.return** | `return {expr};`                        |
 
-- ### JavaScript/TypeScript
+-   ### JavaScript/TypeScript
 
-|          后缀 | 补全结果                                    |
-|------------:|-----------------------------------------|
+|        后缀 | 补全结果                                |
+| ----------: | --------------------------------------- |
 |     **.if** | `if (${expr}) {}`                       |
 |    **.not** | `!{expr}`                               |
 |   **.fori** | `for (let i = 0; i < ${expr}; i++) {}`  |
@@ -56,26 +56,26 @@
 |  **.while** | `while(${expr}) {}`                     |
 | **.return** | `return {expr};`                        |
 
-- ### Python
+-   ### Python
 
-|           后缀 | 补全结果                                                                     |
-|-------------:|--------------------------------------------------------------------------|
-|     **.len** | `len(${expr})`                                                           |
-|  **.return** | `return ${expr}`                                                         |
-|     **.for** | `for i in range(${expr}): ` or `for i in ${expr}`                        |
-|      **.if** | `if ${expr}:`                                                            |
-|    **.none** | `if ${expr} is None:`                                                    |
-| **.notnone** | `if ${expr} is not None:`                                                |
-|     **.not** | `not ${expr}****`                                                        |
-|   **.print** | `print(${expr})`                                                         |
-|     **.var** | `varName = ${expr}`                                                      |
-|   **.while** | `while ${expr}:`                                                         |
+|         后缀 | 补全结果                                                                                           |
+| -----------: | -------------------------------------------------------------------------------------------------- |
+|     **.len** | `len(${expr})`                                                                                     |
+|  **.return** | `return ${expr}`                                                                                   |
+|     **.for** | `for i in range(${expr}): ` or `for i in ${expr}`                                                  |
+|      **.if** | `if ${expr}:`                                                                                      |
+|    **.none** | `if ${expr} is None:`                                                                              |
+| **.notnone** | `if ${expr} is not None:`                                                                          |
+|     **.not** | `not ${expr}****`                                                                                  |
+|   **.print** | `print(${expr})`                                                                                   |
+|     **.var** | `varName = ${expr}`                                                                                |
+|   **.while** | `while ${expr}:`                                                                                   |
 |  **.matrix** | `生成二维矩阵 输入 1 2 3 4 2(矩阵的行) 2(矩阵的列).matrix 会生成一个 2 行 2 列的矩阵[[1,2],[3,4]]` |
 
-- ### Golang
+-   ### Golang
 
-|             后缀 | 补全结果                             |
-|---------------:|----------------------------------|
+|           后缀 | 补全结果                         |
+| -------------: | -------------------------------- |
 |       **.var** | `varName := ${expr}`             |
 |     **.const** | `const varName type = ${expr}`   |
 |       **.for** | `for i, elem in range ${expr}{}` |

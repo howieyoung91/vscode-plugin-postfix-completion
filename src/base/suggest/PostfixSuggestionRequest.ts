@@ -13,13 +13,9 @@ export default class PostfixSuggestionRequest {
     public static readonly POSITION_KEY = "position";
     public static readonly TOKEN_KEY = "token";
     public static readonly CONTEXT_KEY = "context";
-    protected _userData: any = {};
 
     protected _attributes: any = {};
-
-    get attributes(): any {
-        return this._attributes;
-    }
+    protected _target: string;
 
     public setAttributes(attributes: {}): this {
         this._attributes = Object.assign(attributes, this._attributes);
@@ -31,19 +27,25 @@ export default class PostfixSuggestionRequest {
         return this;
     }
 
-    public setData(key: string, value: any) {
-        this._userData[key] = value;
-        return this;
+    public clearAttributes() {
+        this._attributes = {};
     }
 
-    public getData = (key: string) => this._userData[key];
     public getAttribute = (key: string) => this._attributes[key];
     public getDocument = (): string => this._attributes[PostfixSuggestionRequest.DOCUMENT_KEY];
     public getPosition = (): Position => this._attributes[PostfixSuggestionRequest.POSITION_KEY];
     public getToken = (): CancellationToken => this._attributes[PostfixSuggestionRequest.TOKEN_KEY];
     public getCompletionContext = (): CompletionContext => this._attributes[PostfixSuggestionRequest.CONTEXT_KEY];
 
-    public clearAttributes() {
-        this._attributes = {};
+    get attributes(): any {
+        return this._attributes;
+    }
+
+    get target(): string {
+        return this._target;
+    }
+
+    set target(target: string) {
+        this._target = target;
     }
 }

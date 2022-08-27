@@ -4,9 +4,9 @@
  */
 
 import { SnippetString } from "vscode";
-import PostfixHandler from "../../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
-import { Target } from "../../../base/decorator/Target";
+import { Filter } from "../../../base/decorator/Filter";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 import TargetHandleResult from "../../../base/suggest/TargetHandleResult";
 import StringUtil from "../../../util/StringUtil";
@@ -23,26 +23,31 @@ class Var extends PostfixHandler {
 
     private static handleNew(replacement: string) {
         // 获取带泛型的类名
-        let classWithType = replacement.substring(4, replacement.indexOf("(")).trim();
-        // 纯净的类名
-        let clazz = classWithType;
+        let end = replacement.indexOf("("); // new ArrayList<Integer>()
+        if (end === -1) {
+            // new Integer[]{1, 2} -> Integer[] integers = new Integer[]{1, 2};
+            end = replacement.indexOf("[");
+            let clazz = replacement.substring(4, end).trim();
+            return new SnippetString(`${clazz}[] \${1:${clazz.toLowerCase()}s} = ${replacement};`);
+        }
+        let classWithType = replacement.substring(4, end).trim();
         let typeIndexInClazz = classWithType.indexOf("<");
-        // 如果存在泛型
-        // 获取纯净的类名
+        let clazz = classWithType;
+        // 如果存在泛型 获取纯净的类名
         if (typeIndexInClazz !== -1) {
-            // 去除泛型
+            // 去除泛型 得到纯净的类名
             clazz = classWithType.substring(0, typeIndexInClazz);
             replacement = replacement.substring(0, replacement.indexOf("<") + 1) + replacement.substring(replacement.lastIndexOf(">"));
         }
         return new SnippetString(`${classWithType} \${1:${clazz.toLowerCase()}} = ${replacement};`);
     }
 
-    @Target.Slice({})
+    @Filter.Slice({})
     @Return.Replace()
-    handleTarget(replacement: string): null | TargetHandleResult {
+    handleTarget(replacement: string): TargetHandleResult {
         // 判断是否是 new ...(...)
         let newText = null;
-        if (replacement.match(/^new (.+?)\(.*\)$/)) {
+        if (replacement.match(/^new (.+?)(\(.*\)|(\[.*](\{.*?})?))$/)) {
             newText = Var.handleNew(replacement);
         } else {
             newText = Var.handleSimpleType(replacement);

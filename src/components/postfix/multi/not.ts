@@ -3,26 +3,26 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import PostfixHandler from "../../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
-import { Target } from "../../../base/decorator/Target";
+import { Keys, Filter } from "../../../base/decorator/Filter";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 
-@EnablePostfixSuggestion(
-    { language: "java", label: "not" },
-    { language: "c", label: "not" },
-    { language: "cpp", label: "not" },
-    { language: "csharp", label: "not" },
-    { language: "javascript", label: "not" },
-    { language: "typescript", label: "not" },
-    { language: "vue", label: "not" },
-    { language: "html", label: "not" }
-)
+// @EnablePostfixSuggestion(
+//     { language: "java", label: "not" },
+//     { language: "c", label: "not" },
+//     { language: "cpp", label: "not" },
+//     { language: "csharp", label: "not" },
+//     { language: "javascript", label: "not" },
+//     { language: "typescript", label: "not" },
+//     { language: "vue", label: "not" },
+//     { language: "html", label: "not" }
+// )
 class Not extends PostfixHandler {
-    @Target.Slice({ start: " " })
+    @Filter.Slice()
+    @Filter.Regex.Search(/[a-zA-Z_][a-zA-Z_0-9]*$/g)
     @Return.Replace()
-    handleTarget(replacement: string, data: any) {
-        data.startIndex++;
+    handleTarget(replacement: string) {
         return `!${replacement.trim()}`;
     }
 }

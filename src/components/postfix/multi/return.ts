@@ -3,14 +3,14 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import PostfixHandler from "../../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
-import { Target } from "../../../base/decorator/Target";
+import { Filter } from "../../../base/decorator/Filter";
 import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
 
 @EnablePostfixSuggestion({ language: "python", label: "return" }, { language: "go", label: "return" })
 class Return4PyGo extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice({})
     @Return.Replace()
     handleTarget(replacement: string) {
         return `return ${replacement}`;
@@ -28,7 +28,7 @@ class Return4PyGo extends PostfixHandler {
     { language: "html", label: "return" }
 )
 class ReturnMore extends PostfixHandler {
-    @Target.Slice({})
+    @Filter.Slice()
     @Return.Replace()
     handleTarget(replacement: string) {
         return `return ${replacement};`;

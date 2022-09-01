@@ -4,7 +4,7 @@
  */
 
 import { SnippetString } from "vscode";
-import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
 import { Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { HandleResult, PostfixHandler } from "../../base/suggest/PostfixHandler";

@@ -3,7 +3,7 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
 import { PostfixHandler } from "../../base/suggest/PostfixHandler";
 import { Keys, Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";

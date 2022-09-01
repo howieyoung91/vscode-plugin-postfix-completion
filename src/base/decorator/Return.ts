@@ -4,7 +4,7 @@
  */
 
 import { Assert } from "../../util/Assert";
-import TargetHandleResult from "../suggest/TargetHandleResult";
+import { HandleResult } from "../suggest/PostfixHandler";
 import { Keys } from "./Filter";
 
 // todo
@@ -14,7 +14,7 @@ interface ReturnSlice {
 }
 
 export function ReturnDecorator(realMethod) {
-    return (lineText: string, data: {}): TargetHandleResult => {
+    return (lineText: string, data: {}): HandleResult => {
         let result = realMethod(lineText, data);
         if (result == null) {
             return null;

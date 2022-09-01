@@ -6,7 +6,7 @@
 import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
 import { Filter } from "../../../base/decorator/Filter";
-import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../../base/decorator/Enable";
 
 @EnablePostfixSuggestion({ language: "python", label: "len" }, { language: "go", label: "len" })
 class Len extends PostfixHandler {

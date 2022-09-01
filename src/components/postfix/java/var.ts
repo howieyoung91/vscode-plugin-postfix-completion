@@ -7,8 +7,8 @@ import { SnippetString } from "vscode";
 import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
 import { Filter } from "../../../base/decorator/Filter";
-import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
-import TargetHandleResult from "../../../base/suggest/TargetHandleResult";
+import { EnablePostfixSuggestion } from "../../../base/decorator/Enable";
+import { HandleResult } from "../../../base/suggest/PostfixHandler";
 import StringUtil from "../../../util/StringUtil";
 
 @EnablePostfixSuggestion({ language: "java", label: "var" })
@@ -44,7 +44,7 @@ class Var extends PostfixHandler {
 
     @Filter.Slice({})
     @Return.Replace()
-    handleTarget(replacement: string): TargetHandleResult {
+    handleTarget(replacement: string): HandleResult {
         // 判断是否是 new ...(...)
         let newText = null;
         if (replacement.match(/^new (.+?)(\(.*\)|(\[.*](\{.*?})?))$/)) {

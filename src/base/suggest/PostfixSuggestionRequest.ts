@@ -4,16 +4,19 @@
  */
 
 import { CancellationToken, CompletionContext, Position } from "vscode";
-
+export enum AttributeKeys {
+    DOCUMENT_KEY = "document",
+    POSITION_KEY = "position",
+    TOKEN_KEY = "token",
+    CONTEXT_KEY = "context",
+    FIRST_NOT_WHITESPACE_KEY = "firstNotWhiteSpaceIndex",
+    LINE_TEXT_KEY = "lineText",
+    LABEL_KEY = "label",
+}
 /**
  * 后缀补全建议请求
  */
 export default class PostfixSuggestionRequest {
-    public static readonly DOCUMENT_KEY = "document";
-    public static readonly POSITION_KEY = "position";
-    public static readonly TOKEN_KEY = "token";
-    public static readonly CONTEXT_KEY = "context";
-
     protected _attributes: any = {};
     protected _target: string;
 
@@ -32,10 +35,12 @@ export default class PostfixSuggestionRequest {
     }
 
     public getAttribute = (key: string) => this._attributes[key];
-    public getDocument = (): string => this._attributes[PostfixSuggestionRequest.DOCUMENT_KEY];
-    public getPosition = (): Position => this._attributes[PostfixSuggestionRequest.POSITION_KEY];
-    public getToken = (): CancellationToken => this._attributes[PostfixSuggestionRequest.TOKEN_KEY];
-    public getCompletionContext = (): CompletionContext => this._attributes[PostfixSuggestionRequest.CONTEXT_KEY];
+    public getDocument = (): string => this._attributes[AttributeKeys.DOCUMENT_KEY];
+    public getPosition = (): Position => this._attributes[AttributeKeys.POSITION_KEY];
+    public getToken = (): CancellationToken => this._attributes[AttributeKeys.TOKEN_KEY];
+    public getCompletionContext = (): CompletionContext => this._attributes[AttributeKeys.CONTEXT_KEY];
+    public getLineText = (): CompletionContext => this._attributes[AttributeKeys.LINE_TEXT_KEY];
+    public getLabel = (): string => this._attributes[AttributeKeys.LABEL_KEY];
 
     get attributes(): any {
         return this._attributes;

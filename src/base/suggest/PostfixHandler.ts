@@ -4,8 +4,18 @@
  */
 
 import { SnippetString } from "vscode";
-import TargetHandleResult from "./TargetHandleResult";
 import PostfixSuggestionRequest from "./PostfixSuggestionRequest";
+
+export interface TargetHandleResult {
+    text: string | SnippetString;
+    documentation?: string;
+    detail?: string;
+    data?: {};
+    deleteText?: {
+        start: number;
+        end: number;
+    };
+}
 
 export type HandleResult = string | SnippetString | TargetHandleResult;
 
@@ -28,13 +38,4 @@ export abstract class PostfixHandler {
     handleTarget(target: string, attributes: {}): HandleResult {
         return null;
     }
-
-    // /**
-    //  * 处理补全项
-    //  * @param item 补全项
-    //  * @param data 参数
-    //  */
-    // handleCompletionItem(item: CompletionItem, data: {}) {}
-
-    // handlePostfixSuggestionFinally(suggestion: PostfixSuggestion, request: PostfixSuggestionRequest) {}
 }

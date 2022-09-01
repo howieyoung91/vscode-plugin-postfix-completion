@@ -9,7 +9,7 @@ import DefaultPostfixSuggestionProvider from "../../suggest/support/DefaultPostf
 import { ComponentManager } from "../ComponentManager";
 import { Configuration } from "../../config/PostfixConfiguration";
 import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
-import { PostfixSuggestionSupplier } from "../../suggest/SupplyPostfixSuggestions";
+import { PostfixSuggestionSupplier } from "../../suggest/PostfixSuggestionSupplier";
 import LanguageSupportedPostfixSuggestionProvider from "../../suggest/support/LanguageSupportPostfixSuggestionProvider";
 
 const Keys = {

@@ -40,8 +40,6 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
             // 设置新的文本
             this.applyPropertyValues(result, suggestion, position);
 
-            // 重置参数
-            suggestion.clearAttributes();
             // 添加补全建议
             candidates.push(suggestion);
         }
@@ -56,9 +54,10 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
      */
     private dispatch(suggestion: PostfixSuggestion, document: TextDocument, position: Position) {
         const line = DocumentUtil.getTextLine(document, position);
-        suggestion.setAttributes({ firstNotWhiteSpaceIndex: line.firstNonWhitespaceCharacterIndex });
+        suggestion.setAttribute("firstNotWhiteSpaceIndex", line.firstNonWhitespaceCharacterIndex);
         const lineText = line.text.substring(0, position.character);
-        suggestion.setAttributes({ lineText: lineText });
+        suggestion.setAttribute("lineText", lineText);
+        suggestion.setAttribute("label", suggestion.label);
         let result = suggestion.invoke(lineText);
         return this.resolveResult(result);
     }
@@ -76,7 +75,7 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
             suggestion.detail = resultObject.detail;
         } else {
             // 默认为 suggestion
-            suggestion.detail = `postfix`;
+            suggestion.detail = `Postfix Suggestion`;
         }
         // 设置新的文档
         if (resultObject.documentation) {
@@ -97,7 +96,7 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
         // 是否删除原有文本
         if (resultObject.deleteText) {
             suggestion.additionalTextEdits = [
-                TextEditUtil.ATextEditToDeleteBetween(position.line, resultObject.deleteText.start, resultObject.deleteText.end),
+                TextEditUtil.ADeleteTextEditBetween(position.line, resultObject.deleteText.start, resultObject.deleteText.end),
             ];
         }
     }

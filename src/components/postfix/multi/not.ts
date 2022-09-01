@@ -6,7 +6,7 @@
 import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
 import { Keys, Filter } from "../../../base/decorator/Filter";
-import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../../base/decorator/Enable";
 
 // @EnablePostfixSuggestion(
 //     { language: "java", label: "not" },

@@ -3,14 +3,13 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
 import { PostfixHandler } from "../../base/suggest/PostfixHandler";
 import { Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { SnippetString } from "vscode";
 import { indent } from "../../util/DocumentUtil";
-import TargetHandleResult from "../../base/suggest/TargetHandleResult";
-
+import { HandleResult } from "../../base/suggest/PostfixHandler";
 // @EnablePostfixSuggestion(
 //     { language: "javascript", label: "cast" },
 //     { language: "typescript", label: "cast" },
@@ -210,7 +209,7 @@ class NotUndefined extends PostfixHandler {
 
 // @DefinePostfixHandler({ language: "javascript", label: "let" })
 class Let extends PostfixHandler {
-    handleTarget(lineText: string): string | SnippetString | TargetHandleResult | null {
+    handleTarget(lineText: string): HandleResult {
         /*
           ① new  String().let -> let varName = new String();
           ② \s+ sb.    doSth(sb.doSth(arg1, arg2), arg3).let -> let varName = sb.doSth(sb.doSth(arg1, arg2), arg3);

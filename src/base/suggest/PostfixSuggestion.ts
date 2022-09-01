@@ -22,15 +22,20 @@ export default class PostfixSuggestion extends CompletionItem {
     /**
      * 触发补全建议
      */
-    // TODO 实现 session
     invoke(lineText: string) {
         this._request.target = lineText;
         let result = this._handler.handle(this._request);
         if (result === null) {
             result = this._handler.handleTarget(lineText, this._request.attributes);
         }
-        this.clearAttributes();
+        if (this.shouldClearAttributes()) {
+            this.clearAttributes();
+        }
         return result;
+    }
+
+    protected shouldClearAttributes() {
+        return true;
     }
 
     setAttributes = (attributes: {}) => this._request.setAttributes(attributes);

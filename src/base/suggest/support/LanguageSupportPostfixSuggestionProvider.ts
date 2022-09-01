@@ -5,12 +5,11 @@
 
 import PostfixSuggestion from "../PostfixSuggestion";
 import PostfixSuggestionProvider from "../PostfixSuggestionProvider";
-import { PostfixSuggestionSupplier } from "../SupplyPostfixSuggestions";
+import { PostfixSuggestionSupplier } from "../PostfixSuggestionSupplier";
 
 export default abstract class LanguageSupportPostfixSuggestionProvider
     extends PostfixSuggestionProvider
-    implements PostfixSuggestionSupplier
-{
+    implements PostfixSuggestionSupplier {
     protected _language: string | null = null;
     protected _triggerCharacters: string[];
     protected _suggestions: PostfixSuggestion[] = [];

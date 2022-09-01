@@ -3,13 +3,13 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import { EnablePostfixSuggestion } from "../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
 import { PostfixHandler } from "../../base/suggest/PostfixHandler";
 import { Keys, Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
-import TargetHandleResult from "../../base/suggest/TargetHandleResult";
 import { indent } from "../../util/DocumentUtil";
 import { SnippetString } from "vscode";
+import { HandleResult } from "../../base/suggest/PostfixHandler";
 
 @EnablePostfixSuggestion({ language: "java", label: "assert" })
 class Assert extends PostfixHandler {
@@ -22,7 +22,7 @@ class Assert extends PostfixHandler {
 
 @EnablePostfixSuggestion({ language: "java", label: "foreach" })
 class Foreach extends PostfixHandler {
-    handleTarget(lineText: string): TargetHandleResult {
+    handleTarget(lineText: string): HandleResult {
         let startIndex = lineText.lastIndexOf(" ") + 1;
         let endIndex = lineText.lastIndexOf(".");
         // 获取数字
@@ -74,7 +74,7 @@ class Null extends PostfixHandler {
 @EnablePostfixSuggestion({ language: "java", label: "sout" })
 class Sout extends PostfixHandler {
     @Filter.Slice()
-    handleTarget(replacement: string, attribute: {}): TargetHandleResult {
+    handleTarget(replacement: string, attribute: {}): HandleResult {
         let res = { text: null, deleteText: null };
         // 判断是否为空
         if (replacement.length === 0) {
@@ -99,7 +99,7 @@ class Souf extends PostfixHandler {
 @EnablePostfixSuggestion({ language: "java", label: "serr" })
 class Serr extends PostfixHandler {
     @Filter.Slice()
-    handleTarget(replacement: string, attribute: {}): TargetHandleResult {
+    handleTarget(replacement: string, attribute: {}): HandleResult {
         let res = { text: null, deleteText: null };
         // 判断是否为空
         if (replacement.length === 0) {

@@ -6,7 +6,7 @@
 import { SnippetString } from "vscode";
 import { Assert } from "../../util/Assert";
 import { indent } from "../../util/DocumentUtil";
-import { PostfixSuggestionPoint } from "../decorator/EnablePostfixSuggestion";
+import { PostfixPoint } from "../decorator/Enable";
 import { ReturnDecorator } from "../decorator/Return";
 import { DocumentBetweenDecorator, DocumentDecorator, LineTextDecorator } from "../decorator/Source";
 import { RegexMatchDecorator, RegexSearchDecorator, SliceDecorator } from "../decorator/support/FilterDecorators";
@@ -30,10 +30,11 @@ import { FilterType, ReturnConfig, SourceConfig } from "./ConfigPropertyKeys";
 //         "type": "replace"
 //     }
 // }
-class JsonPostfixHandler extends PostfixHandler {}
+class JsonPostfixHandler extends PostfixHandler {
+}
 
 export interface JsonHandlerConfig {
-    points: PostfixSuggestionPoint[] | PostfixSuggestionPoint;
+    points: PostfixPoint[] | PostfixPoint;
     source?: SourceConfig | string;
     filters?: FilterType[];
     result: ReturnConfig | string;
@@ -168,20 +169,13 @@ function decorateFilter(method: any, config: JsonHandlerConfig) {
                     method = SliceDecorator(method, {});
                 }
             } else {
-                switch (filter.type) {
-                    case "slice": {
-                        method = SliceDecorator(method, filter.properties ?? {});
-                        break;
-                    }
-                    case "regex-match": {
-                        method = RegexMatchDecorator(method, new RegExp(filter.properties.pattern));
-                        break;
-                    }
-                    case "regex-search": {
-                        const pattern = filter.properties.pattern;
-                        method = RegexSearchDecorator(method, new RegExp(pattern));
-                        break;
-                    }
+                if (filter.type === "slice") {
+                    method = SliceDecorator(method, filter.properties ?? {});
+                } else if (filter.type === "regex-match") {
+                    method = RegexMatchDecorator(method, new RegExp(filter.properties.pattern));
+                } else if (filter.type === "regex-search") {
+                    const pattern = filter.properties.pattern;
+                    method = RegexSearchDecorator(method, new RegExp(pattern));
                 }
             }
         }

@@ -4,11 +4,11 @@
  */
 
 import { Range } from "vscode";
-import PostfixSuggestionRequest from "../suggest/PostfixSuggestionRequest";
+import { AttributeKeys } from "../suggest/PostfixSuggestionRequest";
 
 export function DocumentDecorator(realMethod) {
     return (lineText: string, attributes: {}) => {
-        const source = attributes[PostfixSuggestionRequest.DOCUMENT_KEY].getText();
+        const source = attributes[AttributeKeys.DOCUMENT_KEY].getText();
         return realMethod(source, attributes);
     };
 }
@@ -16,7 +16,7 @@ export function DocumentDecorator(realMethod) {
 export function LineTextDecorator(lineNumber: number, realMethod) {
     return (lineText: string, attributes: {}) => {
         try {
-            const source = attributes[PostfixSuggestionRequest.DOCUMENT_KEY].lineAt(lineNumber).text;
+            const source = attributes[AttributeKeys.DOCUMENT_KEY].lineAt(lineNumber).text;
             return realMethod(source, attributes);
         } catch (e) {
             return null; // 防止 lineNumber 溢出
@@ -26,7 +26,7 @@ export function LineTextDecorator(lineNumber: number, realMethod) {
 
 export function DocumentBetweenDecorator(startLineNumber: number, endLineNumber: number, limit: number, realMethod) {
     return (lineText: string, data: {}) => {
-        let document = data[PostfixSuggestionRequest.DOCUMENT_KEY];
+        let document = data[AttributeKeys.DOCUMENT_KEY];
         let realStartLineNumber = startLineNumber;
         let realEndLineNumber = endLineNumber;
 

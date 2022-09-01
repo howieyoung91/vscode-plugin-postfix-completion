@@ -7,7 +7,7 @@ import { SnippetString } from "vscode";
 import { PostfixHandler } from "../../../base/suggest/PostfixHandler";
 import { Return } from "../../../base/decorator/Return";
 import { Filter } from "../../../base/decorator/Filter";
-import { EnablePostfixSuggestion } from "../../../base/decorator/EnablePostfixSuggestion";
+import { EnablePostfixSuggestion } from "../../../base/decorator/Enable";
 import { indent } from "../../../util/DocumentUtil";
 
 @EnablePostfixSuggestion(

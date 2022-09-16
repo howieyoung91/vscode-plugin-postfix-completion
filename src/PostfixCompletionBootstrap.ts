@@ -12,7 +12,6 @@ import { PluginContext } from "./base/context/support/PostfixCompletionContext";
 export abstract class Plugin {
     static prepare(p: string) {
         glob.sync(p, { cwd: __dirname }).forEach(path => import(path));
-        console.log(1);
     }
 
     static startWith(context: ExtensionContext) {

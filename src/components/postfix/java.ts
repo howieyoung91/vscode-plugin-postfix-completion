@@ -129,3 +129,25 @@ class RequireNonNull extends PostfixHandler {
         return new SnippetString(`Objects.requireNonNull(${replacement}, $0);`);
     }
 }
+
+@EnablePostfixSuggestion({ language: "java", label: "class" })
+class Class extends PostfixHandler {
+    @Filter.Slice()
+    @Filter.Regex.Search(/[a-zA-Z_][a-zA-Z_0-9]*$/g)
+    @Return.Replace()
+    handleTarget(replacement: string) {
+        console.log(replacement);
+        return new SnippetString(`class ${replacement.trim()} {\n${indent()}$0\n};`);
+    }
+}
+
+@EnablePostfixSuggestion({ language: "java", label: "interface" })
+class Interface extends PostfixHandler {
+    @Filter.Slice()
+    @Filter.Regex.Search(/[a-zA-Z_][a-zA-Z_0-9]*$/g)
+    @Return.Replace()
+    handleTarget(replacement: string) {
+        console.log(replacement);
+        return new SnippetString(`interface ${replacement.trim()} {\n${indent()}$0\n};`);
+    }
+}

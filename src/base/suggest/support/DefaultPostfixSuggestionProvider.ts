@@ -9,6 +9,7 @@ import PostfixSuggestion from "../PostfixSuggestion";
 import DocumentUtil from "../../../util/DocumentUtil";
 import LanguageSupportPostfixSuggestionProvider from "./LanguageSupportPostfixSuggestionProvider";
 import { HandleResult } from "../PostfixHandler";
+import PostfixSuggestionRequest from "../PostfixSuggestionRequest";
 
 type ResolvedHandleResult = {
     text: string | SnippetString;
@@ -28,11 +29,13 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
     provide(document: TextDocument, position: Position, token: CancellationToken, context: CompletionContext): PostfixSuggestion[] {
         let candidates: PostfixSuggestion[] = [];
         for (const suggestion of this._suggestions) {
+            const request = new PostfixSuggestionRequest();
             // 设置参数
-            suggestion.setAttributes({ document, position, token, context });
+            // suggestion.setAttributes({ document, position, token, context });
+            request.setAttributes({ document, position, token, context });
 
             // 初始化参数
-            const result: ResolvedHandleResult = this.dispatch(suggestion, document, position);
+            const result: ResolvedHandleResult = this.dispatch(suggestion, request);
             if (result === null) {
                 continue;
             }
@@ -52,13 +55,16 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
      * @param document
      * @param position
      */
-    private dispatch(suggestion: PostfixSuggestion, document: TextDocument, position: Position) {
+    private dispatch(suggestion: PostfixSuggestion, request: PostfixSuggestionRequest) {
+        const document = request.getDocument();
+        const position = request.getPosition();
         const line = DocumentUtil.getTextLine(document, position);
-        suggestion.setAttribute("firstNotWhiteSpaceIndex", line.firstNonWhitespaceCharacterIndex);
+        request.setAttribute("firstNotWhiteSpaceIndex", line.firstNonWhitespaceCharacterIndex);
         const lineText = line.text.substring(0, position.character);
-        suggestion.setAttribute("lineText", lineText);
-        suggestion.setAttribute("label", suggestion.label);
-        let result = suggestion.invoke(lineText);
+        request.setAttribute("lineText", lineText);
+        request.setAttribute("target", lineText);
+        request.setAttribute("label", suggestion.label);
+        let result = suggestion.invoke(request);
         return this.resolveResult(result);
     }
 

@@ -6,8 +6,8 @@
 import PostfixSuggestion from "../suggest/PostfixSuggestion";
 import { PostfixHandler } from "../suggest/PostfixHandler";
 import { PluginContext } from "../context/support/PostfixCompletionContext";
-import { ExecutablePostfixHandler } from "../suggest/support/ExecutablePostfixHandler";
-import PostfixCommand from "../suggest/support/PostfixCommand";
+import { PostfixCommandHandler } from "../suggest/support/ExecutablePostfixHandler";
+import { PostfixCommand } from "../suggest/support/PostfixCommand";
 
 type Constructor<T = any> = new (...args: any[]) => T;
 
@@ -41,12 +41,12 @@ let i = 1;
 
 export function EnablePostfixCommand(...points: PostfixPoint[]) {
     return (postfixHandlerCtor: Constructor) => {
-        if (!(postfixHandlerCtor.prototype instanceof ExecutablePostfixHandler)) {
+        if (!(postfixHandlerCtor.prototype instanceof PostfixCommandHandler)) {
             return;
         }
         let handler = new postfixHandlerCtor();
         for (const point of points) {
-            PluginContext.registerPostfixSuggestion(point.language, new PostfixCommand(point.label, `postfixcommand.${i}`, handler));
+            PluginContext.registerPostfixSuggestion(point.language, new PostfixCommand(`postfixcommand.${i}`, point.label, handler));
             i++;
         }
     };

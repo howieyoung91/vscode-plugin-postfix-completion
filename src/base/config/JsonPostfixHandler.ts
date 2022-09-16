@@ -53,20 +53,19 @@ function generateRealMethod(config: JsonHandlerConfig) {
             return config.result.replace("{{replacement}}", replacement);
         } else {
             const properties = config.result.properties;
-            switch (config.result.type) {
-                case "string": {
-                    return escapeString(properties, replacement);
-                }
-                case "snippet": {
-                    return new SnippetString(escapeString(properties, replacement));
-                }
+            let escapedString = escapeString(properties, replacement);
+            if (config.result.type === "string") {
+                return escapedString;
+            } else if (config.result.type === "snippet") {
+                return new SnippetString(escapedString);
             }
         }
     };
 }
 
 function escapeString(properties: { value: string }, replacement: string) {
-    let s = properties.value.replace("{{replacement}}", replacement);
+    let s = properties.value;
+    s = s.replace("{{replacement}}", replacement);
     s = s.replace("{{indent}}", indent());
     return s;
 }

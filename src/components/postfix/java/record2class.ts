@@ -11,7 +11,7 @@ import { SnippetString } from "vscode";
 import { indent } from "../../../util/DocumentUtil";
 import StringUtil from "../../../util/StringUtil";
 
-@EnablePostfixSuggestion({ language: "java", label: "recordToClass" })
+@EnablePostfixSuggestion({ language: "java", label: "record2class" })
 class Record2class extends PostfixHandler {
     @Filter.Slice()
     @Filter.Validation.Contains(/record\s+\w+\s*\(.*\)/)
@@ -25,6 +25,23 @@ class Record2class extends PostfixHandler {
         let ctor = Parser.ctor(className, propertiesString, propertyObjectsArray);
         let methods = Parser.methods(className, propertyObjectsArray);
         return new SnippetString(`class ${className} {\n${field}\n${ctor}\n${methods}\n}`);
+    }
+}
+
+@EnablePostfixSuggestion({ language: "java", label: "record2classonlyfields" })
+class Record2classWithoutClass extends PostfixHandler {
+    @Filter.Slice()
+    @Filter.Validation.Contains(/record\s+\w+\s*\(.*\)/)
+    @Return.Replace()
+    handleTarget(replacement: string) {
+        let className = Parser.className(replacement);
+        let propertiesString = Parser.propertiesString(replacement);
+        let propertiesArray = Parser.propertiesArray(propertiesString);
+        let field = Parser.field(propertiesArray);
+        let propertyObjectsArray = Parser.propertyObjectsArray(propertiesArray);
+        let ctor = Parser.ctor(className, propertiesString, propertyObjectsArray);
+        let methods = Parser.methods(className, propertyObjectsArray);
+        return new SnippetString(`${field}\n${ctor}\n${methods}\n`);
     }
 }
 
@@ -129,5 +146,3 @@ class Parser {
         return methods;
     }
 }
-
-// record temp(String username, String password, Object o)

@@ -6,13 +6,13 @@ import { HandleResult, PostfixHandler, TargetHandleResult } from "../PostfixHand
 import PostfixSuggestionRequest, { AttributeKeys } from "../PostfixSuggestionRequest";
 import { Filter } from "../../decorator/Filter";
 
-export abstract class ExecutablePostfixHandler<T> extends PostfixHandler {
-    abstract resolveParams(result: HandleResult, request: PostfixSuggestionRequest): T;
+export abstract class PostfixCommandHandler<T> extends PostfixHandler {
+    abstract parse(result: HandleResult, request: PostfixSuggestionRequest): T;
 
-    abstract command(params: T, request: PostfixSuggestionRequest): void;
+    abstract command(args: T, request: PostfixSuggestionRequest): void;
 }
 
-export abstract class LineTextExecutablePostfixHandler extends ExecutablePostfixHandler<string[]> {
+export abstract class LineTextPostfixCommandHandler extends PostfixCommandHandler<string[]> {
     @Filter.Slice()
     handleTarget(target: string, attributes: {}): HandleResult {
         const label = attributes[AttributeKeys.LABEL_KEY];
@@ -22,10 +22,10 @@ export abstract class LineTextExecutablePostfixHandler extends ExecutablePostfix
         };
     }
 
-    resolveParams(result: HandleResult, request: PostfixSuggestionRequest): string[] {
+    parse(result: HandleResult, request: PostfixSuggestionRequest): string[] {
         let paramString = (result as TargetHandleResult).text as string;
         return paramString.split(/\s+/);
     }
 
-    abstract command(params: string[], request: PostfixSuggestionRequest): void;
+    abstract command(args: string[], request: PostfixSuggestionRequest): void;
 }

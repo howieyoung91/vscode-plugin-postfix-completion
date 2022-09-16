@@ -5,32 +5,40 @@
 
 import PostfixSuggestion from "../PostfixSuggestion";
 import { Command, commands } from "vscode";
-import { ExecutablePostfixHandler } from "./ExecutablePostfixHandler";
+import { PostfixCommandHandler } from "./ExecutablePostfixHandler";
 import TextEditUtil from "../../../util/TextEditUtil";
 import { HandleResult } from "../PostfixHandler";
 import { Assert } from "../../../util/Assert";
+import PostfixSuggestionRequest from "../PostfixSuggestionRequest";
 
-export default class PostfixCommand extends PostfixSuggestion {
-    private readonly delegate: string;
+// export interface PostfixCommandConfiguration {
+// detail?: string;
+// }
+
+export class PostfixCommand extends PostfixSuggestion {
+    private readonly id: string;
     private result: HandleResult;
+    private request: PostfixSuggestionRequest;
 
-    constructor(label: string, delegate: string, handler: ExecutablePostfixHandler<any>) {
+    constructor(id: string, label: string, handler: PostfixCommandHandler<any>) {
         super(label, handler);
-        this.delegate = delegate;
+        this.id = id;
 
         this.activateInvoker();
 
         // register command
-        commands.registerCommand(delegate, (...args) => {
-            this.deleteLine();
-            const params = handler.resolveParams(this.result, this._request);
-            handler.command(params, this._request); //! execute command
-            this.clearAttributes();
+        commands.registerCommand(id, () => {
+            if (this.request) {
+                this.deleteLine();
+                const args = handler.parse(this.result, this.request);
+                handler.command(args, this.request); //! execute command
+            }
         });
     }
 
-    invoke(lineText: string): HandleResult {
-        this.result = super.invoke(lineText);
+    invoke(request: PostfixSuggestionRequest): HandleResult {
+        this.request = request;
+        this.result = super.invoke(request);
         if (!Assert.isString(this.result) && !Assert.isSnippetString(this.result)) {
             const result = { ...this.result };
             result.text = "";
@@ -42,19 +50,16 @@ export default class PostfixCommand extends PostfixSuggestion {
     }
 
     private activateInvoker() {
-        const callbackCommand: Command = {
-            title: "",
-            command: this.delegate + "_invoker",
-        };
+        const callbackCommand: Command = { title: "", command: this.id + "_invoker" };
         // 把回调函数注册进入 vscode
         commands.registerCommand(callbackCommand.command, (...args: any[]) => {
-            commands.executeCommand(this.delegate, args);
+            commands.executeCommand(this.id, args);
         });
         this.command = callbackCommand;
     }
 
     private deleteLine() {
-        const position = this._request.getPosition();
+        const position = this.request.getPosition();
         TextEditUtil.deleteLine(position.line);
     }
 

@@ -12,24 +12,17 @@ import PostfixSuggestionRequest from "./PostfixSuggestionRequest";
  */
 export default class PostfixSuggestion extends CompletionItem {
     protected _handler: PostfixHandler;
-    protected _request: PostfixSuggestionRequest = new PostfixSuggestionRequest(); // !这里复用了一个请求 有可能会出现问题
 
     constructor(label: string, handler: PostfixHandler) {
         super(label, CompletionItemKind.Snippet);
         this._handler = handler;
     }
 
-    /**
-     * 触发补全建议
-     */
-    invoke(lineText: string) {
-        this._request.target = lineText;
-        let result = this._handler.handle(this._request);
-        if (result === null) {
-            result = this._handler.handleTarget(lineText, this._request.attributes);
-        }
+    invoke(request: PostfixSuggestionRequest) {
+        const target = request.getLineText();
+        let result = this._handler.handle(request) ?? this._handler.handleTarget(target, request.attributes);
         if (this.shouldClearAttributes()) {
-            this.clearAttributes();
+            request.clearAttributes();
         }
         return result;
     }
@@ -37,11 +30,6 @@ export default class PostfixSuggestion extends CompletionItem {
     protected shouldClearAttributes() {
         return true;
     }
-
-    setAttributes = (attributes: {}) => this._request.setAttributes(attributes);
-    setAttribute = (key: string, value: any) => this._request.setAttribute(key, value);
-    getAttribute = (key: string) => this._request.getAttribute(key);
-    clearAttributes = () => this._request.clearAttributes();
 
     public static of(label: string, handler: PostfixHandler) {
         return new PostfixSuggestion(label, handler);

@@ -51,10 +51,7 @@ export function RegexMatchDecorator(realMethod: any, pattern: RegExp) {
 
 export function RegexSearchDecorator(realMethod: any, pattern: RegExp) {
     return (target: string, attributes: {}) => {
-        // console.log("abc de".match(/[a-zA-Z_][a-zA-Z_0-9]*/));
         const matchedStrings: string[] = target.match(pattern);
-        // console.log(pattern);
-        // console.log(matchedStrings);
 
         if (!matchedStrings || matchedStrings.length == 0) {
             return null;

@@ -6,12 +6,12 @@
 import { ExtensionContext } from "vscode";
 import { Plugin } from "./PostfixCompletionBootstrap";
 
-const COMPONENTS_PATH = "./components/**/*.js";
+const DEFAULT_COMPONENTS_PATH = "./components/**/*.js"; //! 默认递归导入该目录下的 component
 
 // -------------------------------------------------------------
 //                          准备插件
 // -------------------------------------------------------------
-Plugin.prepare(COMPONENTS_PATH);
+Plugin.prepare(DEFAULT_COMPONENTS_PATH);
 
 // -------------------------------------------------------------
 //                          启动插件

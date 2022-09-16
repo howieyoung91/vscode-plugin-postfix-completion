@@ -3,7 +3,7 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import { CancellationToken, CompletionContext, Position } from "vscode";
+import { CancellationToken, CompletionContext, Position, TextDocument } from "vscode";
 export enum AttributeKeys {
     DOCUMENT_KEY = "document",
     POSITION_KEY = "position",
@@ -35,11 +35,11 @@ export default class PostfixSuggestionRequest {
     }
 
     public getAttribute = (key: string) => this._attributes[key];
-    public getDocument = (): string => this._attributes[AttributeKeys.DOCUMENT_KEY];
+    public getDocument = (): TextDocument => this._attributes[AttributeKeys.DOCUMENT_KEY];
     public getPosition = (): Position => this._attributes[AttributeKeys.POSITION_KEY];
     public getToken = (): CancellationToken => this._attributes[AttributeKeys.TOKEN_KEY];
     public getCompletionContext = (): CompletionContext => this._attributes[AttributeKeys.CONTEXT_KEY];
-    public getLineText = (): CompletionContext => this._attributes[AttributeKeys.LINE_TEXT_KEY];
+    public getLineText = (): string => this._attributes[AttributeKeys.LINE_TEXT_KEY];
     public getLabel = (): string => this._attributes[AttributeKeys.LABEL_KEY];
 
     get attributes(): any {

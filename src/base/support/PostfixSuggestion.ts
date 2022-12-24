@@ -5,7 +5,7 @@
 
 import { PostfixHandler } from "./PostfixHandler";
 import { CompletionItem, CompletionItemKind } from "vscode";
-import PostfixSuggestionRequest from "./PostfixSuggestionRequest";
+import PostfixSuggestionRequest from "./suggest/PostfixSuggestionRequest";
 
 /**
  * 后缀补全基类

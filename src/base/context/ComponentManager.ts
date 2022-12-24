@@ -6,8 +6,8 @@
 export class ComponentManager {
     private readonly singletons: any = {};
 
-    public registerComponent(key: string, obj: any) {
-        this.singletons[key] = obj;
+    public registerComponent(key: string, value: any) {
+        this.singletons[key] = value;
     }
 
     public getComponent(key: string) {

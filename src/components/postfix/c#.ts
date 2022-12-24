@@ -4,7 +4,7 @@
  */
 
 import { SnippetString } from "vscode";
-import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../base/support/PostfixHandler";
 import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
 import { Keys, Filter } from "../../base/decorator/Filter";
 import { indent } from "../../util/DocumentUtil";

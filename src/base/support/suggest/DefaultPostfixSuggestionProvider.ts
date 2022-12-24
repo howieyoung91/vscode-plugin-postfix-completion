@@ -9,7 +9,7 @@ import PostfixSuggestion from "../PostfixSuggestion";
 import DocumentUtil from "../../../util/DocumentUtil";
 import LanguageSupportPostfixSuggestionProvider from "./LanguageSupportPostfixSuggestionProvider";
 import { HandleResult } from "../PostfixHandler";
-import PostfixSuggestionRequest from "../PostfixSuggestionRequest";
+import PostfixSuggestionRequest from "./PostfixSuggestionRequest";
 
 type ResolvedHandleResult = {
     text: string | SnippetString;
@@ -52,8 +52,7 @@ export default class DefaultPostfixSuggestionProvider extends LanguageSupportPos
     /**
      * 分发请求到 SuggestionHandler
      * @param suggestion
-     * @param document
-     * @param position
+     * @param request
      */
     private dispatch(suggestion: PostfixSuggestion, request: PostfixSuggestionRequest) {
         const document = request.getDocument();

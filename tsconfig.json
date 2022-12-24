@@ -1,18 +1,13 @@
 {
-	"compilerOptions": {
-		"experimentalDecorators": true,
-		"module": "commonjs",
-		"target": "ES6",
-		"outDir": "out",
-		"lib": [
-			"es6"
-		],
-		"sourceMap": true,
-		"rootDir": "src",
-		"removeComments": true,
-	},
-	"exclude": [
-		"node_modules",
-		".vscode-test"
-	]
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "ES6",
+        "outDir": "out",
+        "lib": ["es6"],
+        "sourceMap": true,
+        "rootDir": "src",
+        "removeComments": true
+    },
+    "exclude": ["node_modules", ".vscode-test"]
 }

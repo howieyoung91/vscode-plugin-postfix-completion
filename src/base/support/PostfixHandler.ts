@@ -4,7 +4,7 @@
  */
 
 import { SnippetString } from "vscode";
-import PostfixSuggestionRequest from "./PostfixSuggestionRequest";
+import PostfixSuggestionRequest from "./suggest/PostfixSuggestionRequest";
 
 export interface TargetHandleResult {
     text: string | SnippetString;

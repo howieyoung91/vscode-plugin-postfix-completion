@@ -4,12 +4,12 @@
  */
 
 import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
-import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../base/support/PostfixHandler";
 import { Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { SnippetString } from "vscode";
 import { indent } from "../../util/DocumentUtil";
-import { HandleResult } from "../../base/suggest/PostfixHandler";
+import { HandleResult } from "../../base/support/PostfixHandler";
 // @EnablePostfixSuggestion(
 //     { language: "javascript", label: "cast" },
 //     { language: "typescript", label: "cast" },

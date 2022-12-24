@@ -4,7 +4,7 @@
  */
 
 import { Assert } from "../../util/Assert";
-import { HandleResult } from "../suggest/PostfixHandler";
+import { HandleResult } from "../support/PostfixHandler";
 import { Keys } from "./Filter";
 
 // todo

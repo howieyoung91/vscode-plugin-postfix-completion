@@ -4,12 +4,12 @@
  */
 
 import { EnablePostfixSuggestion } from "../../base/decorator/Enable";
-import { PostfixHandler } from "../../base/suggest/PostfixHandler";
+import { PostfixHandler } from "../../base/support/PostfixHandler";
 import { Keys, Filter } from "../../base/decorator/Filter";
 import { Return } from "../../base/decorator/Return";
 import { indent } from "../../util/DocumentUtil";
 import { SnippetString } from "vscode";
-import { HandleResult } from "../../base/suggest/PostfixHandler";
+import { HandleResult } from "../../base/support/PostfixHandler";
 
 @EnablePostfixSuggestion({ language: "java", label: "assert" })
 class Assert extends PostfixHandler {

@@ -4,13 +4,13 @@
  */
 
 import { Disposable, ExtensionContext, languages } from "vscode";
-import PostfixSuggestion from "../../suggest/PostfixSuggestion";
-import DefaultPostfixSuggestionProvider from "../../suggest/support/DefaultPostfixSuggestionProvider";
+import PostfixSuggestion from "../../support/PostfixSuggestion";
+import DefaultPostfixSuggestionProvider from "../../support/suggest/DefaultPostfixSuggestionProvider";
 import { ComponentManager } from "../ComponentManager";
 import { Configuration } from "../../config/PostfixConfiguration";
 import ConfigurablePostfixCompletionContext from "./ConfigurablePostfixSuggestionContext";
-import { PostfixSuggestionSupplier } from "../../suggest/PostfixSuggestionSupplier";
-import LanguageSupportedPostfixSuggestionProvider from "../../suggest/support/LanguageSupportPostfixSuggestionProvider";
+import { PostfixSuggestionSupplier } from "../../support/PostfixSuggestionSupplier";
+import LanguageSupportedPostfixSuggestionProvider from "../../support/suggest/LanguageSupportPostfixSuggestionProvider";
 
 const Keys = {
     PROVIDERS: "postfixSuggestionSuppliers",
@@ -18,63 +18,69 @@ const Keys = {
 };
 
 export abstract class AbstractConfigurablePostfixCompletionContext implements ConfigurablePostfixCompletionContext {
-    public registerPostfixSuggestion(language: string, suggestion: PostfixSuggestion) {
-        const providers = this.getComponentManager().getComponentOrDefault(Keys.PROVIDERS, {});
+    //---------------------------------------------------------------------------------------------
+    //                                     public methods
+    //---------------------------------------------------------------------------------------------
+
+    registerPostfixSuggestion(language: string, suggestion: PostfixSuggestion) {
+        const providers = this.getProviders();
         let provider: PostfixSuggestionSupplier = providers[language];
         if (!provider) {
             provider = new DefaultPostfixSuggestionProvider(language);
             providers[language] = provider;
         }
-        provider.supplyPostfixSuggestions(suggestion);
+        provider.addPostfixSuggestions(suggestion); // 把 suggestions 添加进入 provider
     }
 
-    public abstract wrap(vscodeContext: ExtensionContext): void;
+    destroy() {} // default empty
+    start() {} // default empty
 
-    public abstract getConfiguration(): Configuration;
+    /**
+     * 对 vscode 插件环境做包装，由子类实现
+     */
+    abstract wrap(vscodeContext: ExtensionContext): void;
+    abstract getConfiguration(): Configuration;
+    protected abstract getComponentManager(): ComponentManager;
+    protected abstract getVscodeContext(): ExtensionContext;
 
-    destroy() {}
-
-    start() {}
-
+    //---------------------------------------------------------------------------------------------
+    //                                    private methods
+    //---------------------------------------------------------------------------------------------
     /**
      * 激活后缀补全提供器
      */
-    protected activateSupportedProviders(languages?: string[]) {
+    protected activateProviders(languages?: string[]) {
         if (languages.length == 1 && languages[0] === `*`) {
-            this.doActivateSupportedProviders();
+            this.doActivateProviders();
         } else {
-            this.doActivateSupportedProviders(languages);
+            this.doActivateProviders(languages);
         }
 
         // 注册到 vscode
         this.registerPostfixIntoVscode();
     }
 
-    protected doActivateSupportedProviders(supportedLanguages?: string[]) {
-        const providers = this.getComponentManager().getComponentOrDefault(Keys.PROVIDERS, {});
-        if (supportedLanguages) {
-            for (const language of supportedLanguages) {
+    protected doActivateProviders(enabledLanguages?: string[]) {
+        const providers: any = this.getProviders();
+        if (enabledLanguages) {
+            for (const language of enabledLanguages) {
                 const provider = providers[language];
                 if (provider) {
                     this.doActivate(provider);
                 }
             }
         } else {
+            // activate all
             for (const language in providers) {
-                const provider: DefaultPostfixSuggestionProvider = providers[language];
-                this.doActivate(provider);
+                this.doActivate(providers[language]);
             }
         }
     }
 
     protected doActivate(provider: LanguageSupportedPostfixSuggestionProvider) {
         console.log(provider);
-        let disposable = languages.registerCompletionItemProvider(provider.language, provider, ...provider.triggerCharacters);
+        const disposable = languages.registerCompletionItemProvider(provider.language, provider, ...provider.triggerCharacters);
         this.getPostfixSuggestionDisposables().push(disposable);
-    }
-
-    protected getPostfixSuggestionDisposables() {
-        return this.getComponentManager().getComponentOrDefault(Keys.SUGGESTIONS, []) as Disposable[];
     }
 
     private registerPostfixIntoVscode() {
@@ -82,7 +88,11 @@ export abstract class AbstractConfigurablePostfixCompletionContext implements Co
         this.getVscodeContext().subscriptions.push(...disposables);
     }
 
-    protected abstract getComponentManager(): ComponentManager;
+    protected getProviders() {
+        return this.getComponentManager().getComponentOrDefault(Keys.PROVIDERS, {});
+    }
 
-    protected abstract getVscodeContext(): ExtensionContext;
+    protected getPostfixSuggestionDisposables() {
+        return this.getComponentManager().getComponentOrDefault(Keys.SUGGESTIONS, []) as Disposable[];
+    }
 }

@@ -6,6 +6,6 @@
 import { JsonHandlerConfig } from "./JsonPostfixHandler";
 
 export interface Configuration {
-    supportedLanguages?: string[];
+    enabledLanguages?: string[];
     customSuggestions?: JsonHandlerConfig[];
 }

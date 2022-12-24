@@ -4,7 +4,7 @@
  */
 
 import { Range } from "vscode";
-import { AttributeKeys } from "../suggest/PostfixSuggestionRequest";
+import { AttributeKeys } from "../support/suggest/PostfixSuggestionRequest";
 
 export function DocumentDecorator(realMethod) {
     return (lineText: string, attributes: {}) => {

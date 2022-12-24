@@ -4,6 +4,6 @@
  */
 
 import ConfigurableLifecycleExtensionContext from "./ConfigurableLifecycleExtensionContext";
-import PostfixSuggestionRegistry from "../PostfixRegistry";
+import PostfixSuggestionRegistry from "../PostfixSuggestionRegistry";
 
 export default interface ConfigurablePostfixSuggestionContext extends ConfigurableLifecycleExtensionContext, PostfixSuggestionRegistry {}

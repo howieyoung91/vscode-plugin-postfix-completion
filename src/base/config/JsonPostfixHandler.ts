@@ -10,8 +10,11 @@ import { PostfixPoint } from "../decorator/Enable";
 import { ReturnDecorator } from "../decorator/Return";
 import { DocumentBetweenDecorator, DocumentDecorator, LineTextDecorator } from "../decorator/Source";
 import { RegexMatchDecorator, RegexSearchDecorator, SliceDecorator } from "../decorator/support/FilterDecorators";
-import { PostfixHandler } from "../suggest/PostfixHandler";
-import { FilterType, ReturnConfig, SourceConfig } from "./ConfigPropertyKeys";
+import { PostfixHandler } from "../support/PostfixHandler";
+import { FilterConfig, ReturnConfig, SourceConfig } from "./ConfigPropertyKeys";
+
+class JsonPostfixHandler extends PostfixHandler {}
+
 // {
 //     "points": [{ "language": "java", "label": "fori" }],
 //     "source": {
@@ -30,30 +33,69 @@ import { FilterType, ReturnConfig, SourceConfig } from "./ConfigPropertyKeys";
 //         "type": "replace"
 //     }
 // }
-class JsonPostfixHandler extends PostfixHandler {
-}
-
 export interface JsonHandlerConfig {
+    //  "points": [{ "language": "java", "label": "fori" }]
+    //  "points": { "language": "java", "label": "fori" }
     points: PostfixPoint[] | PostfixPoint;
+    /*
+        "source": {
+            "from": "lineText",
+            "properties": {
+
+            }
+        }
+
+        "source": "lineText"
+    */
     source?: SourceConfig | string;
-    filters?: FilterType[];
+    /*
+        "filters": [{
+            "type": "slice",
+            "properties": {
+                "start"     ?: string, // 起始位置
+                "end"       ?: string, // 结束位置
+                "skipFirst" ?: number, // 是否跳过起始字符, 用于去除某些空格
+            }
+        }, {
+            "type": "regex-match",
+            "properties": {
+                 "pattern": string,
+            }
+        }, {
+            "type": "regex-search",
+            "properties": {
+                 "pattern": string,
+            }
+        }]
+    */
+    filters?: FilterConfig[];
+    // declare result
     result: ReturnConfig | string;
+    /*
+        "type": string;
+        "properties": {
+            "value": string;
+        };
+    */
     return?: ReturnConfig | string;
 }
 
 export function buildHandler(config: JsonHandlerConfig) {
     const postfixHandler = new JsonPostfixHandler();
-    postfixHandler.handleTarget = proxyHandleTarget(config, generateRealMethod(config));
+    postfixHandler.handleTarget = proxyHandleTarget(config, generateActualMethod(config));
     return postfixHandler;
 }
 
-function generateRealMethod(config: JsonHandlerConfig) {
+function generateActualMethod(config: JsonHandlerConfig) {
     return (replacement: string, attributes: any) => {
         if (Assert.isString(config.result)) {
+            // todo support script
             return config.result.replace("{{replacement}}", replacement);
         } else {
             const properties = config.result.properties;
             let escapedString = escapeString(properties, replacement);
+
+            // wrap if necessary
             if (config.result.type === "string") {
                 return escapedString;
             } else if (config.result.type === "snippet") {
@@ -76,7 +118,7 @@ function escapeString(properties: { value: string }, replacement: string) {
  *  ===== aspect 0 =====
  *   ==== aspect 1 ====
  *     == aspect 2 ==
- *        method           -> invoke real method
+ *        method           ->   invoke actual method
  *      = aspect 3 =
  *     == aspect 2 ==
  *   ==== aspect 1 ====
@@ -89,19 +131,79 @@ function proxyHandleTarget(config: JsonHandlerConfig, method: any) {
     return method;
 }
 
+function decorateReturn(method: any, config: JsonHandlerConfig) {
+    if (!config.return) {
+        return method;
+    }
+
+    const returnConfig: { type: string } = { type: null };
+    // adapt config
+    if (Assert.isString(config.return)) {
+        returnConfig.type = config.return;
+    } else {
+        returnConfig.type = config.return.type;
+    }
+
+    //! do decorate
+    if (returnConfig.type === "replace") {
+        method = ReturnDecorator(method);
+    }
+    return method;
+}
+
+function decorateFilter(method: any, config: JsonHandlerConfig) {
+    if (!config.filters) {
+        return method;
+    }
+
+    if (config.filters) {
+        //! 倒序装饰 确保按顺序装饰
+        for (let i = config.filters.length - 1; i >= 0; i--) {
+            const filter = config.filters[i];
+            // 如果 filter 是字符串
+            if (Assert.isString(filter)) {
+                if (filter === "slice") {
+                    method = SliceDecorator(method, {});
+                }
+            } else {
+                filter.properties = filter.properties ?? {}; // make sure not null
+
+                if (filter.type === "slice") {
+                    method = SliceDecorator(method, filter.properties ?? {});
+                } else if (filter.type === "regex-match") {
+                    const pattern = filter.properties.pattern;
+                    if (pattern) {
+                        method = RegexMatchDecorator(method, new RegExp(pattern));
+                    }
+                } else if (filter.type === "regex-search") {
+                    const pattern = filter.properties.pattern;
+                    if (pattern) {
+                        method = RegexSearchDecorator(method, new RegExp(pattern));
+                    }
+                }
+            }
+        }
+    }
+    return method;
+}
+
 function decorateSource(config: JsonHandlerConfig, method: any) {
     if (!config.source) {
         return method;
     }
+
     const sourceConfig: SourceConfig = { from: null, properties: {} };
 
+    // adapt config
     if (Assert.isString(config.source)) {
         sourceConfig.from = config.source;
     } else {
+        // config.source.properties
         sourceConfig.from = config.source.from;
+        sourceConfig.properties = config.source.properties;
     }
 
-    // determine source
+    // determine source and do decorate
     switch (sourceConfig.from) {
         case "document": {
             method = DocumentDecorator(method);
@@ -116,68 +218,21 @@ function decorateSource(config: JsonHandlerConfig, method: any) {
         }
         case "between": {
             let start = sourceConfig.properties.startLineNumber;
-            const end = sourceConfig.properties.endLineNumber;
-            const limit = sourceConfig.properties.limit;
             if (start < 0) {
                 start = 0;
             }
+            const end = sourceConfig.properties.endLineNumber;
+            const limit = sourceConfig.properties.limit;
+
             method = DocumentBetweenDecorator(start, end, limit, method);
             break;
         }
     }
 
     // do decorate
-    if (sourceConfig.from === "document") {
-        method = DocumentDecorator(method);
-    }
+    // if (sourceConfig.from === "document") {
+    //     method = DocumentDecorator(method);
+    // }
 
-    return method;
-}
-
-function decorateReturn(method: any, config: JsonHandlerConfig) {
-    if (!config.return) {
-        return method;
-    }
-    const returnConfig: { type: string } = { type: null };
-    // adapt config
-    if (Assert.isString(config.return)) {
-        returnConfig.type = config.return;
-    } else {
-        returnConfig.type = config.return.type;
-    }
-
-    // do decorate
-    if (returnConfig.type === "replace") {
-        method = ReturnDecorator(method);
-    }
-    return method;
-}
-
-function decorateFilter(method: any, config: JsonHandlerConfig) {
-    if (!config.filters) {
-        return method;
-    }
-    if (config.filters) {
-        // 倒序装饰 确保 aspect 按顺序切入
-        for (let i = config.filters.length - 1; i >= 0; i--) {
-            const filter = config.filters[i];
-            // 如果 filter 是字符串
-            if (Assert.isString(filter)) {
-                // 如果是 slice
-                if (filter === "slice") {
-                    method = SliceDecorator(method, {});
-                }
-            } else {
-                if (filter.type === "slice") {
-                    method = SliceDecorator(method, filter.properties ?? {});
-                } else if (filter.type === "regex-match") {
-                    method = RegexMatchDecorator(method, new RegExp(filter.properties.pattern));
-                } else if (filter.type === "regex-search") {
-                    const pattern = filter.properties.pattern;
-                    method = RegexSearchDecorator(method, new RegExp(pattern));
-                }
-            }
-        }
-    }
     return method;
 }

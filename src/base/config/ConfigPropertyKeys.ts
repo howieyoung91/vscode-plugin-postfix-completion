@@ -11,10 +11,18 @@ export enum ConfigPropertyKeys {
     CUSTOM_SUGGESTIONS = `postfixcompletion.custom.suggestions`,
 }
 
+//---------------------------------------------------------------------------------------------
+//                                   Source Config
+//---------------------------------------------------------------------------------------------
+
 export interface SourceConfig {
     from: string;
     properties: { lineNumber?: number; startLineNumber?: number; endLineNumber?: number; limit?: number };
 }
+
+//---------------------------------------------------------------------------------------------
+//                                    Filter Type
+//---------------------------------------------------------------------------------------------
 
 export interface SliceType {
     type: "slice";
@@ -35,8 +43,11 @@ export interface RegexSearchType {
     };
 }
 
-export type FilterType = SliceType | RegexMatchType | RegexSearchType | string;
+export type FilterConfig = SliceType | RegexMatchType | RegexSearchType | string;
 
+//---------------------------------------------------------------------------------------------
+//                                    Return Type
+//---------------------------------------------------------------------------------------------
 export interface ReturnConfig {
     type: string;
     properties: {

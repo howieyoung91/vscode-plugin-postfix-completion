@@ -3,11 +3,12 @@
  * Copyright ©2021-2022 杨浩宇，保留所有权利。
  */
 
-import PostfixSuggestion from "../suggest/PostfixSuggestion";
-import { PostfixHandler } from "../suggest/PostfixHandler";
 import { PluginContext } from "../context/support/PostfixCompletionContext";
-import { PostfixCommandHandler } from "../suggest/support/ExecutablePostfixHandler";
-import { PostfixCommand } from "../suggest/support/PostfixCommand";
+import { PostfixCommandEnhancer } from "../support/command/CommandEnhancer";
+import { PostfixCommand } from "../support/command/PostfixCommand";
+import { PostfixCommandHandler } from "../support/command/PostfixCommandHandler";
+import { PostfixHandler } from "../support/PostfixHandler";
+import PostfixSuggestion from "../support/PostfixSuggestion";
 
 type Constructor<T = any> = new (...args: any[]) => T;
 
@@ -37,16 +38,24 @@ export function EnablePostfixSuggestion(...points: PostfixPoint[]) {
     };
 }
 
+export interface PostfixCommandPoint extends PostfixPoint {
+    enhancers?: PostfixCommandEnhancer[];
+}
+
 let i = 1;
 
-export function EnablePostfixCommand(...points: PostfixPoint[]) {
+export function EnablePostfixCommand(...points: PostfixCommandPoint[]) {
     return (postfixHandlerCtor: Constructor) => {
         if (!(postfixHandlerCtor.prototype instanceof PostfixCommandHandler)) {
             return;
         }
-        let handler = new postfixHandlerCtor();
+        const handler = new postfixHandlerCtor();
         for (const point of points) {
-            PluginContext.registerPostfixSuggestion(point.language, new PostfixCommand(`postfixcommand.${i}`, point.label, handler));
+            const postfixCommand = new PostfixCommand(`postfixcommand.${i}`, point.label, handler);
+            if (point.enhancers) {
+                postfixCommand.addEnhancers(point.enhancers);
+            }
+            PluginContext.registerPostfixSuggestion(point.language, postfixCommand);
             i++;
         }
     };

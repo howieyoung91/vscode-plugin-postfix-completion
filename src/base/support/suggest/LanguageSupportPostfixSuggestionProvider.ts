@@ -21,7 +21,7 @@ export default abstract class LanguageSupportPostfixSuggestionProvider
         this._triggerCharacters = [`.`];
     }
 
-    public supplyPostfixSuggestions(suggestion: PostfixSuggestion, ...suggestions: PostfixSuggestion[]) {
+    public addPostfixSuggestions(suggestion: PostfixSuggestion, ...suggestions: PostfixSuggestion[]) {
         this._suggestions.push(suggestion, ...suggestions);
         return this;
     }
